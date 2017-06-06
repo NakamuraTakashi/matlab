@@ -20,7 +20,7 @@ format long g
 % installed in your computer.
 
 my_home = getenv('HOME');
-my_root = strcat(my_home, '/ocean/repository');
+my_root = strcat(my_home, '../');
 
 path(path, fullfile(my_root, 'matlab', '4dvar', ''))
 path(path, fullfile(my_root, 'matlab', 'bathymetry', ''))
@@ -38,6 +38,7 @@ path(path, fullfile(my_root, 'matlab', 'seawater', ''))
 path(path, fullfile(my_root, 'matlab', 't_tide', ''))
 path(path, fullfile(my_root, 'matlab', 'tidal_ellipse', ''))
 path(path, fullfile(my_root, 'matlab', 'utility', ''))
+path(path, fullfile(my_root, 'matlab', 'my_scripts', ''))
 
 % Load NetCDF Toolbox for OpenDAP support for versions 2008b or higher. 
 % However, this is not needed if version 2012a or higher since Matlab
@@ -52,9 +53,12 @@ if ((vyear == 2008 && v(5:5) == 'a') || vyear >= 2012),
 end
 
 if (load_toolbox),
-  addpath (strcat(my_home, '/ocean/matlab/snctools'), '-end');
-  javaaddpath (strcat(my_home, '/ocean/matlab/classes/toolsUI-4.1.jar'), '-end');
-  javaaddpath (strcat(my_home, '/ocean/matlab/classes/netcdfAll-4.2.jar'), '-end');
-  javaaddpath (strcat(my_home, '/ocean/matlab/snctools/classes'), '-end');
+  addpath (strcat(my_root, '/matlab/mexcdf/mexnc'), '-end');
+  addpath (strcat(my_root, '/matlab/mexcdf/snctools'), '-end');
+  javaaddpath (strcat(my_root, '/matlab/toolsui-4.2.jar'), '-end');
+  javaaddpath (strcat(my_root, '/matlab/netcdfAll-4.2.jar'), '-end');
+  javaaddpath (strcat(my_root, '/matlab/mexcdf/snctools/classes'), '-end');
   setpref('SNCTOOLS','USE_JAVA', true);
 end
+
+%path(path, 'C:\cygwin64\bin')

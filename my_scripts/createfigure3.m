@@ -1,4 +1,4 @@
-function[h_scatter,h_contour,h_annot]= createfltplot4(XData1,YData1,X,Y,Z,zdata2, annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax)
+function[h_surf,h_contour,h_annot]= createfigure3(XData1,YData1,CData1,zdata2, annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax)
 %CREATEFIGURE(ZDATA1,YDATA1,XDATA1,CDATA1,ZDATA2)
 %  ZDATA1:  surface zdata
 %  YDATA1:  surface ydata
@@ -6,14 +6,14 @@ function[h_scatter,h_contour,h_annot]= createfltplot4(XData1,YData1,X,Y,Z,zdata2
 %  CDATA1:  surface cdata
 %  ZDATA2:  contour z
 
-%  MATLAB ?ï¿½É‚ï¿½é©?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½: 29-Mar-2013 19:17:25
+%  MATLAB ‚É‚æ‚é©“®¶¬“ú: 29-Mar-2013 19:17:25
 %
-% figure ?ï¿½?ï¿½?ï¿½?ï¿½
+% figure ‚ğì¬
 figure1 = figure('PaperSize',[20 30],...
     'Color',[1 1 1],...
     'Colormap',colmap,...
     'GraphicsSmoothing','off',...
-    'Position',[0 0 xsize ysize]);
+    'OuterPosition',[0 0 xsize ysize]);
 
 dx=xmax-xmin;
 dy=ymax-ymin;
@@ -22,9 +22,9 @@ for i=0:10
     if(min(dx/10^i,dy/10^i)<10)
         break
     end
-end 
+end  
 
-% axes ?ï¿½?ï¿½?ï¿½?ï¿½
+% axes ‚ğì¬
 axes1 = axes('Parent',figure1,...
     'YTick', ymin:interval:ymax,...
     'XTick', xmin:interval:xmax,...
@@ -32,57 +32,53 @@ axes1 = axes('Parent',figure1,...
     'FontName','Arial',...
     'CLim',[Cmin Cmax],...
     'Box','on');
-%    'FontSmoothing','off',...
-
-% Axes ?ï¿½?ï¿½ X ?ï¿½?ï¿½?ï¿½Ì”ÍˆÍ‚ï¿½Ûï¿½?ï¿½?ï¿½?ï¿½é‚½?ï¿½ß‚ÉˆÈ‰ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½C?ï¿½?ï¿½?ï¿½ÌƒR?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½g?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½
+% Axes ‚Ì X ²‚Ì”ÍˆÍ‚ğ•Û‚·‚é‚½‚ß‚ÉˆÈ‰º‚Ìƒ‰ƒCƒ“‚ÌƒRƒƒ“ƒg‚ğ‰ğœ
 %xlim(axes1,[-25 3125]);
  xlim(axes1,[xmin xmax]);
-% Axes ?ï¿½?ï¿½ Y ?ï¿½?ï¿½?ï¿½Ì”ÍˆÍ‚ï¿½Ûï¿½?ï¿½?ï¿½?ï¿½é‚½?ï¿½ß‚ÉˆÈ‰ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½C?ï¿½?ï¿½?ï¿½ÌƒR?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½g?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½
+% Axes ‚Ì Y ²‚Ì”ÍˆÍ‚ğ•Û‚·‚é‚½‚ß‚ÉˆÈ‰º‚Ìƒ‰ƒCƒ“‚ÌƒRƒƒ“ƒg‚ğ‰ğœ
 %ylim(axes1,[-25 9525]);
  ylim(axes1,[ymin ymax]);
 hold(axes1,'all');
 pbaspect([dx dy 1])
 
 
-% surface ?ï¿½?ï¿½?ï¿½?ï¿½
+% surface ‚ğì¬
 %surface('Parent',axes1,'ZData',ZData1,'YData',YData1,'XData',XData1,...
 %    'LineStyle','none',...
 %    'CData', CData1);
 
-h_scatter=scatter(X,Y,3,Z,'fill'); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Point size
-%h_scatter=plot(X,Y,'ro');
-%shading flat;
+h_surf=pcolor(XData1,YData1,CData1);
+shading flat;
 %shading interp;
 
-% colorbar ?ï¿½?ï¿½?ï¿½?ï¿½
-colormap(colmap);
+% colorbar ‚ğì¬
+%colormap(colmap);
 colorbar('peer',axes1,...
     'FontSize',9);
 
-
-% contour ?ï¿½?ï¿½?ï¿½?ï¿½
+% contour ‚ğì¬
 h_contour=contour(XData1,YData1,zdata2,...
     'LineColor',[0.48 0.06 0.92],...
-    'LevelList',[-9 0.5],...
+    'LevelList',[0 0.2 0.5 3],...
     'Parent',axes1,...
     'ShowText','off');
 
 %    'LevelList',[0 0.25 0.5 1 3 5],...
+%    'LevelList',[0 0.25 0.5 1 3 5],...
 %    'LevelList',[-1 1],...
 %    'LevelList',[0 0.5 1 3],...
 
-% xlabel ?ï¿½?ï¿½?ï¿½?ï¿½
-xlabel('X (m)','FontName','Arial');
+% xlabel ‚ğì¬
+xlabel('X (km)','FontName','Arial');
 
-% ylabel ?ï¿½?ï¿½?ï¿½?ï¿½
-ylabel('Y (m)','FontName','Arial');
+% ylabel ‚ğì¬
+ylabel('Y (km)','FontName','Arial');
 
-% title ?ï¿½?ï¿½?ï¿½?ï¿½
+% title ‚ğì¬
 title(title1,'FontSize',12,'FontName','Arial', 'FontWeight', 'normal');
 
 
-% textbox ?ï¿½?ï¿½?ï¿½?ï¿½
-% textbox ï¿½ï¿½ï¿½ì¬
+% textbox ‚ğì¬
 h_annot=annotation(figure1,'textbox',...
     [0.0 0.01 0.9 0.035],...
     'HorizontalAlignment', 'center',...
@@ -92,5 +88,5 @@ h_annot=annotation(figure1,'textbox',...
     'FitBoxToText','on',...
     'LineStyle','none');
 
-% 
+
 

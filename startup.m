@@ -57,11 +57,11 @@ if ((vyear == 2008 && v(5:5) == 'a') || vyear >= 2012),
 end
 
 if (load_toolbox),
-  addpath (strcat(my_root, '/matlab/mexcdf/mexnc'), '-end');
-  addpath (strcat(my_root, '/matlab/mexcdf/snctools'), '-end');
-  javaaddpath (strcat(my_root, '/matlab/toolsui-4.2.jar'), '-end');
-  javaaddpath (strcat(my_root, '/matlab/netcdfAll-4.2.jar'), '-end');
-  javaaddpath (strcat(my_root, '/matlab/mexcdf/snctools/classes'), '-end');
+  addpath (strcat(my_root, '/matlab/lib/mexcdf/mexnc'), '-end');
+  addpath (strcat(my_root, '/matlab/lib/mexcdf/snctools'), '-end');
+  javaaddpath (strcat(my_root, '/matlab/lib/toolsui-4.2.jar'), '-end');
+  javaaddpath (strcat(my_root, '/matlab/lib/netcdfAll-4.2.jar'), '-end');
+  javaaddpath (strcat(my_root, '/matlab/lib/mexcdf/snctools/classes'), '-end');
   setpref('SNCTOOLS','USE_JAVA', true);
 end
 

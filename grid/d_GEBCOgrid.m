@@ -3,24 +3,24 @@
 %   === Copyright (c) 2017 Takashi NAKAMURA  =====
 %
 
-etopo_file = 'D:/Documents/GIS_data/ETOPO1_Bed_g_gmt4.grd/ETOPO1_Bed_g_gmt4.grd';
+gebco_file = 'D:/Documents/GIS_data/GEBCO_2014_2D/GEBCO_2014_2D.nc';
 % ETOPO1: 1/60 degree grid resolution
-Gname = 'output/CT_0.04_grd_v1.nc'; % 1/24 degree resolution
-% Gname = 'output/CT_0.08_grd_v3.nc'; % 1/12 degree resolution
+Gname = 'output/CT_0.04_grd_v3.nc'; % 1/24 degree resolution
+% Gname = 'output/CT_0.08_grd_v4.nc'; % 1/12 degree resolution
 
 %% 
 % Set lat, lon at specific station. 
-s_lat = -17;
+s_lat = -18;
 e_lat = 30;
-s_lon = 99;
-e_lon = 139;
+s_lon = 91;
+e_lon = 156;
 % Set ROMS grid resolution
 RESOLUTION = 24; % 1/24 degree resolution
 % RESOLUTION = 12; % 1/12 degree resolution
 
 %% Read ETOPO1 grid coordinate
-lon = ncread(etopo_file, 'x');
-lat = ncread(etopo_file, 'y');
+lon = ncread(gebco_file, 'lon');
+lat = ncread(gebco_file, 'lat');
 %% 
 
 % Serching index number of nearest grid 
@@ -34,7 +34,7 @@ c_lon = id_e_lon - id_s_lon +1;
 c_lat = id_e_lat - id_s_lat +1;
 
 % Read topography data
-h_etopo = ncread(etopo_file, 'z',[id_s_lon-1 id_s_lat-1], [c_lon+2 c_lat+2]);
+h_etopo = ncread(gebco_file, 'elevation',[id_s_lon-1 id_s_lat-1], [c_lon+2 c_lat+2]);
 lat_etopo = lat(id_s_lat-1:id_e_lat+1);
 lon_etopo = lon(id_s_lon-1:id_e_lon+1);
 
@@ -156,9 +156,9 @@ for k=1:1000
 end
 
 %  Grid specific modification !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-rmask2(570:Lp,1)=0; % for 1/24 degree resolution
-% rmask2(1,590:596)=0; % for 1/24 degree resolution
-% rmask2(1:4,424:429)=0; % for 1/24 degree resolution
+% rmask2(570:Lp,1)=0; % for 1/24 degree resolution
+% rmask2(1,590:600)=0; % for 1/24 degree resolution
+% rmask2(1:4,427:429)=0; % for 1/24 degree resolution
 
 % rmask2(290:Lp,1)=0; % for 1/12 degree resolution
 % rmask2(185,342) = 0; % for 1/12 degree resolution

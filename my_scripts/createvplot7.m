@@ -1,4 +1,4 @@
-function[h_scatter,h_contour,h_annot]= createfltplot4(XData1,YData1,X,Y,Z,zdata2, annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax)
+function[h_quiver,h_surf,h_contour,h_annot]=  createvplot7(XData1,YData1,CData1,XData2,YData2,UData2,VData2,zdata2,scale,annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList)
 %CREATEFIGURE(ZDATA1,YDATA1,XDATA1,CDATA1,ZDATA2)
 %  ZDATA1:  surface zdata
 %  YDATA1:  surface ydata
@@ -6,9 +6,9 @@ function[h_scatter,h_contour,h_annot]= createfltplot4(XData1,YData1,X,Y,Z,zdata2
 %  CDATA1:  surface cdata
 %  ZDATA2:  contour z
 
-%  MATLAB ?ｽﾉゑｿｽ骼ｩ?ｽ?ｽ?ｽ?ｽ?ｽ?ｽ?ｽ?ｽ: 29-Mar-2013 19:17:25
-%
-% figure ?ｽ?ｽ?ｽ?ｬ
+%  MATLAB による自動生成日: 29-Mar-2013 19:17:25
+
+% figure を作成
 figure1 = figure('PaperSize',[20 30],...
     'Color',[1 1 1],...
     'Colormap',colmap,...
@@ -22,9 +22,9 @@ for i=0:10
     if(min(dx/10^i,dy/10^i)<10)
         break
     end
-end 
+end  
 
-% axes ?ｽ?ｽ?ｽ?ｬ
+% axes を作成
 axes1 = axes('Parent',figure1,...
     'YTick', ymin:interval:ymax,...
     'XTick', xmin:interval:xmax,...
@@ -32,38 +32,30 @@ axes1 = axes('Parent',figure1,...
     'FontName','Arial',...
     'CLim',[Cmin Cmax],...
     'Box','on');
-%    'FontSmoothing','off',...
-
-% Axes ?ｽ?ｽ X ?ｽ?ｽ?ｽﾌ範囲ゑｿｽﾛ趣ｿｽ?ｽ?ｽ?ｽ驍ｽ?ｽﾟに以会ｿｽ?ｽﾌ?ｿｽ?ｽC?ｽ?ｽ?ｽﾌコ?ｽ?ｽ?ｽ?ｽ?ｽg?ｽ?ｽ?ｽ?ｽ?ｽ?ｽ
+% Axes の X 軸の範囲を保持するために以下のラインのコメントを解除
 %xlim(axes1,[-25 3125]);
  xlim(axes1,[xmin xmax]);
-% Axes ?ｽ?ｽ Y ?ｽ?ｽ?ｽﾌ範囲ゑｿｽﾛ趣ｿｽ?ｽ?ｽ?ｽ驍ｽ?ｽﾟに以会ｿｽ?ｽﾌ?ｿｽ?ｽC?ｽ?ｽ?ｽﾌコ?ｽ?ｽ?ｽ?ｽ?ｽg?ｽ?ｽ?ｽ?ｽ?ｽ?ｽ
+% Axes の Y 軸の範囲を保持するために以下のラインのコメントを解除
 %ylim(axes1,[-25 9525]);
  ylim(axes1,[ymin ymax]);
 hold(axes1,'all');
 pbaspect([dx dy 1])
 
 
-% surface ?ｽ?ｽ?ｽ?ｬ
-%surface('Parent',axes1,'ZData',ZData1,'YData',YData1,'XData',XData1,...
-%    'LineStyle','none',...
-%    'CData', CData1);
+% surface を作成
 
-h_scatter=scatter(X,Y,3,Z,'fill'); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Point size
-%h_scatter=plot(X,Y,'ro');
-%shading flat;
-%shading interp;
-
-% colorbar ?ｽ?ｽ?ｽ?ｬ
-colormap(colmap);
+% colorbar を作成
+%colormap(colmap);
 colorbar('peer',axes1,...
     'FontSize',9);
 
+h_surf=pcolor(XData1,YData1,CData1);
+shading flat;
 
-% contour ?ｽ?ｽ?ｽ?ｬ
+% contour を作成
 h_contour=contour(XData1,YData1,zdata2,...
     'LineColor',[0.48 0.06 0.92],...
-    'LevelList',[-9 0.5],...
+    'LevelList',LevelList,...
     'Parent',axes1,...
     'ShowText','off');
 
@@ -71,17 +63,37 @@ h_contour=contour(XData1,YData1,zdata2,...
 %    'LevelList',[-1 1],...
 %    'LevelList',[0 0.5 1 3],...
 
-% xlabel ?ｽ?ｽ?ｽ?ｬ
-xlabel('X (m)','FontName','Arial');
+% quiver を作成
+U=UData2*scale;
+V=VData2*scale;
+h_quiver=quiver(XData2,YData2,U,V,...
+    'Color', 'k',...
+    'AutoScale','off');
 
-% ylabel ?ｽ?ｽ?ｽ?ｬ
-ylabel('Y (m)','FontName','Arial');
+if unit =='km'
+    % xlabel を作成
+    xlabel('X (km)','FontName','Arial');
+    % ylabel を作成
+    ylabel('Y (km)','FontName','Arial');
+elseif unit == 'm'
+    % xlabel を作成
+    xlabel('X (m)','FontName','Arial');
+    % ylabel を作成
+    ylabel('Y (m)','FontName','Arial');
+elseif unit == 'latlon'
+    % xlabel を作成
+    xlabel('Longitude','FontName','Arial');
+    % ylabel を作成
+    ylabel('Latitude','FontName','Arial');
+end
 
-% title ?ｽ?ｽ?ｽ?ｬ
+% title を作成
 title(title1,'FontSize',12,'FontName','Arial', 'FontWeight', 'normal');
 
+% colorbar を作成
+%colormap(colmap);
+%colorbar('peer',axes1);
 
-% textbox ?ｽ?ｽ?ｽ?ｬ
 % textbox を作成
 h_annot=annotation(figure1,'textbox',...
     [0.0 0.01 0.9 0.035],...
@@ -92,5 +104,5 @@ h_annot=annotation(figure1,'textbox',...
     'FitBoxToText','on',...
     'LineStyle','none');
 
-% 
+
 

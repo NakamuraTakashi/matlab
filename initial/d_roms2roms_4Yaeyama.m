@@ -25,16 +25,16 @@
 %NWAdata = 'D:\ROMS\Yaeyama\output\ocean_his_Yaeyama2_1g.nc';
 %NWAgrid = 'D:\ROMS\Yaeyama\Data\Yaeyama2_grd_v8.nc';
 % NWAdata = 'O:\ROMS\Yaeyama\Y1_13v7\Yaeyama1_his_130410.nc';
-NWAdata = 'O:\ROMS\Yaeyama\Y1_14v2\Yaeyama1_his_140410.nc';
-NWAgrid = 'D:\ROMS\Yaeyama\Data\Yaeyama1_grd_v9.nc';
+NWAdata = 'D:\ROMS\output\Yaeyama\test\Yaeyama2_his_14_Pup_Ckeep.nc';
+NWAgrid = 'D:\ROMS\Data\Yaeyama\Yaeyama2_grd_v9.3.nc';
 
-GRDname = 'D:\ROMS\Yaeyama\Data\Yaeyama2_grd_v9.1.nc';
-INIname = 'D:\ROMS\Yaeyama\Data\Yaeyama2_ini_Nz15_ROMS_140512v2.nc';
+GRDname = 'D:\ROMS\Data\Yaeyama\Yaeyama3_grd_v10_1227.nc';
+INIname = 'D:\ROMS\Data\Yaeyama\Yaeyama3_ini_Nz15_ROMS_140801.nc';
 
 CREATE = true;                   % logical switch to create NetCDF
 report = false;                  % report vertical grid information
 
-IniRec = 769;                    % NWA time record for initialization
+IniRec = 1;                    % NWA time record for initialization
 
 %--------------------------------------------------------------------------
 %  Set application parameters in structure array, S.

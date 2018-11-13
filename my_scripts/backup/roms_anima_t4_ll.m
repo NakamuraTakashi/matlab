@@ -2,97 +2,67 @@
 % === ver 2016/03/10   Copyright (c) 2014-2016 Takashi NAKAMURA  =====
 %                for MATLAB R2015a,b  
 
-%grd='C:\cygwin64\home\Takashi\ROMS\Projects\Shiraho_reef_offline\Data\shiraho_reef_grid11.nc'; his='C:\cygwin64\home\Takashi\ROMS\Projects\Shiraho_reef_offline\ocean_his.nc';
-% grd='D:\ROMS\Shiraho_reef\OA5_Ctrl\Data\shiraho_reef_grid11.nc'; his='D:\ROMS\Shiraho_reef\OA5_Ctrl\ocean_his.nc';
-% grd='C:\cygwin64\home\Takashi\ROMS\Projects\Shiraho_reef\Data\shiraho_reef_grid11.nc'; his='C:\cygwin64\home\Takashi\ROMS\Projects\Shiraho_reef\ocean_his.nc';
+grd='D:\ROMS\Data\Coral_Triangle\CT_0.04_grd_v1.nc';
+his='D:\ROMS\output\Coral_Triangle\test01\CT_0.04_his_1604.nc';
 
-% grd='D:\ROMS\Yaeyama\Data\Yaeyama1_grd_v8.nc'; his='J:\ROMS\Yaeyama\Y1_1g_130601\ocean_his_Yaeyama1_1g_130601.nc';
-% grd='D:\ROMS\Yaeyama\Data\Yaeyama2_grd_v9.nc'; his='D:\ROMS\Yaeyama\Y2_1g_eco_130607_7\ocean_his_Yaeyama2_1g_eco_130607.nc';
-
-%his='C:\cygwin64\home\Takashi\ROMS\Projects\Yaeyama1\Data\Yaeyama1_air140401_141001_frc.nc';
-%his='C:\cygwin64\home\Takashi\ROMS\Projects\Yaeyama1\Data\Yaeyama1_140401_141001_ini.nc';
-% grd='D:\ROMS\Shiraho_reef\OAv7_present\Data\shiraho_reef_grid12.nc';
-% his='D:\ROMS\Shiraho_reef\OAv7_present\ocean_his.nc';
-% grd='D:\ROMS\Shiraho_reef\Data\shiraho_reef_grid13.nc';
-% grd='D:\ROMS\Data\Shiraho_reef\shiraho_reef_grid16.2.nc';
-% his='D:\ROMS\Shiraho_reef\OAv11\ocean_his_10_4.nc';
-grd='D:\ROMS\Data\Fukido\fukido_grd_v7.nc';
-
-% starting_date=datenum(2009,8,25,0,0,0); % for Shiraho
-starting_date=datenum(2010,8,20,0,0,0); % for Shiraho
-% starting_date=datenum(2013,6,1,0,0,0);
+starting_date=datenum(2000,1,1,0,0,0);
 
 % Nz=8; % for Shiraho
-Nz=3; % for Fukido
 % Nz=15; %30-1
-% Nz=30; %30-1
+Nz=30; %30-1
 
 % LOCAL_TIME='(UTC)';
 % LOCAL_TIME='(JST)';
-% LOCAL_TIME='(UTC+9)';
+%LOCAL_TIME='(UTC+9)';
 LOCAL_TIME='';
 
-wet_dry = 1;  % Dry mask OFF: 0, ON: 1
+wet_dry = 0;  % Dry mask OFF: 0, ON: 1
 
 
-h          = ncread(grd,'h');
+% h          = ncread(grd,'h');
+h          = ncread(grd,'mask_rho');
 % p_coral    = ncread(grd,'p_coral');
-% % p_coral2 = ncread(grd,'p_coral2');
-% p_seagrass = ncread(grd,'p_seagrass');
-% p_sand = ncread(grd,'p_sand');
-% p_algae = ncread(grd,'p_algae');
+%p_seagrass = ncread(grd,'p_seagrass');
 %lat_rho    = ncread(grd,'lat_rho');
 %lon_rho    = ncread(grd,'lon_rho');
-x_rho      = ncread(grd,'x_rho');
-y_rho      = ncread(grd,'y_rho');
+x_rho      = ncread(grd,'lon_rho');
+y_rho      = ncread(grd,'lat_rho');
 mask_rho   = ncread(grd,'mask_rho');
 
 [Im,Jm] = size(h);
 
 c(1:Im,1:Jm)=0;
-x_rho=(x_rho-min(min(x_rho)))/1000; % m->km
-y_rho=(y_rho-min(min(y_rho)))/1000; % m->km
 
 k=0;
 i=1;
 
-xmin=0;   xmax=max(max(x_rho));  ymin=0;   ymax=max(max(y_rho));
+xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
 % xmin=0;   xmax=2.3;  ymin=0;   ymax=max(max(y_rho));
 
-% xsize=Im*2+100; ysize=Jm*2+100;  % for YAEYAM1
+xsize=450; ysize=520;  % for CT
 % xsize=300; ysize=680; % for SHIRAHO
-xsize=250; ysize=540; % for SHIRAHO for Publish
+% xsize=250; ysize=540; % for SHIRAHO for Publish
+% xsize=240; ysize=540; % for SHIRAHO for Animation
 %xsize=500; ysize=650; % for SHIRAHO zoom
 
-id = 16;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% id = 32;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+id = 22;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 close all
 
-% if id <100
-% %time = ncread(his,'ocean_time',[i],[1]);
-%     time = ncread(his,'ocean_time');
-% else
-%      time = ncread(his,'time');
-% end
+if id <100
+%time = ncread(his,'ocean_time',[i],[1]);
+    time = ncread(his,'ocean_time');
+else
+     time = ncread(his,'time');
+end
 
-% imax=length(time);
+imax=length(time);
 
 % coral masking
-coral_mask = (p_coral==0).*0+(p_coral>0).*1;
-coral_mask = coral_mask ./coral_mask;
-% coral2 masking
-coral2_mask = (p_coral2==0).*0+(p_coral2>0).*1;
-coral2_mask = coral2_mask ./coral2_mask;
-% seagrass masking
-sg_mask = (p_seagrass==0).*0+(p_seagrass>0).*1;
-sg_mask = sg_mask ./sg_mask;
-% algae masking
-ag_mask = (p_algae==0).*0+(p_algae>0).*1;
-ag_mask = ag_mask ./ag_mask;
-% sand masking
-sand_mask = (p_sand==0).*0+(p_sand>0).*1;
-sand_mask = sand_mask ./sand_mask;
+% coral_mask = (p_coral==0).*0+(p_coral>0).*1;
+% coral_mask = coral_mask ./coral_mask;
 
 mask_rho = mask_rho ./mask_rho;
 
@@ -108,43 +78,209 @@ colmap2=downsample(colmap2,2);
 colmap3=downsample(colmap3,2);
 colmap4=downsample(colmap4,2);
 
-% if id <100
-%     date=starting_date+time(i+1)/24/60/60;
-% else
-%     date=starting_date+time(i+1);
-% end
-% 
-date_str=strcat(datestr(starting_date,31),'  ',LOCAL_TIME);
+if id <100
+    date=starting_date+time(i+1)/24/60/60;
+else
+    date=starting_date+time(i+1);
+end
 
-% tmp = zeros(size(x_rho));
-% tmp = ncread(his,'temp',[1 1 Nz i],[Inf Inf 1 1]);
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho,h.*mask_rho,h, date_str,'Bathymetry',0,35,colmap2,xsize,ysize,xmin,xmax,ymin,ymax);
-drawnow
-hgexport(figure(1), 'output/figs_png\bath.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(1), 'output/figs_eps\bath.eps',hgexport('factorystyle'),'Format','eps');
+date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
 
-% tmp = ncread(his,'temp',[1 1 Nz i],[Inf Inf 1 1]);
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho, p_coral.*coral_mask ,h,date_str,'Coral coverage',0,1,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
-drawnow
-hgexport(figure(2), 'output/figs_png\coral_cov.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(2), 'output/figs_eps\coral_cov.eps',hgexport('factorystyle'),'Format','eps');
+tmp = zeros(size(x_rho));
 
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho, p_coral2.*coral2_mask ,h,date_str,'Coral2 coverage',0,1,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
-drawnow
-hgexport(figure(3), 'output/figs_png\coral2_cov.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(3), 'output/figs_eps\coral2_cov.eps',hgexport('factorystyle'),'Format','eps');
 
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho,p_seagrass.*sg_mask,h,date_str,'Seagrass coverage',0,1,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
-drawnow
-hgexport(figure(4), 'output/figs_png\seagrass_cov.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(4), 'output/figs_eps\seagrass_cov.eps',hgexport('factorystyle'),'Format','eps');
+if id == 1
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Temperature (^oC)',20,33,jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 2
+%     [h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho,tmp,h,date_str,'Salinity (psu)', 33, 36.0, flipud(colmap1),xsize,ysize,xmin,xmax,ymin,ymax);
+%     [h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho,tmp,h,date_str,'Salinity (psu)', 33, 36.0, colmap1,xsize,ysize,xmin,xmax,ymin,ymax);
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Salinity (psu)', 32, 36, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 3
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'DIC (\mumol kg^-^1)',1600,2100,jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 4
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'TA (\mumol kg^-^1)',2050,2350,jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 5
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'DO (\mumol L^-^1)',100,350,jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 6
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'\delta^{13}C_{DIC} (permil)',-1,2.5,jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 7
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Hs (m)',0,2.5,jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 8 
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'pH (total scale)', 7.8, 8.5 ,jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 9
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'\Omega_{arg}', 2.5, 6, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 10
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'pCO_2 (\muatm)', 100, 700, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 11
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'SS \phi=5um (kg m^-^3)', 0, 0.15, colmap1,xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 12
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'    Coral Pg (nmol cm^-^2 s^-^1)',0, 0.6,jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 13
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'    Coral Pn (nmol cm^-^2 s^-^1)', -0.4, 0.4,jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 14
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'    Coral R (nmol cm^-^2 s^-^1)', 0, 0.35, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 15
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'    Coral G (nmol cm^-^2 s^-^1)', -0.04, 0.12, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 16
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'    Coral org-C (\mumol cm^-^2)', 0, 20, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 17
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'    Coral \delta^{13}C_{org-C} (permil)', -21, -15, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 18
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Sediment thickness (m)', 0, 0.0025, colmap1,xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 19
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Coral zoox. density (cell cm^-^2)', 0, 1200000, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 20
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Coral growth rate (s^-^1)', 0, 0.000000012, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 21
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Coral mortality (s^-^1)', 0, 0.00000002, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 22
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Sea surface elevation (m)', -1.5, 2.0, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 23
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Phytoplankton1 (umolC L^-^1) ', 0, 4, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 24
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Phytoplankton2 (umolC L^-^1) ', 0, 3, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 25
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Phytoplankton (umolC L^-^1) ', 0, 5, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 26
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'NO3 (umolN L^-^1) ', 0, 1, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 27
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'NO2 (umolN L^-^1) ', 0, 0.1, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 28
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'NH4 (umolN L^-^1) ', 0, 1, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 29
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'PO4 (umolP L^-^1) ', 0, 0.1, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 30
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'SS \phi=200um (kg m^-^3)', 0, 0.15, colmap1,xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 31
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Chl-a (ug L^-^1) ', 0, 1.5, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 32
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Chl-a (ug L^-^1) ', 0, 1, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
 
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho,p_algae.*ag_mask,h,date_str,'Macroalgae coverage',0,1,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 101
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Air temperature (^oC)', 25, 33, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 102
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Air pressure (hPa)', 950, 1020, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 103
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Humidity (%)', 60, 100, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 104
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Rain fall rate (kg m^-^2 s^-^1)', 0, 0.005, jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 105
+    [h_surf,h_contour,h_annot]=createfigure3_ll(x_rho,y_rho,tmp,h,date_str,'Cloud fraction', 0, 1, gray(128),xsize,ysize,xmin,xmax,ymin,ymax);
+end
 drawnow
-hgexport(figure(5), 'output/figs_png\macroalgae_cov.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(5), 'output/figs_eps\macroalgae_cov.eps',hgexport('factorystyle'),'Format','eps');
+%set(figure(1),'OuterPosition',[0 0 320 700])%[0 0 400 800]%[0 0 290 620]
 
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho,p_sand.*sand_mask,h,date_str,'Sand coverage',0,1,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
-drawnow
-hgexport(figure(6), 'output/figs_png\sand_cov.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(6), 'output/figs_eps\sand_cov.eps',hgexport('factorystyle'),'Format','eps');
+
+for i=1:1:imax
+% for i=336:1:imax    
+
+    if id == 1
+        tmp = ncread(his,'temp',[1 1 Nz i],[Inf Inf 1 1]);  % Surface
+%        tmp = ncread(his,'temp',[1 1 1 i],[Inf Inf 1 1]);  % bottom
+    elseif id == 2
+        tmp =  ncread(his,'salt',[1 1 Nz i],[Inf Inf 1 1]);
+    elseif id == 3
+        tmp = ncread(his,'TIC',[1 1 Nz i],[Inf Inf 1 1]);
+    elseif id == 4
+        tmp = ncread(his,'alkalinity',[1 1 Nz i],[Inf Inf 1 1]) ;
+    elseif id == 5
+        tmp = ncread(his,'oxygen',[1 1 Nz i],[Inf Inf 1 1]);
+    elseif id == 6
+        tmp = ncread(his,'d13C_DIC',[1 1 Nz i],[Inf Inf 1 1]);
+    elseif id == 7
+        tmp = ncread(his,'Hwave',[1 1 i],[Inf Inf 1]);
+    elseif id == 8 
+        tmp = ncread(his,'pH',[1 1 i],[Inf Inf 1]);
+    elseif id == 9
+    %    tmp = ncread(his,'Warg',[i,0 0],[1,Jm,Im]);
+        tmp = ncread(his,'Omega_arg',[1 1 i],[Inf Inf 1]);
+    elseif id == 10
+        tmp = ncread(his,'pCO2',[1 1 i],[Inf Inf 1]);
+    elseif id == 11
+        tmp = ncread(his,'mud_01',[1 1 Nz i],[Inf Inf 1 1]);  % ?½\?½w?½?½mud
+    elseif id == 12
+        tmp =  ncread(his,'coral1_Pg',[1 1 i],[Inf Inf 1]) .*coral_mask;
+    elseif id == 13
+        tmp = ncread(his,'coral1_Pn',[1 1 i],[Inf Inf 1]) .*coral_mask;
+    elseif id == 14
+        tmp = ncread(his,'coral1_R',[1 1 i],[Inf Inf 1]) .*coral_mask;
+    elseif id == 15
+        tmp = ncread(his,'coral1_G',[1 1 i],[Inf Inf 1]) .*coral_mask;
+    elseif id == 16
+        tmp = ncread(his,'coral1_orgC',[1 1 i],[Inf Inf 1]) .*coral_mask;
+    elseif id == 17
+        tmp = ncread(his,'coral1_d13Ctissue',[1 1 i],[Inf Inf 1]) .*coral_mask;
+    elseif id == 18
+        tmp = ncread(his,'bed_thickness',[1 1 1 i],[Inf Inf 1 1]);
+    elseif id == 19
+        tmp = ncread(his,'coral_densZoox',[1 1 i],[Inf Inf 1]) .*coral_mask;
+    elseif id == 20
+        tmp = ncread(his,'coral_growth',[1 1 i],[Inf Inf 1]) .*coral_mask;
+    elseif id == 21
+        tmp = ncread(his,'coral_mort',[1 1 i],[Inf Inf 1]) .*coral_mask;
+    elseif id == 22
+        tmp = ncread(his,'zeta',[1 1 i],[Inf Inf 1]).*mask_rho;
+    elseif id == 23
+        tmp = ncread(his,'phytoplankton1',[1 1 Nz i],[Inf Inf 1 1]) ;
+    elseif id == 24
+        tmp = ncread(his,'phytoplankton2',[1 1 Nz i],[Inf Inf 1 1]) ;
+    elseif id == 25
+        tmp = ncread(his,'phytoplankton1',[1 1 Nz i],[Inf Inf 1 1]) ;
+        tmp = tmp+ncread(his,'phytoplankton2',[1 1 Nz i],[Inf Inf 1 1]) ;
+    elseif id == 26
+        tmp = ncread(his,'NO3',[1 1 Nz i],[Inf Inf 1 1]) ;
+    elseif id == 27
+        tmp = ncread(his,'NO2',[1 1 Nz i],[Inf Inf 1 1]) ;
+    elseif id == 28
+        tmp = ncread(his,'NH4',[1 1 Nz i],[Inf Inf 1 1]) ;
+    elseif id == 29
+        tmp = ncread(his,'PO4',[1 1 Nz i],[Inf Inf 1 1]) ;
+    elseif id == 30
+        tmp = ncread(his,'mud_02',[1 1 Nz i],[Inf Inf 1 1]);  % ?½\?½w?½?½mud
+    elseif id == 31
+        tmp = ncread(his,'phytoplankton1',[1 1 Nz i],[Inf Inf 1 1]) ;
+        tmp = tmp + ncread(his,'phytoplankton2',[1 1 Nz i],[Inf Inf 1 1]) ;
+        tmp = tmp * 0.24;
+    elseif id == 32
+        tmp = ncread(his,'phytoplankton2',[1 1 Nz i],[Inf Inf 1 1]) ;
+        tmp = tmp * 0.24;
+
+    elseif id == 101
+        tmp = ncread(his,'Tair',[1 1 i],[Inf Inf 1]);
+    elseif id == 102
+        tmp = ncread(his,'Pair',[1 1 i],[Inf Inf 1]);
+    elseif id == 103
+        tmp = ncread(his,'Qair',[1 1 i],[Inf Inf 1]);
+    elseif id == 104
+        tmp = ncread(his,'rain',[1 1 i],[Inf Inf 1]);
+    elseif id == 105
+        tmp = ncread(his,'cloud',[1 1 i],[Inf Inf 1]);
+    end
+
+    if wet_dry == 1
+        wetdry_mask_rho = ncread(his,'wetdry_mask_rho',[1 1 i],[Inf Inf 1]);
+        wetdry_mask_rho = wetdry_mask_rho ./wetdry_mask_rho;
+        tmp = tmp .* wetdry_mask_rho;
+    end
+
+    %depth =squeeze(zeta(i,:,:))+h;
+    %depth =zeta+h;
+    %date=datenum(2009,8,25,0,0,0)+time/24/60/60;
+    if id <100
+        date=starting_date+time(i)/24/60/60;
+    else
+        date=starting_date+time(i);
+    end
+
+    date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
+
+    set(h_surf,'CData',tmp)
+    set(h_annot,'String',date_str)
+    drawnow
+    hgexport(figure(1), strcat('output/figs_png\t01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
+%     hgexport(figure(1), strcat('output/figs_eps\t01_',num2str(i,'%0.4u'),'.eps'),hgexport('factorystyle'),'Format','eps');
+
+end
+
+
+

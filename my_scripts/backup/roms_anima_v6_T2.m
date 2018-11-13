@@ -1,101 +1,160 @@
 %
-% === ver 2016/03/10   Copyright (c) 2014-2016 Takashi NAKAMURA  =====
-%                for MATLAB R2015a,b  
+% === ver 2015/11/20   Copyright (c) 2014-2015 Takashi NAKAMURA  =====
+%                for MATLAB R2015a  
 
-%grd='C:\cygwin64\home\Takashi\ROMS\Projects\Shiraho_reef_offline\Data\shiraho_reef_grid11.nc'; his='C:\cygwin64\home\Takashi\ROMS\Projects\Shiraho_reef_offline\ocean_his.nc';
+
+%YAEYAMA case
+%grd='D:\ROMS\Yaeyama\Data\Yaeyama1_grd_ver2.nc';
+%his='D:\ROMS\Yaeyama\output\ocean_his_Yaeyama1.nc';
+%his='D:\ROMS\Yaeyama\test1\ocean_his.nc';
+%his='D:\ROMS\Yaeyama\Data\Yaeyama1_frc_JMA_140401_141001.nc';
+%his='D:\ROMS\Yaeyama\Data\Yaeyama1_ini_HYCOM_140401_141001.nc';
+
+%Shiraho reef case
 % grd='D:\ROMS\Shiraho_reef\OA5_Ctrl\Data\shiraho_reef_grid11.nc'; his='D:\ROMS\Shiraho_reef\OA5_Ctrl\ocean_his.nc';
-% grd='C:\cygwin64\home\Takashi\ROMS\Projects\Shiraho_reef\Data\shiraho_reef_grid11.nc'; his='C:\cygwin64\home\Takashi\ROMS\Projects\Shiraho_reef\ocean_his.nc';
+
+%grd='D:\ROMS\Yaeyama\Data\Yaeyama1_grd_ver3.nc'; his='D:\ROMS\Yaeyama\output\ocean_his_Yaeyama1_3g.nc';
+%grd='D:\ROMS\Yaeyama\Data\Yaeyama2_grd_ver7.nc'; his='D:\ROMS\Yaeyama\output\ocean_his_Yaeyama2_3g.nc';
 
 % grd='D:\ROMS\Yaeyama\Data\Yaeyama1_grd_v8.nc'; his='J:\ROMS\Yaeyama\Y1_1g_130601\ocean_his_Yaeyama1_1g_130601.nc';
-% grd='D:\ROMS\Yaeyama\Data\Yaeyama2_grd_v9.nc'; his='D:\ROMS\Yaeyama\Y2_1g_eco_130607_7\ocean_his_Yaeyama2_1g_eco_130607.nc';
+% grd='D:\ROMS\Yaeyama\Data\Yaeyama2_grd_v9.nc'; his='D:\ROMS\Yaeyama\Y2_1g_eco_130607_3\ocean_his_Yaeyama2_1g_eco_130607.nc';
+grd='D:\ROMS\Data\Yaeyama\Yaeyama1_grd_v10.nc'; 
+% his1='C:\cygwin64\home\Takashi\ROMS_prep\output\Yaeyama1_frc_DSJRA55_Uwind_199609.nc';
+% his2='C:\cygwin64\home\Takashi\ROMS_prep\output\Yaeyama1_frc_DSJRA55_Vwind_199609.nc';
+his1='D:\ROMS\Data\Yaeyama\Yaeyama1_frc_DSJRA55_Uwind_199609.nc';
+his2='D:\ROMS\Data\Yaeyama\Yaeyama1_frc_DSJRA55_Vwind_199609.nc';
 
-%his='C:\cygwin64\home\Takashi\ROMS\Projects\Yaeyama1\Data\Yaeyama1_air140401_141001_frc.nc';
-%his='C:\cygwin64\home\Takashi\ROMS\Projects\Yaeyama1\Data\Yaeyama1_140401_141001_ini.nc';
-% grd='D:\ROMS\Shiraho_reef\OAv7_present\Data\shiraho_reef_grid12.nc';
-% his='D:\ROMS\Shiraho_reef\OAv7_present\ocean_his.nc';
-% grd='D:\ROMS\Shiraho_reef\Data\shiraho_reef_grid13.nc';
-% grd='D:\ROMS\Data\Shiraho_reef\shiraho_reef_grid16.2.nc';
-% his='D:\ROMS\Shiraho_reef\OAv11\ocean_his_10_4.nc';
-grd='D:\ROMS\Data\Fukido\fukido_grd_v7.nc';
 
-% starting_date=datenum(2009,8,25,0,0,0); % for Shiraho
-starting_date=datenum(2010,8,20,0,0,0); % for Shiraho
-% starting_date=datenum(2013,6,1,0,0,0);
+%Jm=192;   % Mm+2
+%Im=64;    % Lm+2
 
-% Nz=8; % for Shiraho
-Nz=3; % for Fukido
-% Nz=15; %30-1
-% Nz=30; %30-1
+id = 100;  % <- Select 1,2,3,100
 
-% LOCAL_TIME='(UTC)';
-% LOCAL_TIME='(JST)';
-% LOCAL_TIME='(UTC+9)';
-LOCAL_TIME='';
+if id==1 || id==2
+%     scale=0.8;   % for SHIRAHO
+%    scale=7;  % for YAEYAMA1
+   scale=3;   % for YAEYAMA2
+%    scale=2;   % for YAEYAMA3
+elseif id == 3
+    scale=0.08;  % for Wave
+elseif id == 100
+%     scale=1.5;  % for Wind
+    scale=1;  % for Wind
+end
+
+% s_interval=4; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
+s_interval=6;  % for Wind
+%s_interval=1; % for SHIRAHO
+%s_interval=3; % for test
+
+% Vmax = 0.8; % for SHIRAHO
+% Vmax = 3; % for YAEYAMA1
+% Vmax = 1.5; % for YAEYAMA2 & YAEYAMA3
+Vmax = 20;  % for Wind
+
+starting_date=datenum(2000,1,1,0,0,0);% for YAEYAMA1
+% starting_date=datenum(2009,8,25,0,0,0);% for SHIRAHO
+% Nz=30; % for YAEYAMA1
+Nz=15; % for YAEYAMA2 & YAEYAMA3
+% Nz=8;  % for SHIRAHO
+
+LOCAL_TIME='(UTC)';
+%LOCAL_TIME='(JST)';
+%LOCAL_TIME='(UTC+9)';
+% LOCAL_TIME='';
 
 wet_dry = 1;  % Dry mask OFF: 0, ON: 1
 
-
 h          = ncread(grd,'h');
-% p_coral    = ncread(grd,'p_coral');
-% % p_coral2 = ncread(grd,'p_coral2');
-% p_seagrass = ncread(grd,'p_seagrass');
-% p_sand = ncread(grd,'p_sand');
-% p_algae = ncread(grd,'p_algae');
 %lat_rho    = ncread(grd,'lat_rho');
 %lon_rho    = ncread(grd,'lon_rho');
 x_rho      = ncread(grd,'x_rho');
 y_rho      = ncread(grd,'y_rho');
-mask_rho   = ncread(grd,'mask_rho');
+mask_u   = ncread(grd,'mask_u');
+mask_v   = ncread(grd,'mask_v');
 
-[Im,Jm] = size(h);
+[Im, Jm] = size(h);
 
 c(1:Im,1:Jm)=0;
 x_rho=(x_rho-min(min(x_rho)))/1000; % m->km
 y_rho=(y_rho-min(min(y_rho)))/1000; % m->km
 
 k=0;
-i=1;
+i=6;
+
+
 
 xmin=0;   xmax=max(max(x_rho));  ymin=0;   ymax=max(max(y_rho));
-% xmin=0;   xmax=2.3;  ymin=0;   ymax=max(max(y_rho));
+%xmin=0; xmax=2;  ymin=1; ymax=4;
 
-% xsize=Im*2+100; ysize=Jm*2+100;  % for YAEYAM1
-% xsize=300; ysize=680; % for SHIRAHO
-xsize=250; ysize=540; % for SHIRAHO for Publish
+xsize=Im*2+100; ysize=Jm*2+100;  % for YAEYAM1
+% xsize=290; ysize=680; % for SHIRAHO
 %xsize=500; ysize=650; % for SHIRAHO zoom
 
-id = 16;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 close all
+clear ubar vber ubar2 vbar2 ubar3 vbar3
 
-% if id <100
-% %time = ncread(his,'ocean_time',[i],[1]);
-%     time = ncread(his,'ocean_time');
-% else
-%      time = ncread(his,'time');
-% end
+mask_u = mask_u ./mask_u;
+mask_v = mask_v ./mask_v;
 
-% imax=length(time);
+if id <100
+%time = ncread(his,'ocean_time',[i],[1]);
+    time = ncread(his,'ocean_time');
+else
+    time = ncread(his1,'time');
+end
+imax=length(time);
 
-% coral masking
-coral_mask = (p_coral==0).*0+(p_coral>0).*1;
-coral_mask = coral_mask ./coral_mask;
-% coral2 masking
-coral2_mask = (p_coral2==0).*0+(p_coral2>0).*1;
-coral2_mask = coral2_mask ./coral2_mask;
-% seagrass masking
-sg_mask = (p_seagrass==0).*0+(p_seagrass>0).*1;
-sg_mask = sg_mask ./sg_mask;
-% algae masking
-ag_mask = (p_algae==0).*0+(p_algae>0).*1;
-ag_mask = ag_mask ./ag_mask;
-% sand masking
-sand_mask = (p_sand==0).*0+(p_sand>0).*1;
-sand_mask = sand_mask ./sand_mask;
+if id == 1
+	ubar = ncread(his,'ubar',[1 1 i],[Inf Inf 1]);
+	vbar = ncread(his,'vbar',[1 1 i],[Inf Inf 1]);
+elseif id == 2
+    ubar = ncread(his,'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
+    vbar = ncread(his,'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
+elseif id == 3
+	dwave = ncread(his,'Dwave',[1 1 i],[Inf Inf 1]);
+	hwave = ncread(his,'Hwave',[1 1 i],[Inf Inf 1]);
+    ubar = cos(pi*dwave/180);
+    vbar = sin(pi*dwave/180);
+    if wet_dry == 1
+        wetdry_mask_rho = ncread(his,'wetdry_mask_rho',[1 1 i],[Inf Inf 1]);
+        wetdry_mask_rho = wetdry_mask_rho ./wetdry_mask_rho;
+        hwave = hwave .* wetdry_mask_rho;
+    end
+elseif id == 100
+	ubar = ncread(his1,'Uwind',[1 1 i],[Inf Inf 1]);
+	vbar = ncread(his2,'Vwind',[1 1 i],[Inf Inf 1]);
+end
 
-mask_rho = mask_rho ./mask_rho;
 
+
+%depth =squeeze(zeta(i,:,:))+h;
+%depth =zeta+h;
+%date=datenum(2009,8,25,0,0,0)+time/24/60/60;
+if id==1 || id==2
+    ubar2(1:Im, 1:Jm)=NaN;
+    ubar2(2:Im, 1:Jm)=ubar;%.*scale;
+    vbar2(1:Im, 1:Jm)=NaN;
+    vbar2(1:Im, 2:Jm)=vbar;%.*scale;
+else
+    ubar2=ubar;
+    vbar2=vbar;
+end
+
+vel=hypot(ubar2,ubar2);
+
+% Down sampling
+x_rho2=x_rho(1:s_interval:Im,1:s_interval:Jm);
+y_rho2=y_rho(1:s_interval:Im,1:s_interval:Jm);
+ubar3=ubar2(1:s_interval:Im,1:s_interval:Jm);
+vbar3=vbar2(1:s_interval:Im,1:s_interval:Jm);
+
+if id <100
+    date=starting_date+time(i+1)/24/60/60;
+else
+    date=starting_date+time(i+1);
+end
+date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
 
 % My color map
 colmap1=[1 1 1;0.961538434028625 0.961538434028625 1;0.923076927661896 0.923076927661896 1;0.884615361690521 0.884615361690521 1;0.846153855323792 0.846153855323792 1;0.807692289352417 0.807692289352417 1;0.769230782985687 0.769230782985687 1;0.730769217014313 0.730769217014313 1;0.692307710647583 0.692307710647583 1;0.653846144676209 0.653846144676209 1;0.615384638309479 0.615384638309479 1;0.576923072338104 0.576923072338104 1;0.538461565971375 0.538461565971375 1;0.5 0.5 1;0.461538463830948 0.461538463830948 1;0.423076927661896 0.423076927661896 1;0.384615391492844 0.384615391492844 1;0.346153855323792 0.346153855323792 1;0.307692319154739 0.307692319154739 1;0.269230782985687 0.269230782985687 1;0.230769231915474 0.230769231915474 1;0.192307695746422 0.192307695746422 1;0.15384615957737 0.15384615957737 1;0.115384615957737 0.115384615957737 1;0.0769230797886848 0.0769230797886848 1;0.0384615398943424 0.0384615398943424 1;0 0 1;0 0.014492753893137 1;0 0.028985507786274 1;0 0.0434782616794109 1;0 0.0579710155725479 1;0 0.0724637657403946 1;0 0.0869565233588219 1;0 0.101449273526669 1;0 0.115942031145096 1;0 0.130434781312943 1;0 0.144927531480789 1;0 0.159420296549797 1;0 0.173913046717644 1;0 0.18840579688549 1;0 0.202898547053337 1;0 0.217391297221184 1;0 0.231884062290192 1;0 0.246376812458038 1;0 0.260869562625885 1;0 0.275362312793732 1;0 0.289855062961578 1;0 0.304347813129425 1;0 0.318840593099594 1;0 0.333333343267441 1;0 0.347826093435287 1;0 0.362318843603134 1;0 0.376811593770981 1;0 0.391304343938828 1;0 0.405797094106674 1;0 0.420289844274521 1;0 0.434782594442368 1;0 0.449275374412537 1;0 0.463768124580383 1;0 0.47826087474823 1;0 0.492753624916077 1;0 0.507246375083923 1;0 0.52173912525177 1;0 0.536231875419617 1;0 0.550724625587463 1;0 0.56521737575531 1;0 0.579710125923157 1;0 0.594202876091003 1;0 0.60869562625885 1;0 0.623188376426697 1;0 0.637681186199188 1;0 0.652173936367035 1;0 0.666666686534882 1;0 0.681159436702728 1;0 0.695652186870575 1;0 0.710144937038422 1;0 0.724637687206268 1;0 0.739130437374115 1;0 0.753623187541962 1;0 0.768115937709808 1;0 0.782608687877655 1;0 0.797101438045502 1;0 0.811594188213348 1;0 0.826086938381195 1;0 0.840579688549042 1;0 0.855072438716888 1;0 0.869565188884735 1;0 0.884057998657227 1;0 0.898550748825073 1;0 0.91304349899292 1;0 0.927536249160767 1;0 0.942028999328613 1;0 0.95652174949646 1;0 0.971014499664307 1;0 0.985507249832153 1;0 1 1;0.015625 1 0.984375;0.03125 1 0.96875;0.046875 1 0.953125;0.0625 1 0.9375;0.078125 1 0.921875;0.09375 1 0.90625;0.109375 1 0.890625;0.125 1 0.875;0.140625 1 0.859375;0.15625 1 0.84375;0.171875 1 0.828125;0.1875 1 0.8125;0.203125 1 0.796875;0.21875 1 0.78125;0.234375 1 0.765625;0.25 1 0.75;0.265625 1 0.734375;0.28125 1 0.71875;0.296875 1 0.703125;0.3125 1 0.6875;0.328125 1 0.671875;0.34375 1 0.65625;0.359375 1 0.640625;0.375 1 0.625;0.390625 1 0.609375;0.40625 1 0.59375;0.421875 1 0.578125;0.4375 1 0.5625;0.453125 1 0.546875;0.46875 1 0.53125;0.484375 1 0.515625;0.5 1 0.5;0.515625 1 0.484375;0.53125 1 0.46875;0.546875 1 0.453125;0.5625 1 0.4375;0.578125 1 0.421875;0.59375 1 0.40625;0.609375 1 0.390625;0.625 1 0.375;0.640625 1 0.359375;0.65625 1 0.34375;0.671875 1 0.328125;0.6875 1 0.3125;0.703125 1 0.296875;0.71875 1 0.28125;0.734375 1 0.265625;0.75 1 0.25;0.765625 1 0.234375;0.78125 1 0.21875;0.796875 1 0.203125;0.8125 1 0.1875;0.828125 1 0.171875;0.84375 1 0.15625;0.859375 1 0.140625;0.875 1 0.125;0.890625 1 0.109375;0.90625 1 0.09375;0.921875 1 0.078125;0.9375 1 0.0625;0.953125 1 0.046875;0.96875 1 0.03125;0.984375 1 0.015625;1 1 0;1 0.984375 0;1 0.96875 0;1 0.953125 0;1 0.9375 0;1 0.921875 0;1 0.90625 0;1 0.890625 0;1 0.875 0;1 0.859375 0;1 0.84375 0;1 0.828125 0;1 0.8125 0;1 0.796875 0;1 0.78125 0;1 0.765625 0;1 0.75 0;1 0.734375 0;1 0.71875 0;1 0.703125 0;1 0.6875 0;1 0.671875 0;1 0.65625 0;1 0.640625 0;1 0.625 0;1 0.609375 0;1 0.59375 0;1 0.578125 0;1 0.5625 0;1 0.546875 0;1 0.53125 0;1 0.515625 0;1 0.5 0;1 0.484375 0;1 0.46875 0;1 0.453125 0;1 0.4375 0;1 0.421875 0;1 0.40625 0;1 0.390625 0;1 0.375 0;1 0.359375 0;1 0.34375 0;1 0.328125 0;1 0.3125 0;1 0.296875 0;1 0.28125 0;1 0.265625 0;1 0.25 0;1 0.234375 0;1 0.21875 0;1 0.203125 0;1 0.1875 0;1 0.171875 0;1 0.15625 0;1 0.140625 0;1 0.125 0;1 0.109375 0;1 0.09375 0;1 0.078125 0;1 0.0625 0;1 0.046875 0;1 0.03125 0;1 0.015625 0;1 0 0;0.984375 0 0;0.96875 0 0;0.953125 0 0;0.9375 0 0;0.921875 0 0;0.90625 0 0;0.890625 0 0;0.875 0 0;0.859375 0 0;0.84375 0 0;0.828125 0 0;0.8125 0 0;0.796875 0 0;0.78125 0 0;0.765625 0 0;0.75 0 0;0.734375 0 0;0.71875 0 0;0.703125 0 0;0.6875 0 0;0.671875 0 0;0.65625 0 0;0.640625 0 0;0.625 0 0;0.609375 0 0;0.59375 0 0;0.578125 0 0;0.5625 0 0;0.546875 0 0;0.53125 0 0;0.515625 0 0;0.5 0 0];
@@ -108,43 +167,86 @@ colmap2=downsample(colmap2,2);
 colmap3=downsample(colmap3,2);
 colmap4=downsample(colmap4,2);
 
-% if id <100
-%     date=starting_date+time(i+1)/24/60/60;
-% else
-%     date=starting_date+time(i+1);
-% end
-% 
-date_str=strcat(datestr(starting_date,31),'  ',LOCAL_TIME);
+if id==1 || id==2
+    [h_quiver,h_surf,h_contour,h_annot]=createvplot5(x_rho,y_rho,vel,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Velocity (m s^-^1)',0,Vmax,flipud(jet(128)),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 3
+    [h_quiver,h_surf,h_contour,h_annot]=createvplot5(x_rho,y_rho,hwave,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Hs (m)',0,1.5,jet(128),xsize,ysize,xmin,xmax,ymin,ymax);
+elseif id == 100
+    [h_quiver,h_surf,h_contour,h_annot]=createvplot5(x_rho,y_rho,vel,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Wind velocity (m s^-^1)',0,Vmax,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
+end
 
-% tmp = zeros(size(x_rho));
-% tmp = ncread(his,'temp',[1 1 Nz i],[Inf Inf 1 1]);
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho,h.*mask_rho,h, date_str,'Bathymetry',0,35,colmap2,xsize,ysize,xmin,xmax,ymin,ymax);
 drawnow
-hgexport(figure(1), 'output/figs_png\bath.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(1), 'output/figs_eps\bath.eps',hgexport('factorystyle'),'Format','eps');
+%set(figure(1),'OuterPosition',[0 0 320 700])%[0 0 400 800]
 
-% tmp = ncread(his,'temp',[1 1 Nz i],[Inf Inf 1 1]);
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho, p_coral.*coral_mask ,h,date_str,'Coral coverage',0,1,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
-drawnow
-hgexport(figure(2), 'output/figs_png\coral_cov.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(2), 'output/figs_eps\coral_cov.eps',hgexport('factorystyle'),'Format','eps');
+%for i=4:3:imax
+%for i=24:6:imax
+%for i=2303:1:2519
+% for i=1:1:imax
+for i=1:2:imax
+% for i=7:6:imax
+%for i=7:6:0
+    
+if id == 1
+	ubar = ncread(his,'ubar',[1 1 i],[Inf Inf 1]);
+	vbar = ncread(his,'vbar',[1 1 i],[Inf Inf 1]);
+elseif id == 2
+    ubar = ncread(his,'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
+    vbar = ncread(his,'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
+elseif id == 3
+	dwave = ncread(his,'Dwave',[1 1 i],[Inf Inf 1]);
+	hwave = ncread(his,'Hwave',[1 1 i],[Inf Inf 1]);
+    ubar = cos(pi*dwave/180);
+    vbar = sin(pi*dwave/180);
+    if wet_dry == 1
+        wetdry_mask_rho = ncread(his,'wetdry_mask_rho',[1 1 i],[Inf Inf 1]);
+        wetdry_mask_rho = wetdry_mask_rho ./wetdry_mask_rho;
+        hwave = hwave .* wetdry_mask_rho;
+    end
+elseif id == 100
+	ubar = ncread(his1,'Uwind',[1 1 i],[Inf Inf 1]);
+	vbar = ncread(his2,'Vwind',[1 1 i],[Inf Inf 1]);
+end
 
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho, p_coral2.*coral2_mask ,h,date_str,'Coral2 coverage',0,1,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
-drawnow
-hgexport(figure(3), 'output/figs_png\coral2_cov.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(3), 'output/figs_eps\coral2_cov.eps',hgexport('factorystyle'),'Format','eps');
 
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho,p_seagrass.*sg_mask,h,date_str,'Seagrass coverage',0,1,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
-drawnow
-hgexport(figure(4), 'output/figs_png\seagrass_cov.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(4), 'output/figs_eps\seagrass_cov.eps',hgexport('factorystyle'),'Format','eps');
+if id <100
+    date=starting_date+time(i)/24/60/60;
+else
+    date=starting_date+time(i);
+end
+date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
 
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho,p_algae.*ag_mask,h,date_str,'Macroalgae coverage',0,1,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
-drawnow
-hgexport(figure(5), 'output/figs_png\macroalgae_cov.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(5), 'output/figs_eps\macroalgae_cov.eps',hgexport('factorystyle'),'Format','eps');
+if id==1 || id==2
+    ubar2(1:Im, 1:Jm)=NaN;
+    ubar2(2:Im, 1:Jm)=ubar;%.*scale;
+    vbar2(1:Im, 1:Jm)=NaN;
+    vbar2(1:Im, 2:Jm)=vbar;%.*scale;
+    vel=hypot(ubar2,vbar2);
+elseif id == 3
+    ubar2=ubar;
+    vbar2=vbar;
+    vel=hwave;
+elseif id == 100
+    ubar2=ubar;
+    vbar2=vbar;
+    vel=hypot(ubar2,vbar2);
+end
 
-[h_surf,h_contour,h_annot]=createfigure3(x_rho,y_rho,p_sand.*sand_mask,h,date_str,'Sand coverage',0,1,colmap4,xsize,ysize,xmin,xmax,ymin,ymax);
+
+% Down sampling
+ubar3=ubar2(1:s_interval:Im,1:s_interval:Jm);
+vbar3=vbar2(1:s_interval:Im,1:s_interval:Jm);
+
+set(h_surf,'CData',vel)
+set(h_quiver,'UData',ubar3*scale)
+set(h_quiver,'VData',vbar3*scale)
+set(h_annot,'String',date_str)
+
 drawnow
-hgexport(figure(6), 'output/figs_png\sand_cov.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(6), 'output/figs_eps\sand_cov.eps',hgexport('factorystyle'),'Format','eps');
+
+% hgexport(figure(1), strcat('output/figs_png\v01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
+%hgexport(figure(1), strcat('output/figs_png\v01_',num2str(i,'%0.4u'),'.bmp'),hgexport('factorystyle'),'Format','bmp256');
+%hgexport(figure(1), strcat('output/figs_png\v01_',num2str(i,'%0.4u'),'.jpg'),hgexport('factorystyle'),'Format','jpeg');
+
+end
+
+

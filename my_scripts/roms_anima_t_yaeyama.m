@@ -209,7 +209,7 @@ for i=1:2:imax
     elseif id == 10
         tmp = ncread(his,'pCO2',[1 1 i],[Inf Inf 1]);
     elseif id == 11
-        tmp = ncread(his,'mud_01',[1 1 Nz i],[Inf Inf 1 1]);  % ?½\?½w?½?½mud
+        tmp = ncread(his,'mud_01',[1 1 Nz i],[Inf Inf 1 1]);  % ?ï¿½\?ï¿½w?ï¿½?ï¿½mud
     elseif id == 12
         tmp =  ncread(his,'coral1_Pg',[1 1 i],[Inf Inf 1]) .*coral_mask;
     elseif id == 13
@@ -253,7 +253,7 @@ for i=1:2:imax
 %         tmp = ncread(his,'dye_01',[1 1 Nz i],[Inf Inf 1 1]) ;
         tmp = ncread(his,'dye_01',[1 1 1 i],[Inf Inf 1 1]) ;
     elseif id == 30
-        tmp = ncread(his,'mud_02',[1 1 Nz i],[Inf Inf 1 1]);  % ?½\?½w?½?½mud
+        tmp = ncread(his,'mud_02',[1 1 Nz i],[Inf Inf 1 1]);  % ?ï¿½\?ï¿½w?ï¿½?ï¿½mud
     elseif id == 31
         tmp = ncread(his,'phytoplankton1',[1 1 Nz i],[Inf Inf 1 1]) ;
         tmp = tmp + ncread(his,'phytoplankton2',[1 1 Nz i],[Inf Inf 1 1]) ;

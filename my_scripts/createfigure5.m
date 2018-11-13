@@ -6,9 +6,9 @@ function[h_surf,h_contour,h_annot]= createfigure5(XData1,YData1,CData1,zdata2, a
 %  CDATA1:  surface cdata
 %  ZDATA2:  contour z
 
-%  MATLAB ‚É‚æ‚é©“®¶¬“ú: 29-Mar-2013 19:17:25
+%  MATLAB ï¿½É‚ï¿½é©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: 29-Mar-2013 19:17:25
 %
-% figure ‚ğì¬
+% figure ï¿½ï¿½ï¿½ì¬
 figure1 = figure('PaperSize',[20 30],...
     'Color',[1 1 1],...
     'Colormap',colmap,...
@@ -24,7 +24,7 @@ for i=0:10
     end
 end  
 
-% axes ‚ğì¬
+% axes ï¿½ï¿½ï¿½ì¬
 axes1 = axes('Parent',figure1,...
     'YTick', ymin:interval:ymax,...
     'XTick', xmin:interval:xmax,...
@@ -32,17 +32,17 @@ axes1 = axes('Parent',figure1,...
     'FontName','Arial',...
     'CLim',[Cmin Cmax],...
     'Box','on');
-% Axes ‚Ì X ²‚Ì”ÍˆÍ‚ğ•Û‚·‚é‚½‚ß‚ÉˆÈ‰º‚Ìƒ‰ƒCƒ“‚ÌƒRƒƒ“ƒg‚ğ‰ğœ
+% Axes ï¿½ï¿½ X ï¿½ï¿½ï¿½Ì”ÍˆÍ‚ï¿½Ûï¿½ï¿½ï¿½ï¿½é‚½ï¿½ß‚ÉˆÈ‰ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½ï¿½ï¿½ÌƒRï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 %xlim(axes1,[-25 3125]);
  xlim(axes1,[xmin xmax]);
-% Axes ‚Ì Y ²‚Ì”ÍˆÍ‚ğ•Û‚·‚é‚½‚ß‚ÉˆÈ‰º‚Ìƒ‰ƒCƒ“‚ÌƒRƒƒ“ƒg‚ğ‰ğœ
+% Axes ï¿½ï¿½ Y ï¿½ï¿½ï¿½Ì”ÍˆÍ‚ï¿½Ûï¿½ï¿½ï¿½ï¿½é‚½ï¿½ß‚ÉˆÈ‰ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½ï¿½ï¿½ÌƒRï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 %ylim(axes1,[-25 9525]);
  ylim(axes1,[ymin ymax]);
 hold(axes1,'all');
 pbaspect([dx dy 1])
 
 
-% surface ‚ğì¬
+% surface ï¿½ï¿½ï¿½ì¬
 %surface('Parent',axes1,'ZData',ZData1,'YData',YData1,'XData',XData1,...
 %    'LineStyle','none',...
 %    'CData', CData1);
@@ -51,12 +51,12 @@ h_surf=pcolor(XData1,YData1,CData1);
 shading flat;
 %shading interp;
 
-% colorbar ‚ğì¬
+% colorbar ï¿½ï¿½ï¿½ì¬
 %colormap(colmap);
 colorbar('peer',axes1,...
     'FontSize',9);
 
-% contour ‚ğì¬
+% contour ï¿½ï¿½ï¿½ì¬
 h_contour=contour(XData1,YData1,zdata2,...
     'LineColor',[0.48 0.06 0.92],...
     'LevelList',LevelList,...
@@ -70,27 +70,27 @@ h_contour=contour(XData1,YData1,zdata2,...
 %     'LevelList',[0 0.2 0.5 3],...
 
 if strcmp(unit,'km')
-    % xlabel ‚ğì¬
+    % xlabel ï¿½ï¿½ï¿½ì¬
     xlabel('X (km)','FontName','Arial');
-    % ylabel ‚ğì¬
+    % ylabel ï¿½ï¿½ï¿½ì¬
     ylabel('Y (km)','FontName','Arial');
 elseif strcmp(unit,'m') 
-    % xlabel ‚ğì¬
+    % xlabel ï¿½ï¿½ï¿½ì¬
     xlabel('X (m)','FontName','Arial');
-    % ylabel ‚ğì¬
+    % ylabel ï¿½ï¿½ï¿½ì¬
     ylabel('Y (m)','FontName','Arial');
 elseif strcmp(unit,'latlon')
-    % xlabel ‚ğì¬
+    % xlabel ï¿½ï¿½ï¿½ì¬
     xlabel('Longitude','FontName','Arial');
-    % ylabel ‚ğì¬
+    % ylabel ï¿½ï¿½ï¿½ì¬
     ylabel('Latitude','FontName','Arial');
 end
 
-% title ‚ğì¬
+% title ï¿½ï¿½ï¿½ì¬
 title(title1,'FontSize',12,'FontName','Arial', 'FontWeight', 'normal');
 
 
-% textbox ‚ğì¬
+% textbox ï¿½ï¿½ï¿½ì¬
 h_annot=annotation(figure1,'textbox',...
     [0.0 0.01 0.9 0.035],...
     'HorizontalAlignment', 'center',...

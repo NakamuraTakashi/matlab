@@ -1,6 +1,7 @@
 
 % his1='D:\ROMS\output\Shiraho_reef\test\ocean_his_10.nc';
-his1='D:\ROMS\output\Shiraho_reef\OAv12_ctrl\ocean_his_10.nc';
+% his1='D:\ROMS\output\Shiraho_reef\OAv12_ctrl\ocean_his_10.nc';
+his1='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_29.5.nc';
 
 formatSpec = '%{yyyy/MM/dd HH:mm}D%f';
 

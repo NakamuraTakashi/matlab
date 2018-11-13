@@ -1,4 +1,4 @@
-function[h_scatter,h_contour,h_annot]= createfltplot4(XData1,YData1,X,Y,Z,zdata2, annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax)
+function[h_scatter,h_contour,h_annot]= createfltplot2(XData1,YData1,X,Y,Z,zdata2, annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax)
 %CREATEFIGURE(ZDATA1,YDATA1,XDATA1,CDATA1,ZDATA2)
 %  ZDATA1:  surface zdata
 %  YDATA1:  surface ydata
@@ -13,7 +13,7 @@ figure1 = figure('PaperSize',[20 30],...
     'Color',[1 1 1],...
     'Colormap',colmap,...
     'GraphicsSmoothing','off',...
-    'Position',[0 0 xsize ysize]);
+    'OuterPosition',[0 0 xsize ysize]);
 
 dx=xmax-xmin;
 dy=ymax-ymin;
@@ -55,7 +55,7 @@ h_scatter=scatter(X,Y,3,Z,'fill'); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Point s
 %shading interp;
 
 % colorbar ?Ω?Ω?Ω?¨
-colormap(colmap);
+%colormap(colmap);
 colorbar('peer',axes1,...
     'FontSize',9);
 
@@ -72,25 +72,23 @@ h_contour=contour(XData1,YData1,zdata2,...
 %    'LevelList',[0 0.5 1 3],...
 
 % xlabel ?Ω?Ω?Ω?¨
-xlabel('X (m)','FontName','Arial');
+xlabel('X (km)','FontName','Arial');
 
 % ylabel ?Ω?Ω?Ω?¨
-ylabel('Y (m)','FontName','Arial');
+ylabel('Y (km)','FontName','Arial');
 
 % title ?Ω?Ω?Ω?¨
-title(title1,'FontSize',12,'FontName','Arial', 'FontWeight', 'normal');
+title(title1,'FontSize',16,'FontName','Arial Bold');
 
 
 % textbox ?Ω?Ω?Ω?¨
-% textbox ÇçÏê¨
 h_annot=annotation(figure1,'textbox',...
-    [0.0 0.01 0.9 0.035],...
-    'HorizontalAlignment', 'center',...
+    [0.4 0.02 0.35 0.035],...
     'String',annot_str,...
     'FontName','Arial',...
-    'FontSize',11,...
+    'FontSize',16,...
     'FitBoxToText','on',...
     'LineStyle','none');
 
-% 
+
 

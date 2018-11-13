@@ -51,7 +51,7 @@ load_toolbox = vyear >= 2008;
 if ((vyear == 2008 && v(5:5) == 'a') || vyear >= 2012),
   load_toolbox = false;
 end
-
+load_toolbox = true;
 if (load_toolbox),
   addpath (strcat(my_root, '/matlab/lib/mexcdf/mexnc'), '-end');
   addpath (strcat(my_root, '/matlab/lib/mexcdf/snctools'), '-end');

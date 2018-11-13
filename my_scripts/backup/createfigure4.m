@@ -1,4 +1,4 @@
-function[h_quiver,h_surf,h_contour,h_annot]=  createvplot5(XData1,YData1,CData1,XData2,YData2,UData2,VData2,zdata2,scale,annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax)
+function[h_surf,h_contour,h_annot]= createfigure4(XData1,YData1,CData1,zdata2, annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax)
 %CREATEFIGURE(ZDATA1,YDATA1,XDATA1,CDATA1,ZDATA2)
 %  ZDATA1:  surface zdata
 %  YDATA1:  surface ydata
@@ -7,13 +7,13 @@ function[h_quiver,h_surf,h_contour,h_annot]=  createvplot5(XData1,YData1,CData1,
 %  ZDATA2:  contour z
 
 %  MATLAB ‚É‚æ‚é©“®¶¬“ú: 29-Mar-2013 19:17:25
-
+%
 % figure ‚ğì¬
 figure1 = figure('PaperSize',[20 30],...
     'Color',[1 1 1],...
     'Colormap',colmap,...
     'GraphicsSmoothing','off',...
-    'OuterPosition',[0 0 xsize ysize]);
+    'Position',[0 0 xsize ysize]);
 
 dx=xmax-xmin;
 dy=ymax-ymin;
@@ -43,14 +43,18 @@ pbaspect([dx dy 1])
 
 
 % surface ‚ğì¬
+%surface('Parent',axes1,'ZData',ZData1,'YData',YData1,'XData',XData1,...
+%    'LineStyle','none',...
+%    'CData', CData1);
+
+h_surf=pcolor(XData1,YData1,CData1);
+shading flat;
+%shading interp;
 
 % colorbar ‚ğì¬
 %colormap(colmap);
 colorbar('peer',axes1,...
     'FontSize',9);
-
-h_surf=pcolor(XData1,YData1,CData1);
-shading flat;
 
 % contour ‚ğì¬
 h_contour=contour(XData1,YData1,zdata2,...
@@ -60,31 +64,21 @@ h_contour=contour(XData1,YData1,zdata2,...
     'ShowText','off');
 
 %    'LevelList',[0 0.25 0.5 1 3 5],...
+%    'LevelList',[0 0.25 0.5 1 3 5],...
 %    'LevelList',[-1 1],...
 %    'LevelList',[0 0.5 1 3],...
-
-% quiver ‚ğì¬
-U=UData2*scale;
-V=VData2*scale;
-h_quiver=quiver(XData2,YData2,U,V,...
-    'Color', 'k',...
-    'AutoScale','off');
-
-%     'Color', 'w',...
-%     'Color', 'k',...
+%     'LevelList',[0 0.2 0.5 3],...
+%     'LevelList',[-9 0.5],...
 
 % xlabel ‚ğì¬
-xlabel('X (km)','FontName','Arial');
+xlabel('X (m)','FontName','Arial');
 
 % ylabel ‚ğì¬
-ylabel('Y (km)','FontName','Arial');
+ylabel('Y (m)','FontName','Arial');
 
 % title ‚ğì¬
 title(title1,'FontSize',12,'FontName','Arial', 'FontWeight', 'normal');
 
-% colorbar ‚ğì¬
-%colormap(colmap);
-%colorbar('peer',axes1);
 
 % textbox ‚ğì¬
 h_annot=annotation(figure1,'textbox',...

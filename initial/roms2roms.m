@@ -412,6 +412,6 @@ end
 
 %  Interplate requested variable.
 
-V = interp_field(I,Hmethod,Vmethod,RemoveNaN);
+V = interp_field2(I,Hmethod,Vmethod,RemoveNaN);
 
 return

@@ -2,8 +2,8 @@
 % === ver 2016/03/10   Copyright (c) 2014-2016 Takashi NAKAMURA  =====
 %                for MATLAB R2015a,b  
 
-grd='D:\ROMS\Data\Yaeyama\Yaeyama2_grd_v9.5_doctest.nc';
-his='D:\ROMS\output\Yaeyama\test\Yaeyama2_his_14_doc.nc';
+grd='D:\ROMS\Data\Yaeyama\Yaeyama2_grd_v9.5.nc';
+his='D:\ROMS\output\Yaeyama\dye_exp\Yaeyama2_160510_his_kkl_nscrp_bl2016_debug7_dyetest3.nc';
 
 % starting_date=datenum(2009,8,25,0,0,0); % for Shiraho
 % starting_date=datenum(2010,8,20,0,0,0); % for Shiraho
@@ -44,13 +44,13 @@ y_rho=(y_rho-min(min(y_rho)))/1000; % m->km
 k=0;
 i=1;
 
-xmin=0;   xmax=max(max(x_rho));  ymin=0;   ymax=max(max(y_rho));
-% xmin=0;   xmax=2.3;  ymin=0;   ymax=max(max(y_rho));
+% xmin=0;   xmax=max(max(x_rho));  ymin=0;   ymax=max(max(y_rho));
+xmin=20;   xmax=70;  ymin=20;   ymax=70;
 
 xsize=600; ysize=500; % for YAEYAMA2
 
 % id = 32;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-id = 35;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+id = 36;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 close all
@@ -160,6 +160,8 @@ elseif id == 29
     [h_surf,h_contour,h_annot]=createfigure5(x_rho,y_rho,tmp,h,date_str,'PO4 (umolP L^-^1) ', 0, 0.1, jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 35
     [h_surf,h_contour,h_annot]=createfigure5(x_rho,y_rho,tmp,h,date_str,'DOC (umol L^-^1) ', 65, 150, colmap1,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+elseif id == 36
+    [h_surf,h_contour,h_annot]=createfigure5(x_rho,y_rho,tmp,h,date_str,'Tracer (kg m^-^3) ', 0, 0.1, colmap1,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 30
     [h_surf,h_contour,h_annot]=createfigure5(x_rho,y_rho,tmp,h,date_str,'SS \phi=200um (kg m^-^3)', 0, 0.15, colmap1,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 31
@@ -190,8 +192,8 @@ drawnow
 %set(figure(1),'OuterPosition',[0 0 320 700])%[0 0 400 800]%[0 0 290 620]
 
 % for i=145:3:imax
-% for i=1:3:imax   
-for i=300:1:330
+for i=1:2:imax   
+% for i=1:1:330
 
     if id == 1
         tmp = ncread(his,'temp',[1 1 Nz i],[Inf Inf 1 1]);  % Surface
@@ -256,6 +258,9 @@ for i=300:1:330
         tmp = ncread(his,'PO4',[1 1 Nz i],[Inf Inf 1 1]) ;
     elseif id == 35
         tmp = ncread(his,'DOC',[1 1 Nz i],[Inf Inf 1 1]) ;
+    elseif id == 36
+%         tmp = ncread(his,'dye_01',[1 1 Nz i],[Inf Inf 1 1]) ;
+        tmp = ncread(his,'dye_01',[1 1 1 i],[Inf Inf 1 1]) ;
     elseif id == 30
         tmp = ncread(his,'mud_02',[1 1 Nz i],[Inf Inf 1 1]);  % ?½\?½w?½?½mud
     elseif id == 31
@@ -312,7 +317,7 @@ for i=300:1:330
     drawnow
     
     hgexport(figure(1), strcat('output/figs_png\t01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
-    hgexport(figure(1), strcat('output/figs_eps\t01_',num2str(i,'%0.4u'),'.eps'),hgexport('factorystyle'),'Format','eps');
+%     hgexport(figure(1), strcat('output/figs_eps\t01_',num2str(i,'%0.4u'),'.eps'),hgexport('factorystyle'),'Format','eps');
 
 end
 

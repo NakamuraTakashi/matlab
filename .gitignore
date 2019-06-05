@@ -9,6 +9,8 @@
 *.nc
 
 *.mat
+!MyColormaps.mat
+
 *.asv
 *~
 *.asc
@@ -16,5 +18,14 @@
 *.txt
 
 output/*
+!output/figs_png
+output/figs_png/*
+!output/figs_eps
+output/figs_eps/*
+!output/anim
+output/anim/*
+!.gitkeep
+!output/*.sh
+
 data/*
 lib/*

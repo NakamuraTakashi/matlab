@@ -18,8 +18,8 @@ river = 2 ;
 riv_X = [  9,   1 ];
 riv_Y = [ 58,   1 ];
 
-% riv_X_rho = [177, 181, 183, 185, 186, 188, 190, 192, 196, 199, 201, 182 ]; % Ncview ‚Ì“Ç‚İæ‚è’l(i)
-% riv_Y_rho = [144, 143, 139, 138, 137, 136, 135, 135, 135, 137, 139, 142 ]; % Ncview ‚Ì“Ç‚İæ‚è’l(j)
+% riv_X_rho = [177, 181, 183, 185, 186, 188, 190, 192, 196, 199, 201, 182 ]; % Ncview ï¿½Ì“Ç‚İï¿½ï¿½l(i)
+% riv_Y_rho = [144, 143, 139, 138, 137, 136, 135, 135, 135, 137, 139, 142 ]; % Ncview ï¿½Ì“Ç‚İï¿½ï¿½l(j)
 
 
 %% 
@@ -136,7 +136,7 @@ nccreate(NC_FILE,'river_time',...
           'Dimensions',{'river_time',river_time},...
           'Datatype','double')
 ncwriteatt(NC_FILE,'river_time','long_name','river runoff time');
-ncwriteatt(NC_FILE,'river_time','units','days since 2000-01-01 00:00:00');  %%% •ÏX•K—v!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ncwriteatt(NC_FILE,'river_time','units','days since 2000-01-01 00:00:00');  %%% ï¿½ÏXï¿½Kï¿½v!!!!!!!!!!!!!!!!!!!!!!!!!!!
 % river_transport
 nccreate(NC_FILE,'river_transport',...
           'Dimensions',{'river',river, 'river_time',river_time},...

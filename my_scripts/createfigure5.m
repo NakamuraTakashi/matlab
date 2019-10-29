@@ -69,17 +69,17 @@ h_contour=contour(XData1,YData1,zdata2,...
 %    'LevelList',[0 0.5 1 3],...
 %     'LevelList',[0 0.2 0.5 3],...
 
-if unit =='km'
+if strcmp(unit,'km')
     % xlabel ‚ğì¬
     xlabel('X (km)','FontName','Arial');
     % ylabel ‚ğì¬
     ylabel('Y (km)','FontName','Arial');
-elseif unit == 'm'
+elseif strcmp(unit,'m') 
     % xlabel ‚ğì¬
     xlabel('X (m)','FontName','Arial');
     % ylabel ‚ğì¬
     ylabel('Y (m)','FontName','Arial');
-elseif unit == 'latlon'
+elseif strcmp(unit,'latlon')
     % xlabel ‚ğì¬
     xlabel('Longitude','FontName','Arial');
     % ylabel ‚ğì¬

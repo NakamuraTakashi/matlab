@@ -55,8 +55,8 @@ load_toolbox = true;
 if (load_toolbox),
   addpath (strcat(my_root, '/matlab/lib/mexcdf/mexnc'), '-end');
   addpath (strcat(my_root, '/matlab/lib/mexcdf/snctools'), '-end');
-  javaaddpath (strcat(my_root, '/matlab/lib/toolsui-4.2.jar'), '-end');
-  javaaddpath (strcat(my_root, '/matlab/lib/netcdfAll-4.2.jar'), '-end');
+%   javaaddpath (strcat(my_root, '/matlab/lib/toolsui-4.3.jar'), '-end');
+  javaaddpath (strcat(my_root, '/matlab/lib/netcdfAll-4.3.jar'), '-end');
   javaaddpath (strcat(my_root, '/matlab/lib/mexcdf/snctools/classes'), '-end');
   setpref('SNCTOOLS','USE_JAVA', true);
 end

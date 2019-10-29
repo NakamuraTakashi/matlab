@@ -70,17 +70,17 @@ h_quiver=quiver(XData2,YData2,U,V,...
     'Color', 'k',...
     'AutoScale','off');
 
-if unit =='km'
+if strcmp(unit,'km')
     % xlabel ‚ğì¬
     xlabel('X (km)','FontName','Arial');
     % ylabel ‚ğì¬
     ylabel('Y (km)','FontName','Arial');
-elseif unit == 'm'
+elseif strcmp(unit,'m') 
     % xlabel ‚ğì¬
     xlabel('X (m)','FontName','Arial');
     % ylabel ‚ğì¬
     ylabel('Y (m)','FontName','Arial');
-elseif unit == 'latlon'
+elseif strcmp(unit,'latlon')
     % xlabel ‚ğì¬
     xlabel('Longitude','FontName','Arial');
     % ylabel ‚ğì¬

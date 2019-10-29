@@ -1,4 +1,4 @@
-function F = coarse2fine(Ginp,Gout,Gfactor,varargin)
+function F = coarse2fine2(Ginp,Gout,Gfactor,varargin)
 
 %
 % COARSE2FINE:  Creates a finer resolution ROMS Grid NetCDF file
@@ -144,7 +144,12 @@ for value = got_list,
   field = char(value);
   got.(field) =  any(strcmp(vnames, field));
 end
-	    
+
+got.x_rho = 0; got.y_rho = 0;
+got.x_u = 0; got.y_u = 0;
+got.x_v = 0; got.y_v = 0;
+got.x_psi = 0; got.y_psi = 0;
+
 % Set fields to process.
 
 field_list = {'f', 'h', 'pm', 'pn'};
@@ -430,11 +435,11 @@ end
 % Other grid variables. The inverse metrics pm and pn cannot be
 % interpolated. They need to be recomputed.
 
-Rr  = TriScatteredInterp(C.x_rho(:),C.y_rho(:),C.f(:),method);
-F.f = Rr(F.x_rho, F.y_rho);
+Rr  = TriScatteredInterp(C.lon_rho(:),C.lat_rho(:),C.f(:),method);
+F.f = Rr(F.lon_rho, F.lat_rho);
 
 if (got.angle),
-  Rr.V = C.angle(:);   F.angle = Rr(F.x_rho, F.y_rho);
+  Rr.V = C.angle(:);   F.angle = Rr(F.lon_rho, F.lat_rho);
 end
 
 % Bathymetry.  Make sure that the interpolation method is linear
@@ -449,12 +454,12 @@ end
 
 Rr.V = C.h(:);    Rr.Method = 'linear';
 
-F.h  = Rr(F.x_rho, F.y_rho);
+F.h  = Rr(F.lon_rho, F.lat_rho);
 
 if (got.hraw),
   C.hraw = nc_read(Ginp,'hraw',1);
   
-  Rr.V = C.hraw(:);   F.hraw = Rr(F.x_rho, F.y_rho);
+  Rr.V = C.hraw(:);   F.hraw = Rr(F.lon_rho, F.lat_rho);
 end
 
 % Land/sea masking: use nondimensional fractional coordinates.
@@ -504,7 +509,7 @@ else
     GreatCircle = false;
     disp('Computing grid spacing: Cartesian distances');
   end
-GreatCircle = false;
+
   [F.pm, F.pn, F.dndx, F.dmde]=grid_metrics(F, GreatCircle);
 end
 
@@ -514,7 +519,7 @@ end
 
 % Set number of grid points.
 
-[LpF,MpF] = size(F.x_rho);              % RHO-points
+[LpF,MpF] = size(F.lon_rho);              % RHO-points
 
 disp(' ');
 disp(['Number of points:',                                              ...

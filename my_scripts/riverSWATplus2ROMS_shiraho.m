@@ -47,7 +47,7 @@ PO4(i,:) = data{1,11}/3600./data{1,6}/30.97*1000; % solp: kgP/hour -> umolP/L
 NH4(i,:) = data{1,13}/3600./data{1,6}/14.007*1000; % nh3: kgN/hour -> umolN/L
 NO2(i,:) = data{1,14}/3600./data{1,6}/14.007*1000; % no2: kgN/hour -> umolN/L
 Oxyg(i,:)= data{1,16}/3600./data{1,6}/32*1000; % dox: kg/hour -> umol/L
-temp(i,:)= data{1,17}/3600./data{1,6}/32*1000; % temp: degC -> degC
+temp(i,:)= data{1,17}; % temp: degC -> degC
 DOC(i,:) = data{1,18}/3600./data{1,6}/12*1000; % DOC: kgC/hour -> umol/L
 POC(i,:) = (data{1,19}+data{1,20})/3600./data{1,6}/12*1000; % POC, CPOM: kgC/hour -> umolC/L
 

@@ -1,99 +1,94 @@
 % === Copyright (c) 2015-2019 Takashi NAKAMURA  =====
 
-filename='data/channel_subday.txt';  % SWAT+ hourly output file 
+% filename='data/channel_subday.txt';  % SWAT+ hourly output file 
+% 
+% fileID = fopen(filename);
+% FormatSpec = '%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f';
+% data = textscan(fileID, FormatSpec, 'HeaderLines',1);
+% fclose(fileID);
 
-fileID = fopen(filename);
-FormatSpec = '%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f';
-data = textscan(fileID, FormatSpec, 'HeaderLines',1);
-fclose(fileID);
-
-NC_FILE = './output/shiraho_river_Nz8_2010.nc';
+NC_FILE = './output/Yaeyama_river_Nz15_const.nc';
 
 TIME_REF = '2000-01-01 00:00:00';
 % LOCAL_TIME = 9; % hours: UTC+9 (JST) 
 
 % Shiraho grid river mouth setting
-xi_u = 63 ;
-eta_v = 191 ;
-s_rho = 8 ;
-river = 2 ;    % river 1: Todoroki river, river 2: SGD
-riv_X = [  9,   1 ];
-riv_Y = [ 58,   1 ];
+% xi_u = 63 ;
+% eta_v = 191 ;
+s_rho = 15 ;
+river = 1 ;    % river 1: Nagura river
+riv_X = 182;
+riv_Y = 162;
 
-riv_D = [  0,   0 ];  % east<->west:0,  south<->north:1
-riv_D2= [  1,   1 ];  % east->west or south-> north: 1,  west->east or north-> south:-1
+riv_D = 0;  % east<->west:0,  south<->north:1
+riv_D2= -1;  %  west->east or south-> north: 1, east->west or north-> south:-1
 
 %% 
 start_time = datetime(TIME_REF);
 
-data_days = datenum(data{1,2},1,1)+data{1,3}-1 + (data{1,4}-0.5)/24;
+data_days = datenum('1990-01-01 00:00:00');
+data_days2 = datenum('2100-01-01 00:00:00');
 % river_time
 sta_date = datenum(start_time);
-riv_date = data_days - sta_date;
+riv_date(1) = data_days - sta_date;
+riv_date(2) = data_days2 - sta_date;
 
 days_sinc_TIME_REF = ['days since ', datestr(start_time,'yyyy-mm-dd HH:MM:ss')];
 
 %% 
 % Todoroki river
 %      time(i,:)= num(:,1);
-i=1;
 
-flow(i,:)= data{1,6}; % flo: m3/s
-SS(i,:)  = data{1,7}*1000/3600./data{1,6}; % sed: ton/hour -> kg/m3
-DON(i,:) = data{1,8}/3600./data{1,6}/14.007*1000; % orgn: kgN/hour -> umolN/L
-DOP(i,:) = data{1,9}/3600./data{1,6}/30.97*1000; % sedp: kgP/hour -> umolP/L
-NO3(i,:) = data{1,10}/3600./data{1,6}/14.007*1000; % no3: kgN/hour -> umolN/L
-PO4(i,:) = data{1,11}/3600./data{1,6}/30.97*1000; % solp: kgP/hour -> umolP/L
-NH4(i,:) = data{1,13}/3600./data{1,6}/14.007*1000; % nh3: kgN/hour -> umolN/L
-NO2(i,:) = data{1,14}/3600./data{1,6}/14.007*1000; % no2: kgN/hour -> umolN/L
-Oxyg(i,:)= data{1,16}/3600./data{1,6}/32*1000; % dox: kg/hour -> umol/L
-temp(i,:)= data{1,17}; % temp: degC -> degC
-DOC(i,:) = data{1,18}/3600./data{1,6}/12*1000; % DOC: kgC/hour -> umol/L
-POC(i,:) = (data{1,19}+data{1,20})/3600./data{1,6}/12*1000; % POC, CPOM: kgC/hour -> umolC/L
+data_num = 2;
 
-data_num = size(flow(1,:),2);
+flow(1:river,1:data_num)= 0.5; % flo: m3/s
+SS(1:river,1:data_num)  = 0.047; % sed: ton/hour -> kg/m3
+DON1(1:river,1:data_num) = 33*0.5; % orgn: kgN/hour -> umolN/L
+DON2(1:river,1:data_num) = 33*0.5; % orgn: kgN/hour -> umolN/L
+DOP1(1:river,1:data_num) = 0.03*0.5; % sedp: kgP/hour -> umolP/L
+DOP2(1:river,1:data_num) = 0.03*0.5; % sedp: kgP/hour -> umolP/L
+NO3(1:river,1:data_num) = 19; % no3: kgN/hour -> umolN/L
+PO4(1:river,1:data_num) = 0.3; % solp: kgP/hour -> umolP/L
+NH4(1:river,1:data_num) = 1.6; % nh3: kgN/hour -> umolN/L
+% NO2(1:river,1:data_num) = 0.2; % no2: kgN/hour -> umolN/L
+Oxyg(1:river,1:data_num)= 200; % dox: kg/hour -> umol/L
+temp(1:river,1:data_num)= 25; % temp: degC -> degC
+DOC1(1:river,1:data_num) = 156*0.5; % DOC: kgC/hour -> umol/L
+DOC2(1:river,1:data_num) = 156*0.5; % DOC: kgC/hour -> umol/L
+POC1(1:river,1:data_num) = 10; % POC, CPOM: kgC/hour -> umolC/L
+POC2(1:river,1:data_num) = 10; % POC, CPOM: kgC/hour -> umolC/L
 
-PON(i,:) = DON(i,:)*0.1;
-DON(i,:) = DON(i,:)*0.9;
-POP(i,:) = DOP(i,:)*0.1;
-DOP(i,:) = DOP(i,:)*0.9;
+PON1(1:river,1:data_num) = DON1(1:river,1:data_num)*0.1;
+PON2(1:river,1:data_num) = DON2(1:river,1:data_num)*0.1;
+DON1(1:river,1:data_num) = DON1(1:river,1:data_num)*0.9;
+DON2(1:river,1:data_num) = DON2(1:river,1:data_num)*0.9;
+POP1(1:river,1:data_num) = DOP1(1:river,1:data_num)*0.1;
+POP2(1:river,1:data_num) = DOP2(1:river,1:data_num)*0.1;
+DOP1(1:river,1:data_num) = DOP1(1:river,1:data_num)*0.9;
+DOP2(1:river,1:data_num) = DOP2(1:river,1:data_num)*0.9;
 
-salt(i,1:data_num) = 3;
+PIC1(1:river,1:data_num) = 0; % POC, CPOM: kgC/hour -> umolC/L
 
-alk(i,1:data_num)  = 3600;
-TIC(i,1:data_num)  = 3500;
 
-% Seepage
-i=2;
-flow(i,:)= 0.042*10e-6; % m3/m2/s
-SS(i,:)  = 0; % kg/m3
-DON(i,:) = 0; % umol/L
-DOP(i,:) = 0; % umol/L
-NO3(i,:) = 10.01; % umol/L
-NH4(i,:) = 4.37; % umol/L
-NO2(i,:) = 0.46; % umol/L
-PO4(i,:) = 0.032; % umol/L
+salt(1:river,1:data_num) = 3;
 
-salt(i,:) = 32.36;
-temp(i,:) = 27;
-alk(i,:)  = 2300; %!!!!!!!!!!!!!!!!!!!!!!!!
-TIC(i,:)  = 2000; %!!!!!!!!!!!!!!!!!!!!!!!!
-Oxyg(i,:) = 10; %!!!!!!!!!!!!!!!!!!!!!!!!
-PON(i,:) = 0;
-POP(i,:) = 0;
-POC(i,:) = 0;
-DOC(i,:) = 0;
+alk(1:river,1:data_num)  = 1960;
+TIC(1:river,1:data_num)  = 1600;
 
 % river and seepage
 Phy1(1:river,1:data_num) = 0;
 Phy2(1:river,1:data_num) = 0;
+Phy3(1:river,1:data_num) = 0;
 Zoop(1:river,1:data_num) = 0;
-d13C_TIC(1:river,1:data_num) = -8.4;
-d13C_DOC(1:river,1:data_num) = -25;
-d13C_POC(1:river,1:data_num) = -25;
-d13C_Phy1(1:river,1:data_num) = -25;
-d13C_Phy2(1:river,1:data_num) = -25;
-d13C_Zoo(1:river,1:data_num) = -25;
+d13C_TIC(1:river,1:data_num) = 0;
+d13C_DOC1(1:river,1:data_num) = 0;
+d13C_DOC2(1:river,1:data_num) = 0;
+d13C_POC1(1:river,1:data_num) = 0;
+d13C_POC2(1:river,1:data_num) = 100;
+d13C_Phy1(1:river,1:data_num) = 0;
+d13C_Phy2(1:river,1:data_num) = 0;
+d13C_Phy3(1:river,1:data_num) = 0;
+d13C_Zoo(1:river,1:data_num) = 0;
 
 %% 
 % ----- Create NetCDF river file ------------------------------------------
@@ -193,12 +188,12 @@ ncwriteatt(NC_FILE,'river_NO3','long_name','river runoff NO3');
 ncwriteatt(NC_FILE,'river_NO3','units','umol L-1');
 ncwriteatt(NC_FILE,'river_NO3','time','river_time');
 % river_NO2
-nccreate(NC_FILE,'river_NO2',...
-          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
-          'Datatype','double')
-ncwriteatt(NC_FILE,'river_NO2','long_name','river runoff NO2');
-ncwriteatt(NC_FILE,'river_NO2','units','umol L-1');
-ncwriteatt(NC_FILE,'river_NO2','time','river_time');
+% nccreate(NC_FILE,'river_NO2',...
+%           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+%           'Datatype','double')
+% ncwriteatt(NC_FILE,'river_NO2','long_name','river runoff NO2');
+% ncwriteatt(NC_FILE,'river_NO2','units','umol L-1');
+% ncwriteatt(NC_FILE,'river_NO2','time','river_time');
 % river_NH4
 nccreate(NC_FILE,'river_NH4',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
@@ -273,30 +268,30 @@ ncwriteatt(NC_FILE,'river_POC_02','time','river_time');
 nccreate(NC_FILE,'river_PON_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_PON','long_name','river runoff PON');
-ncwriteatt(NC_FILE,'river_PON','units','umol L-1');
-ncwriteatt(NC_FILE,'river_PON','time','river_time');
+ncwriteatt(NC_FILE,'river_PON_01','long_name','river runoff PON');
+ncwriteatt(NC_FILE,'river_PON_01','units','umol L-1');
+ncwriteatt(NC_FILE,'river_PON_01','time','river_time');
 % river_PON
 nccreate(NC_FILE,'river_PON_02',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_PON','long_name','river runoff PON');
-ncwriteatt(NC_FILE,'river_PON','units','umol L-1');
-ncwriteatt(NC_FILE,'river_PON','time','river_time');
+ncwriteatt(NC_FILE,'river_PON_02','long_name','river runoff PON');
+ncwriteatt(NC_FILE,'river_PON_02','units','umol L-1');
+ncwriteatt(NC_FILE,'river_PON_02','time','river_time');
 % river_POP
 nccreate(NC_FILE,'river_POP_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_POP','long_name','river runoff POP');
-ncwriteatt(NC_FILE,'river_POP','units','umol L-1');
-ncwriteatt(NC_FILE,'river_POP','time','river_time');
+ncwriteatt(NC_FILE,'river_POP_01','long_name','river runoff POP');
+ncwriteatt(NC_FILE,'river_POP_01','units','umol L-1');
+ncwriteatt(NC_FILE,'river_POP_01','time','river_time');
 % river_POP
 nccreate(NC_FILE,'river_POP_02',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_POP','long_name','river runoff POP');
-ncwriteatt(NC_FILE,'river_POP','units','umol L-1');
-ncwriteatt(NC_FILE,'river_POP','time','river_time');
+ncwriteatt(NC_FILE,'river_POP_02','long_name','river runoff POP');
+ncwriteatt(NC_FILE,'river_POP_02','units','umol L-1');
+ncwriteatt(NC_FILE,'river_POP_02','time','river_time');
 % river_Phy1
 nccreate(NC_FILE,'river_Phyt_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
@@ -318,13 +313,20 @@ nccreate(NC_FILE,'river_Phyt_03',...
 ncwriteatt(NC_FILE,'river_Phyt_03','long_name','river runoff phytoplankton3');
 ncwriteatt(NC_FILE,'river_Phyt_03','units','umolC L-1');
 ncwriteatt(NC_FILE,'river_Phyt_03','time','river_time');
- river_Zoop
+% river_Zoop
 nccreate(NC_FILE,'river_Zoop_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
 ncwriteatt(NC_FILE,'river_Zoop_01','long_name','river runoff zooplankton1');
 ncwriteatt(NC_FILE,'river_Zoop_01','units','umolC L-1');
 ncwriteatt(NC_FILE,'river_Zoop_01','time','river_time');
+% river_PIC
+nccreate(NC_FILE,'river_PIC_01',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_PIC_01','long_name','river runoff PIC');
+ncwriteatt(NC_FILE,'river_PIC_01','units','umol L-1');
+ncwriteatt(NC_FILE,'river_PIC_01','time','river_time');
 % river_d13C_TIC
 nccreate(NC_FILE,'river_d13C_TIC',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
@@ -449,12 +451,12 @@ end
 ncwrite(NC_FILE,'river_NH4',riv_value(1:river, :, :));
 
 % river_NO2
-for i=1:river
-    for j=1:s_rho
-        riv_value( i, j, 1:data_num ) = NO2(i,:);
-    end
-end
-ncwrite(NC_FILE,'river_NO2',riv_value(1:river, :, :));
+% for i=1:river
+%     for j=1:s_rho
+%         riv_value( i, j, 1:data_num ) = NO2(i,:);
+%     end
+% end
+% ncwrite(NC_FILE,'river_NO2',riv_value(1:river, :, :));
 
 
 
@@ -509,50 +511,93 @@ ncwrite(NC_FILE,'river_Oxyg',riv_value(1:river, :, :));
 % river_DOC
 for i=1:river
     for j=1:s_rho
-        riv_value( i, j, 1:data_num ) = DOC(i,:);
+        riv_value( i, j, 1:data_num ) = DOC1(i,:);
     end
 end
-ncwrite(NC_FILE,'river_DOC',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_DOC_01',riv_value(1:river, :, :));
+% river_DOC
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = DOC2(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_DOC_02',riv_value(1:river, :, :));
 
 % river_DON
 for i=1:river
     for j=1:s_rho
-        riv_value( i, j, 1:data_num ) = DON(i,:);
+        riv_value( i, j, 1:data_num ) = DON1(i,:);
     end
 end
-ncwrite(NC_FILE,'river_DON',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_DON_01',riv_value(1:river, :, :));
+% river_DON
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = DON2(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_DON_02',riv_value(1:river, :, :));
 
 % river_DOP
 for i=1:river
     for j=1:s_rho
-        riv_value( i, j, 1:data_num ) = DOP(i,:);
+        riv_value( i, j, 1:data_num ) = DOP1(i,:);
     end
 end
-ncwrite(NC_FILE,'river_DOP',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_DOP_01',riv_value(1:river, :, :));
+% river_DOP
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = DOP2(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_DOP_02',riv_value(1:river, :, :));
 
 % river_POC
 for i=1:river
     for j=1:s_rho
-        riv_value( i, j, 1:data_num ) = POC(i,:);
+        riv_value( i, j, 1:data_num ) = POC1(i,:);
     end
 end
-ncwrite(NC_FILE,'river_POC',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_POC_01',riv_value(1:river, :, :));
+
+% river_POC
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = POC2(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_POC_02',riv_value(1:river, :, :));
 
 % river_PON
 for i=1:river
     for j=1:s_rho
-        riv_value( i, j, 1:data_num ) = PON(i,:);
+        riv_value( i, j, 1:data_num ) = PON1(i,:);
     end
 end
-ncwrite(NC_FILE,'river_PON',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_PON_01',riv_value(1:river, :, :));
+% river_PON
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = PON2(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_PON_02',riv_value(1:river, :, :));
 
 % river_POP
 for i=1:river
     for j=1:s_rho
-        riv_value( i, j, 1:data_num ) = POP(i,:);
+        riv_value( i, j, 1:data_num ) = POP1(i,:);
     end
 end
-ncwrite(NC_FILE,'river_POP',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_POP_01',riv_value(1:river, :, :));
+% river_POP
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = POP2(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_POP_02',riv_value(1:river, :, :));
 
 % river_Phy1
 for i=1:river
@@ -560,15 +605,22 @@ for i=1:river
         riv_value( i, j, 1:data_num ) = Phy1(i,:);
     end
 end
-ncwrite(NC_FILE,'river_Phy1',riv_value(1:river, :, :));
-
-% river_Phy2
+ncwrite(NC_FILE,'river_Phyt_01',riv_value(1:river, :, :));
+% river_Phy1
 for i=1:river
     for j=1:s_rho
         riv_value( i, j, 1:data_num ) = Phy2(i,:);
     end
 end
-ncwrite(NC_FILE,'river_Phy2',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_Phyt_02',riv_value(1:river, :, :));
+
+% river_Phy2
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = Phy3(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_Phyt_03',riv_value(1:river, :, :));
 
 % river_Zoop
 for i=1:river
@@ -576,7 +628,15 @@ for i=1:river
         riv_value( i, j, 1:data_num ) = Zoop(i,:);
     end
 end
-ncwrite(NC_FILE,'river_Zoop',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_Zoop_01',riv_value(1:river, :, :));
+
+% river_PIC
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = PIC1(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_PIC_01',riv_value(1:river, :, :));
 
 % river_d13C_TIC
 for i=1:river
@@ -589,18 +649,32 @@ ncwrite(NC_FILE,'river_d13C_TIC',riv_value(1:river, :, :));
 % river_d13C_DOC
 for i=1:river
     for j=1:s_rho
-        riv_value( i, j, 1:data_num ) = d13C_DOC(i,:);
+        riv_value( i, j, 1:data_num ) = d13C_DOC1(i,:);
     end
 end
-ncwrite(NC_FILE,'river_d13C_DOC',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_d13C_DOC_01',riv_value(1:river, :, :));
+% river_d13C_DOC
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = d13C_DOC2(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_d13C_DOC_02',riv_value(1:river, :, :));
 
 % river_d13C_POC
 for i=1:river
     for j=1:s_rho
-        riv_value( i, j, 1:data_num ) = d13C_POC(i,:);
+        riv_value( i, j, 1:data_num ) = d13C_POC1(i,:);
     end
 end
-ncwrite(NC_FILE,'river_d13C_POC',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_d13C_POC_01',riv_value(1:river, :, :));
+% river_d13C_POC
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = d13C_POC2(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_d13C_POC_02',riv_value(1:river, :, :));
 
 % river_d13C_Phy1
 for i=1:river
@@ -608,7 +682,7 @@ for i=1:river
         riv_value( i, j, 1:data_num ) = d13C_Phy1(i,:);
     end
 end
-ncwrite(NC_FILE,'river_d13C_Phy1',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_d13C_Phyt_01',riv_value(1:river, :, :));
 
 % river_d13C_Phy2
 for i=1:river
@@ -616,7 +690,14 @@ for i=1:river
         riv_value( i, j, 1:data_num ) = d13C_Phy2(i,:);
     end
 end
-ncwrite(NC_FILE,'river_d13C_Phy2',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_d13C_Phyt_02',riv_value(1:river, :, :));
+% river_d13C_Phy2
+for i=1:river
+    for j=1:s_rho
+        riv_value( i, j, 1:data_num ) = d13C_Phy3(i,:);
+    end
+end
+ncwrite(NC_FILE,'river_d13C_Phyt_03',riv_value(1:river, :, :));
 
 % river_d13C_Zoo
 for i=1:river
@@ -624,7 +705,7 @@ for i=1:river
         riv_value( i, j, 1:data_num ) = d13C_Zoo(i,:);
     end
 end
-ncwrite(NC_FILE,'river_d13C_Zoo',riv_value(1:river, :, :));
+ncwrite(NC_FILE,'river_d13C_Zoop_01',riv_value(1:river, :, :));
 
 %% 
 % 

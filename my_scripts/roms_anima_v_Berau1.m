@@ -3,8 +3,10 @@
 %
 
 % Coral Triangle case
-grd='../Data/Berau/Berau1_grd_v1.2.nc'; 
-his='../Projects/Berau/Berau1_his_201704_3.nc';
+% grd='../Data/Berau/Berau1_grd_v1.2.nc'; 
+grd='../Data/Berau/Berau2_grd_v3.1.nc'; 
+% his='../Projects/Berau/Berau1_his_201704_3.nc';
+his='../Projects/Berau/Berau2_his_201704_2.nc';
 
 starting_date=datenum(2000,1,1,0,0,0); % 
 
@@ -13,11 +15,7 @@ starting_date=datenum(2000,1,1,0,0,0); %
 
 id = 6;  % <- Select 1,2,3,100
 
-if id==1 || id==2  || id==4  || id==5 || id==6
-    scale=0.2;   % for SHIRAHO
-    s_interval=7; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
-    Vmax = 2; % for SHIRAHO
-elseif id == 3
+if id == 3
     scale=0.08;  % for Wave
     s_interval=4; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
 elseif id == 100
@@ -25,6 +23,11 @@ elseif id == 100
     scale=1;  % for Wind
     s_interval=6;  % for Wind
     Vmax = 20;  % for Wind
+else
+%     scale=0.2;   % for berau1
+    scale=0.07;   % for berau2
+    s_interval=7; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
+    Vmax = 2; % for SHIRAHO
 end
 
 Nz=30;  % for SHIRAHO
@@ -58,10 +61,11 @@ c(1:Im,1:Jm)=0;
 k=0;
 i=1;
 
-% xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-xmin=116;   xmax=max(max(x_rho));  ymin=-6.5;   ymax=max(max(y_rho));
+% xmin=116;   xmax=max(max(x_rho));  ymin=-6.5;   ymax=max(max(y_rho));  % for Berau1
+% xsize=400; ysize=700; % for Berau1
 
-xsize=400; ysize=700; % for Berau1
+xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+xsize=600; ysize=550; % for Berau2
 
 close all
 % clear ubar vber ubar2 vbar2 ubar3 vbar3
@@ -171,13 +175,13 @@ for i=1:1:imax
         ubar2=ubar;
         vbar2=vbar;
         vel=hwave;
-    elseif id == 4 || id==5 || id==6
-        ubar2=ubar;
-        vbar2=vbar;
     elseif id == 100
         ubar2=ubar;
         vbar2=vbar;
         tmp=hypot(ubar2,vbar2);
+    else
+        ubar2=ubar;
+        vbar2=vbar;
     end
 
 
@@ -192,7 +196,7 @@ for i=1:1:imax
 
     drawnow
 
-%     hgexport(figure(1), strcat('output/figs_png\v01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
+    hgexport(figure(1), strcat('output/figs_png\v01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
 %     hgexport(figure(1), strcat('output/figs_eps\v01_',num2str(i,'%0.4u'),'.eps'),hgexport('factorystyle'),'Format','eps');
 end
 

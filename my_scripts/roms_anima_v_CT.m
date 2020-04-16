@@ -3,7 +3,7 @@
 %
 
 % Coral Triangle case
-grd='D:/ROMS/Data/Coral_Triangle/CT_0.08_grd_v2.nc'; 
+grd='../Data/Coral_Triangle/CT_0.08_grd_v2.nc'; 
 his='D:\cygwin64\home\Takashi\COAWST\Projects\Coral_Triangle\CT_0.08_his_201704.nc';
 
 starting_date=datenum(2000,1,1,0,0,0); % 
@@ -11,13 +11,9 @@ starting_date=datenum(2000,1,1,0,0,0); %
 %Jm=192;   % Mm+2
 %Im=64;    % Lm+2
 
-id = 5;  % <- Select 1,2,3,100
+id = 6;  % <- Select 1,2,3,100
 
-if id==1 || id==2  || id==4  || id==5
-    scale=1.5;   % for SHIRAHO
-    s_interval=7; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
-    Vmax = 2; % for SHIRAHO
-elseif id == 3
+if id == 3
     scale=0.08;  % for Wave
     s_interval=4; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
 elseif id == 100
@@ -25,6 +21,10 @@ elseif id == 100
     scale=1;  % for Wind
     s_interval=6;  % for Wind
     Vmax = 20;  % for Wind
+else
+    scale=1.5;   % for SHIRAHO
+    s_interval=7; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
+    Vmax = 2; % for SHIRAHO
 end
 
 Nz=30;  % for SHIRAHO
@@ -108,6 +108,8 @@ elseif id == 4
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Temperature (^oC)',20,32,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 5
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Water elevation (m)',-1.5,2.5,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+elseif id == 6
+    [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Salinity (psu)',31,35,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 100
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Wind velocity (m s^-^1)',0,Vmax,colmap4,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 end
@@ -142,6 +144,10 @@ for i=1:1:imax
         ubar = ncread(his,'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
         vbar = ncread(his,'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
         tmp = ncread(his,'zeta',[1 1 i],[Inf Inf 1]).*mask_rho;
+    elseif id == 6
+        ubar = ncread(his,'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
+        vbar = ncread(his,'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
+        tmp = ncread(his,'salt',[1 1 Nz i],[Inf Inf 1 1]);  % Surface
     elseif id == 100
         ubar = ncread(his1,'Uwind',[1 1 i],[Inf Inf 1]);
         vbar = ncread(his2,'Vwind',[1 1 i],[Inf Inf 1]);
@@ -165,13 +171,13 @@ for i=1:1:imax
         ubar2=ubar;
         vbar2=vbar;
         vel=hwave;
-    elseif id == 4 || id==5
-        ubar2=ubar;
-        vbar2=vbar;
     elseif id == 100
         ubar2=ubar;
         vbar2=vbar;
         tmp=hypot(ubar2,vbar2);
+    else
+        ubar2=ubar;
+        vbar2=vbar;
     end
 
 

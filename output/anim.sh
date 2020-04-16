@@ -5,7 +5,8 @@
 #name='vel'
 #name='dye'
 #name='temp_vel'
-name='elev_vel'
+#name='elev_vel'
+name='Berau2_salt_vel'
 #
 anim_dir='figs_png_'${name}
 echo ${anim_dir}

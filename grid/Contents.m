@@ -4,6 +4,13 @@
 %
 % These functions are used for preparing ROMS Grid NetCDF file.
 %
+%   add_coords        - Adds horizontal (Cartesian or spherical) coordinates
+%                          to a NetCDF file.
+%
+%   add_mask          - Adds generic land/maks to a non ROMS NetCDF file.
+%
+%   add_masks         - Adds ROMS land/sea mask arrays to a NetCDF file.
+%
 %   add_sponge        - Adds enhanced viscosity and diffusion scaling
 %                         variables (visc_factor and diff_factor) to an
 %                         existing ROMS Grid NetCDF file.
@@ -41,6 +48,8 @@
 %
 %   c_contact         - Creates ROMS nesting Contact Points NetCDF file.
 %
+%   check_refine      - Checks a ROMS nested refinement grid structure.
+%
 %   coarse2fine       - Given a coarse resolution ROMS grid NetCDF file,
 %                         it creates a finer resolution grid in the
 %                         specified region.
@@ -65,6 +74,13 @@
 %   plot_contact      - Plots various ROMS Nested Grids Contact Points
 %                         figures.
 %
+%   qc_interp         - Quadratic conservative interpolation for ROMS
+%                         refinement.
+%
+%   refine_gridvar    - Computes requested refined variable from ROMS
+%                        coarse grid using quadratic conservative
+%                        interpolation.
+%
 %   sponge            - Sets and writes diffusion and viscosity sponge
 %                         coefficients into Grid NetCDF file.
 %
@@ -74,7 +90,7 @@
 
 % svn $Id$
 %=========================================================================%
-%  Copyright (c) 2002-2017 The ROMS/TOMS Group                            %
+%  Copyright (c) 2002-2020 The ROMS/TOMS Group                            %
 %    Licensed under a MIT/X style license                                 %
 %    See License_ROMS.txt                           Hernan G. Arango      %
 %=========================================================================%

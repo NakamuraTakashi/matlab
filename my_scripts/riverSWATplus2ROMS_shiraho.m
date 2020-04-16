@@ -47,7 +47,7 @@ PO4(i,:) = data{1,11}/3600./data{1,6}/30.97*1000; % solp: kgP/hour -> umolP/L
 NH4(i,:) = data{1,13}/3600./data{1,6}/14.007*1000; % nh3: kgN/hour -> umolN/L
 NO2(i,:) = data{1,14}/3600./data{1,6}/14.007*1000; % no2: kgN/hour -> umolN/L
 Oxyg(i,:)= data{1,16}/3600./data{1,6}/32*1000; % dox: kg/hour -> umol/L
-temp(i,:)= data{1,17}/3600./data{1,6}/32*1000; % temp: degC -> degC
+temp(i,:)= data{1,17}; % temp: degC -> degC
 DOC(i,:) = data{1,18}/3600./data{1,6}/12*1000; % DOC: kgC/hour -> umol/L
 POC(i,:) = (data{1,19}+data{1,20})/3600./data{1,6}/12*1000; % POC, CPOM: kgC/hour -> umolC/L
 
@@ -136,7 +136,7 @@ nccreate(NC_FILE,'river_time',...
           'Dimensions',{'river_time',data_num},...
           'Datatype','double')
 ncwriteatt(NC_FILE,'river_time','long_name','river runoff time');
-ncwriteatt(NC_FILE,'river_time','units', days_sinc_TIME_REF);  %%% ïœçXïKóv!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ncwriteatt(NC_FILE,'river_time','units', days_sinc_TIME_REF);  %%% ÔøΩœçXÔøΩKÔøΩv!!!!!!!!!!!!!!!!!!!!!!!!!!!
 % river_transport
 nccreate(NC_FILE,'river_transport',...
           'Dimensions',{'river',river, 'river_time',data_num},...
@@ -213,69 +213,118 @@ nccreate(NC_FILE,'river_PO4',...
 ncwriteatt(NC_FILE,'river_PO4','long_name','river runoff PO4');
 ncwriteatt(NC_FILE,'river_PO4','units','umol L-1');
 ncwriteatt(NC_FILE,'river_PO4','time','river_time');
-% river_DOC
-nccreate(NC_FILE,'river_DOC',...
+% river_DOC (LDOC)
+nccreate(NC_FILE,'river_DOC_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_DOC','long_name','river runoff DOC');
-ncwriteatt(NC_FILE,'river_DOC','units','umol L-1');
-ncwriteatt(NC_FILE,'river_DOC','time','river_time');
+ncwriteatt(NC_FILE,'river_DOC_01','long_name','river runoff DOC');
+ncwriteatt(NC_FILE,'river_DOC_01','units','umol L-1');
+ncwriteatt(NC_FILE,'river_DOC_01','time','river_time');
+% river_DOC (RDOC)
+nccreate(NC_FILE,'river_DOC_02',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_DOC_02','long_name','river runoff DOC');
+ncwriteatt(NC_FILE,'river_DOC_02','units','umol L-1');
+ncwriteatt(NC_FILE,'river_DOC_02','time','river_time');
 % river_DON
-nccreate(NC_FILE,'river_DON',...
+nccreate(NC_FILE,'river_DON_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_DON','long_name','river runoff DON');
-ncwriteatt(NC_FILE,'river_DON','units','umol L-1');
-ncwriteatt(NC_FILE,'river_DON','time','river_time');
+ncwriteatt(NC_FILE,'river_DON_01','long_name','river runoff DON');
+ncwriteatt(NC_FILE,'river_DON_01','units','umol L-1');
+ncwriteatt(NC_FILE,'river_DON_01','time','river_time');
+% river_DON
+nccreate(NC_FILE,'river_DON_02',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_DON_02','long_name','river runoff DON');
+ncwriteatt(NC_FILE,'river_DON_02','units','umol L-1');
+ncwriteatt(NC_FILE,'river_DON_02','time','river_time');
 % river_DOP
-nccreate(NC_FILE,'river_DOP',...
+nccreate(NC_FILE,'river_DOP_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_DOP','long_name','river runoff DOP');
-ncwriteatt(NC_FILE,'river_DOP','units','umol L-1');
-ncwriteatt(NC_FILE,'river_DOP','time','river_time');
+ncwriteatt(NC_FILE,'river_DOP_01','long_name','river runoff DOP');
+ncwriteatt(NC_FILE,'river_DOP_01','units','umol L-1');
+ncwriteatt(NC_FILE,'river_DOP_01','time','river_time');
+% river_DOP
+nccreate(NC_FILE,'river_DOP_02',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_DOP_02','long_name','river runoff DOP');
+ncwriteatt(NC_FILE,'river_DOP_02','units','umol L-1');
+ncwriteatt(NC_FILE,'river_DOP_02','time','river_time');
 % river_POC
-nccreate(NC_FILE,'river_POC',...
+nccreate(NC_FILE,'river_POC_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_POC','long_name','river runoff POC');
-ncwriteatt(NC_FILE,'river_POC','units','umol L-1');
-ncwriteatt(NC_FILE,'river_POC','time','river_time');
+ncwriteatt(NC_FILE,'river_POC_01','long_name','river runoff POC');
+ncwriteatt(NC_FILE,'river_POC_01','units','umol L-1');
+ncwriteatt(NC_FILE,'river_POC_01','time','river_time');
+% river_POC
+nccreate(NC_FILE,'river_POC_02',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_POC_02','long_name','river runoff POC');
+ncwriteatt(NC_FILE,'river_POC_02','units','umol L-1');
+ncwriteatt(NC_FILE,'river_POC_02','time','river_time');
 % river_PON
-nccreate(NC_FILE,'river_PON',...
+nccreate(NC_FILE,'river_PON_01',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_PON','long_name','river runoff PON');
+ncwriteatt(NC_FILE,'river_PON','units','umol L-1');
+ncwriteatt(NC_FILE,'river_PON','time','river_time');
+% river_PON
+nccreate(NC_FILE,'river_PON_02',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
 ncwriteatt(NC_FILE,'river_PON','long_name','river runoff PON');
 ncwriteatt(NC_FILE,'river_PON','units','umol L-1');
 ncwriteatt(NC_FILE,'river_PON','time','river_time');
 % river_POP
-nccreate(NC_FILE,'river_POP',...
+nccreate(NC_FILE,'river_POP_01',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_POP','long_name','river runoff POP');
+ncwriteatt(NC_FILE,'river_POP','units','umol L-1');
+ncwriteatt(NC_FILE,'river_POP','time','river_time');
+% river_POP
+nccreate(NC_FILE,'river_POP_02',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
 ncwriteatt(NC_FILE,'river_POP','long_name','river runoff POP');
 ncwriteatt(NC_FILE,'river_POP','units','umol L-1');
 ncwriteatt(NC_FILE,'river_POP','time','river_time');
 % river_Phy1
-nccreate(NC_FILE,'river_Phy1',...
+nccreate(NC_FILE,'river_Phyt_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_Phy1','long_name','river runoff phytoplankton1');
-ncwriteatt(NC_FILE,'river_Phy1','units','umolC L-1');
-ncwriteatt(NC_FILE,'river_Phy1','time','river_time');
-% river_Phy2
-nccreate(NC_FILE,'river_Phy2',...
+ncwriteatt(NC_FILE,'river_Phyt_01','long_name','river runoff phytoplankton1');
+ncwriteatt(NC_FILE,'river_Phyt_01','units','umolC L-1');
+ncwriteatt(NC_FILE,'river_Phyt_01','time','river_time');
+% river_Phy1
+nccreate(NC_FILE,'river_Phyt_02',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_Phy2','long_name','river runoff phytoplankton2');
-ncwriteatt(NC_FILE,'river_Phy2','units','umolC L-1');
-ncwriteatt(NC_FILE,'river_Phy2','time','river_time');
-% river_Zoop
-nccreate(NC_FILE,'river_Zoop',...
+ncwriteatt(NC_FILE,'river_Phyt_02','long_name','river runoff phytoplankton2');
+ncwriteatt(NC_FILE,'river_Phyt_02','units','umolC L-1');
+ncwriteatt(NC_FILE,'river_Phyt_02','time','river_time');
+% river_Phy1
+nccreate(NC_FILE,'river_Phyt_03',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_Zoop','long_name','river runoff zooplankton');
-ncwriteatt(NC_FILE,'river_Zoop','units','umolC L-1');
-ncwriteatt(NC_FILE,'river_Zoop','time','river_time');
+ncwriteatt(NC_FILE,'river_Phyt_03','long_name','river runoff phytoplankton3');
+ncwriteatt(NC_FILE,'river_Phyt_03','units','umolC L-1');
+ncwriteatt(NC_FILE,'river_Phyt_03','time','river_time');
+ river_Zoop
+nccreate(NC_FILE,'river_Zoop_01',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_Zoop_01','long_name','river runoff zooplankton1');
+ncwriteatt(NC_FILE,'river_Zoop_01','units','umolC L-1');
+ncwriteatt(NC_FILE,'river_Zoop_01','time','river_time');
 % river_d13C_TIC
 nccreate(NC_FILE,'river_d13C_TIC',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
@@ -284,40 +333,61 @@ ncwriteatt(NC_FILE,'river_d13C_TIC','long_name','river runoff d13C in DIC');
 ncwriteatt(NC_FILE,'river_d13C_TIC','units','permil VPDB');
 ncwriteatt(NC_FILE,'river_d13C_TIC','time','river_time');
 % river_d13C_DOC
-nccreate(NC_FILE,'river_d13C_DOC',...
+nccreate(NC_FILE,'river_d13C_DOC_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_d13C_DOC','long_name','river runoff d13C in DOC');
-ncwriteatt(NC_FILE,'river_d13C_DOC','units','permil VPDB');
-ncwriteatt(NC_FILE,'river_d13C_DOC','time','river_time');
+ncwriteatt(NC_FILE,'river_d13C_DOC_01','long_name','river runoff d13C in DOC');
+ncwriteatt(NC_FILE,'river_d13C_DOC_01','units','permil VPDB');
+ncwriteatt(NC_FILE,'river_d13C_DOC_01','time','river_time');
+% river_d13C_DOC
+nccreate(NC_FILE,'river_d13C_DOC_02',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_d13C_DOC_02','long_name','river runoff d13C in DOC');
+ncwriteatt(NC_FILE,'river_d13C_DOC_02','units','permil VPDB');
+ncwriteatt(NC_FILE,'river_d13C_DOC_02','time','river_time');
 % river_d13C_POC
-nccreate(NC_FILE,'river_d13C_POC',...
+nccreate(NC_FILE,'river_d13C_POC_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_d13C_POC','long_name','river runoff d13C in POC');
-ncwriteatt(NC_FILE,'river_d13C_POC','units','permil VPDB');
-ncwriteatt(NC_FILE,'river_d13C_POC','time','river_time');
+ncwriteatt(NC_FILE,'river_d13C_POC_01','long_name','river runoff d13C in POC');
+ncwriteatt(NC_FILE,'river_d13C_POC_01','units','permil VPDB');
+ncwriteatt(NC_FILE,'river_d13C_POC_01','time','river_time');
+% river_d13C_POC
+nccreate(NC_FILE,'river_d13C_POC_02',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_d13C_POC_02','long_name','river runoff d13C in POC');
+ncwriteatt(NC_FILE,'river_d13C_POC_02','units','permil VPDB');
+ncwriteatt(NC_FILE,'river_d13C_POC_02','time','river_time');
 % river_d13C_Phy1
-nccreate(NC_FILE,'river_d13C_Phy1',...
+nccreate(NC_FILE,'river_d13C_Phyt_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_d13C_Phy1','long_name','river runoff d13C in phtoplankton1');
-ncwriteatt(NC_FILE,'river_d13C_Phy1','units','permil VPDB');
-ncwriteatt(NC_FILE,'river_d13C_Phy1','time','river_time');
-% river_d13C_Phy2
-nccreate(NC_FILE,'river_d13C_Phy2',...
+ncwriteatt(NC_FILE,'river_d13C_Phyt_01','long_name','river runoff d13C in phtoplankton1');
+ncwriteatt(NC_FILE,'river_d13C_Phyt_01','units','permil VPDB');
+ncwriteatt(NC_FILE,'river_d13C_Phyt_01','time','river_time');
+% river_d13C_Phy1
+nccreate(NC_FILE,'river_d13C_Phyt_02',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_d13C_Phy2','long_name','river runoff d13C in phtoplankton2');
-ncwriteatt(NC_FILE,'river_d13C_Phy2','units','permil VPDB');
-ncwriteatt(NC_FILE,'river_d13C_Phy2','time','river_time');
+ncwriteatt(NC_FILE,'river_d13C_Phyt_02','long_name','river runoff d13C in phtoplankton1');
+ncwriteatt(NC_FILE,'river_d13C_Phyt_02','units','permil VPDB');
+ncwriteatt(NC_FILE,'river_d13C_Phyt_02','time','river_time');
+% river_d13C_Phy1
+nccreate(NC_FILE,'river_d13C_Phyt_03',...
+          'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
+          'Datatype','double')
+ncwriteatt(NC_FILE,'river_d13C_Phyt_03','long_name','river runoff d13C in phtoplankton1');
+ncwriteatt(NC_FILE,'river_d13C_Phyt_03','units','permil VPDB');
+ncwriteatt(NC_FILE,'river_d13C_Phyt_03','time','river_time');
 % river_d13C_Zoo
-nccreate(NC_FILE,'river_d13C_Zoo',...
+nccreate(NC_FILE,'river_d13C_Zoop_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...
           'Datatype','double')
-ncwriteatt(NC_FILE,'river_d13C_Zoo','long_name','river runoff d13C in zooplankton');
-ncwriteatt(NC_FILE,'river_d13C_Zoo','units','permil VPDB');
-ncwriteatt(NC_FILE,'river_d13C_Zoo','time','river_time');
+ncwriteatt(NC_FILE,'river_d13C_Zoop_01','long_name','river runoff d13C in zooplankton');
+ncwriteatt(NC_FILE,'river_d13C_Zoop_01','units','permil VPDB');
+ncwriteatt(NC_FILE,'river_d13C_Zoop_01','time','river_time');
 % global attributes
 ncwriteatt(NC_FILE,'/','type','ROMS FORCING file');
 ncwriteatt(NC_FILE,'/','title','Todoroki River Forcing');

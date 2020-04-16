@@ -29,6 +29,9 @@
 %                     of the minimum is marked with a filled magenta
 %                     circle whereas the maximum is marked with a filled
 %                     magenta square.
+%   roms_field    - Computes requested secondary 2D or 3D field from ROMS
+%                     state output history/average data. Currently, there
+%                     is code for compute 2D or 3D relative vorticity.
 %   roms_vectors  - Processes vector data for either the full grid
 %                     or boundary edges. The strategy is to get any
 %                     horizontal vector field at RHO-points for the
@@ -40,23 +43,19 @@
 %                     or viceversa. Input vector components may be
 %                     located at the center of the cell (RHO-points)
 %                     or at staggered Arakawa's C-grid locations.
+%   rvorticity    - Computes 2D or 3D relative vorticity from ROMS fields. 
 %   sample_grid   - Gets Parent grid indices range of the polygon that
 %                     tightly contains the Target Grid.
 %
 %   uv_barotropic - Computes vertically integrated velocity components
 %                     for ROMS full grid or boundaries.
-%
-% Color Palettes:
-%
-%   inferno       - A 256 colormap by Nathaniel J. Smith and Stefan van
-%                     der Walt.
-%   magma         - A 256 colormap by Nathaniel J. Smith and Stefan van
-%                     der Walt.
-%   plasma        - A 256 colormap by Nathaniel J. Smith and Stefan van
-%                     der Walt.
-%   viridis       - A 256 colormap by Eric Firing.
-%   vivid         - A personalized colormap bh Joseph Kirk.
-%   zebra         - A banded colormap by S.B. Hooker et al. (1995).
+%   vector4stream - Given velocity components and grid information, it
+%                     interpolates data to a monotonic and plaid grid
+%                     (as if produced by MESHGRID) for the plotting of
+%                     streamlines elsewhere using 'streamslice' or
+%                     'm_streamline'
+%   wrt_latlon    - Writes the (lat,lon) pairs into an ASCII so it may be
+%                     used in the ROMS plotting package. 
 %
 % Filters:
 %
@@ -80,7 +79,11 @@
 %   date_stamp   - Sets current date string.
 %   day_code     - Computes day of the week for a given date.
 %   daynum       - Calculates date number from date (ROMS Version).
+%   daynum360    - Calculates date number from a 360-day calendar date
+%                    (ROMS Version).
 %   dayvec       - Calculates date from a date number (ROMS Version).
+%   dayvec360    - Calculates date from a date number of the 360-day
+%                    calendar (ROMS Version).
 %   gregorian    - Converts Julian day number to Gregorian calendar date.
 %   greg2str     - Converts Gregorian date array to string.
 %   hms2h        - Converts hours, minutes, and seconds to decimal hours.
@@ -117,7 +120,7 @@
 
 % svn $Id$
 %=========================================================================%
-%  Copyright (c) 2002-2017 The ROMS/TOMS Group                            %
+%  Copyright (c) 2002-2020 The ROMS/TOMS Group                            %
 %    Licensed under a MIT/X style license                                 %
 %    See License_ROMS.txt                           Hernan G. Arango      %
 %=========================================================================%

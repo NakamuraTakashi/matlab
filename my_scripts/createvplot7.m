@@ -35,9 +35,13 @@ axes1 = axes('Parent',figure1,...
 % Axes の X 軸の範囲を保持するために以下のラインのコメントを解除
 %xlim(axes1,[-25 3125]);
  xlim(axes1,[xmin xmax]);
+% xlim auto
+xticks('auto')
 % Axes の Y 軸の範囲を保持するために以下のラインのコメントを解除
 %ylim(axes1,[-25 9525]);
  ylim(axes1,[ymin ymax]);
+% ylim auto
+yticks('auto')
 hold(axes1,'all');
 pbaspect([dx dy 1])
 

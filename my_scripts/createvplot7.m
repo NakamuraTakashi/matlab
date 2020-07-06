@@ -38,6 +38,8 @@ axes1 = axes('Parent',figure1,...
 % Axes �� Y ���͈̔͂�ێ����邽�߂Ɉȉ��̃��C���̃R�����g������
 %ylim(axes1,[-25 9525]);
  ylim(axes1,[ymin ymax]);
+% ylim auto
+yticks('auto')
 hold(axes1,'all');
 pbaspect([dx dy 1])
 

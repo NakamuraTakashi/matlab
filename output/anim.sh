@@ -6,7 +6,7 @@
 #name='dye'
 #name='temp_vel'
 #name='elev_vel'
-name='Zoop13C'
+name='Y1_temp_5ms'
 #
 anim_dir='figs_png_'${name}
 echo ${anim_dir}

@@ -6,9 +6,6 @@ function[h_surf,h_contour,h_annot]= createfigure5(XData1,YData1,CData1,zdata2, a
 %  CDATA1:  surface cdata
 %  ZDATA2:  contour z
 
-%  MATLAB �ɂ�鎩��������: 29-Mar-2013 19:17:25
-%
-% figure ���쐬
 figure1 = figure('PaperSize',[20 30],...
     'Color',[1 1 1],...
     'Colormap',colmap,...
@@ -24,7 +21,7 @@ for i=0:10
     end
 end  
 
-% axes ���쐬
+% axes
 axes1 = axes('Parent',figure1,...
     'YTick', ymin:interval:ymax,...
     'XTick', xmin:interval:xmax,...
@@ -32,17 +29,17 @@ axes1 = axes('Parent',figure1,...
     'FontName','Arial',...
     'CLim',[Cmin Cmax],...
     'Box','on');
-% Axes �� X ���͈̔͂�ێ����邽�߂Ɉȉ��̃��C���̃R�����g������
+% Axes
 %xlim(axes1,[-25 3125]);
  xlim(axes1,[xmin xmax]);
-% Axes �� Y ���͈̔͂�ێ����邽�߂Ɉȉ��̃��C���̃R�����g������
+% Axes
 %ylim(axes1,[-25 9525]);
  ylim(axes1,[ymin ymax]);
 hold(axes1,'all');
 pbaspect([dx dy 1])
 
 
-% surface ���쐬
+% surface
 %surface('Parent',axes1,'ZData',ZData1,'YData',YData1,'XData',XData1,...
 %    'LineStyle','none',...
 %    'CData', CData1);
@@ -51,12 +48,12 @@ h_surf=pcolor(XData1,YData1,CData1);
 shading flat;
 %shading interp;
 
-% colorbar ���쐬
+% colorbar
 %colormap(colmap);
 colorbar('peer',axes1,...
     'FontSize',9);
 
-% contour ���쐬
+% contour
 h_contour=contour(XData1,YData1,zdata2,...
     'LineColor',[0.48 0.06 0.92],...
     'LevelList',LevelList,...
@@ -70,27 +67,27 @@ h_contour=contour(XData1,YData1,zdata2,...
 %     'LevelList',[0 0.2 0.5 3],...
 
 if strcmp(unit,'km')
-    % xlabel ���쐬
+    % xlabel
     xlabel('X (km)','FontName','Arial');
-    % ylabel ���쐬
+    % ylabel
     ylabel('Y (km)','FontName','Arial');
 elseif strcmp(unit,'m') 
-    % xlabel ���쐬
+    % xlabel
     xlabel('X (m)','FontName','Arial');
-    % ylabel ���쐬
+    % ylabel
     ylabel('Y (m)','FontName','Arial');
 elseif strcmp(unit,'latlon')
-    % xlabel ���쐬
+    % xlabel
     xlabel('Longitude','FontName','Arial');
-    % ylabel ���쐬
+    % ylabel
     ylabel('Latitude','FontName','Arial');
 end
 
-% title ���쐬
+% title
 title(title1,'FontSize',12,'FontName','Arial', 'FontWeight', 'normal');
 
 
-% textbox ���쐬
+% textbox
 h_annot=annotation(figure1,'textbox',...
     [0.0 0.01 0.9 0.035],...
     'HorizontalAlignment', 'center',...

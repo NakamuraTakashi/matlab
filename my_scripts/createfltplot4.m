@@ -6,9 +6,6 @@ function[h_scatter,h_contour,h_annot]= createfltplot4(XData1,YData1,X,Y,Z,zdata2
 %  CDATA1:  surface cdata
 %  ZDATA2:  contour z
 
-%  MATLAB ?�ɂ�鎩?�?�?�?�?�?�?�?�: 29-Mar-2013 19:17:25
-%
-% figure ?�?�?�?�
 figure1 = figure('PaperSize',[20 30],...
     'Color',[1 1 1],...
     'Colormap',colmap,...
@@ -24,7 +21,7 @@ for i=0:10
     end
 end 
 
-% axes ?�?�?�?�
+% axes
 axes1 = axes('Parent',figure1,...
     'YTick', ymin:interval:ymax,...
     'XTick', xmin:interval:xmax,...
@@ -34,17 +31,17 @@ axes1 = axes('Parent',figure1,...
     'Box','on');
 %    'FontSmoothing','off',...
 
-% Axes ?�?� X ?�?�?�͈̔͂�ێ�?�?�?�邽?�߂Ɉȉ�?��?��?�C?�?�?�̃R?�?�?�?�?�g?�?�?�?�?�?�
+% Axes
 %xlim(axes1,[-25 3125]);
  xlim(axes1,[xmin xmax]);
-% Axes ?�?� Y ?�?�?�͈̔͂�ێ�?�?�?�邽?�߂Ɉȉ�?��?��?�C?�?�?�̃R?�?�?�?�?�g?�?�?�?�?�?�
+% Axes
 %ylim(axes1,[-25 9525]);
  ylim(axes1,[ymin ymax]);
 hold(axes1,'all');
 pbaspect([dx dy 1])
 
 
-% surface ?�?�?�?�
+% surface
 %surface('Parent',axes1,'ZData',ZData1,'YData',YData1,'XData',XData1,...
 %    'LineStyle','none',...
 %    'CData', CData1);
@@ -54,13 +51,13 @@ h_scatter=scatter(X,Y,3,Z,'fill'); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Point s
 %shading flat;
 %shading interp;
 
-% colorbar ?�?�?�?�
+% colorbar
 colormap(colmap);
 colorbar('peer',axes1,...
     'FontSize',9);
 
 
-% contour ?�?�?�?�
+% contour
 h_contour=contour(XData1,YData1,zdata2,...
     'LineColor',[0.48 0.06 0.92],...
     'LevelList',[-9 0.5],...
@@ -71,18 +68,18 @@ h_contour=contour(XData1,YData1,zdata2,...
 %    'LevelList',[-1 1],...
 %    'LevelList',[0 0.5 1 3],...
 
-% xlabel ?�?�?�?�
+% xlabel
 xlabel('X (m)','FontName','Arial');
 
-% ylabel ?�?�?�?�
+% ylabel
 ylabel('Y (m)','FontName','Arial');
 
-% title ?�?�?�?�
+% title
 title(title1,'FontSize',12,'FontName','Arial', 'FontWeight', 'normal');
 
 
-% textbox ?�?�?�?�
-% textbox ���쐬
+% textbox
+% textbox
 h_annot=annotation(figure1,'textbox',...
     [0.0 0.01 0.9 0.035],...
     'HorizontalAlignment', 'center',...

@@ -87,7 +87,7 @@ elseif id == 9
 elseif id == 10
     tmp = ncread(his,'pCO2',[1 1 i],[Inf Inf 1]);
 elseif id == 11
-    tmp = ncread(his,'mud_01',[1 1 1 i],[Inf Inf 1 1]);  % ��ʂ�mud
+    tmp = ncread(his,'mud_01',[1 1 1 i],[Inf Inf 1 1]);
 elseif id == 12
     tmp =  ncread(his,'coral_Pg',[1 1 i],[Inf Inf 1]) .*coral_mask;
 elseif id == 13

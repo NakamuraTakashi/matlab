@@ -44,7 +44,7 @@ SS(i,:)  = data{1,8}/1000; % sed: mg/L -> kg/m3
 SS2(i,:)  = data{1,8}/1000; % sed: mg/L -> kg/m3
 DON(i,:) = data{1,9}/14.007*1000; % orgn: mg/L -> umol/L
 DOP(i,:) = data{1,10}/30.97*1000; % sedp: mg/L -> umol/L
-NO3(i,:) = data{1,11}/14.007*1000 * 0.1; % no3: mg/L -> umol/L %!!0.1�������Ă���̂͂����̒����B���f���v����!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+NO3(i,:) = data{1,11}/14.007*1000 * 0.1; % no3: mg/L -> umol/L
 PO4(i,:) = data{1,12}/30.97*1000; % solp: mg/L -> umol/L
 NH4(i,:) = data{1,14}/14.007*1000; % nh3: mg/L -> umol/L
 % NO2(i,:) = data{1,15}/14.007*1000; % no2: mg/L -> umol/L
@@ -75,7 +75,6 @@ salt(i,1:data_num) = 1;
 
 alk(i,1:data_num)  = 3600;
 TIC(i,1:data_num)  = 3500;
-
 
 % Seepage
 i=2;
@@ -189,7 +188,6 @@ nccreate(NC_FILE,'river_salt',...
           'Datatype','double')
 ncwriteatt(NC_FILE,'river_salt','long_name','river runoff salinity');
 ncwriteatt(NC_FILE,'river_salt','time','river_time');
-
 % river_mud_01
 nccreate(NC_FILE,'river_mud_01',...
           'Dimensions',{'river',river, 's_rho',s_rho, 'river_time',data_num },...

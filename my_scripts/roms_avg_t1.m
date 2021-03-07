@@ -202,7 +202,7 @@ if wet_dry == 1
     tmp = tmp .* wetdry_mask_rho;
 end
 
-% ���ρA�W���΍����̌v�Z
+
 tmp3=tmp;
 for i=1:size(tmp,3)
     tmp3(:,:,i)=tmp3(:,:,i) .*coral_mask;

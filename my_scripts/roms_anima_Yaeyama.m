@@ -16,7 +16,7 @@ load('MyColormaps')
 id = 7;  % <- Select 1,2,3,100
 
 
-% title='Temperature (^oC)'; cmin=25; cmax=35; colmap=jet(128); ncname='temp';
+title='Temperature (^oC)'; cmin=25; cmax=35; colmap=jet(128); ncname='temp';
 % title='Salinity (psu)'; cmin=33; cmax=35; colmap=jet(128); ncname='salt';
 
 % title='Coarse POC (umolC L^-^1)'; cmin=0; cmax=0.002; colmap=colmap1; ncname='POC_02';
@@ -47,7 +47,7 @@ id = 7;  % <- Select 1,2,3,100
 % title='Particulate Inorganic ^1^3C (umolC L^-^1)'; cmin=0; cmax=0.0001; colmap=colmap1; ncname='PI13C_01';
 
 % title='Zooplankton (umolC L^-^1)';  cmin=0; cmax=5; colmap=jet(128); ncname='zooplankton_01';
-title='^1^3C in Zooplankton (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colmap1; ncname='zoop13C_01';
+% title='^1^3C in Zooplankton (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colmap1; ncname='zoop13C_01';
 
 if id == 3
     scale=0.08;  % for Wave
@@ -59,7 +59,7 @@ elseif id == 100
     Vmax = 20;  % for Wind
 else
 %     scale=0.2;   % for berau1
-    scale=0;   % for berau2
+    scale=1.0;   % for berau2
     s_interval=6; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
     Vmax = 3; % for SHIRAHO
 end
@@ -79,10 +79,10 @@ unit = 'km';
 LevelList = [-1 1 10];
 
 h          = ncread(his,'h');
-% y_rho    = ncread(his,'lat_rho');
-% x_rho    = ncread(his,'lon_rho');
-x_rho      = ncread(grd,'x_rho');
-y_rho      = ncread(grd,'y_rho');
+y_rho    = ncread(his,'lat_rho');
+x_rho    = ncread(his,'lon_rho');
+% x_rho      = ncread(grd,'x_rho');
+% y_rho      = ncread(grd,'y_rho');
 x_rho=(x_rho-min(min(x_rho)))/1000; % m->km
 y_rho=(y_rho-min(min(y_rho)))/1000; % m->km
 

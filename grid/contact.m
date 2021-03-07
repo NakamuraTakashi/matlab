@@ -305,6 +305,30 @@ G = grids_structure(Gnames);
 
 S = grid_perimeter(G);
 
+%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>TN:add
+% Modify land edge valuses of bathymetry h
+
+for igrd=1:size(G,2)
+    for i=2:G(igrd).Lm+1
+        for j=2:G(igrd).Mm+1
+            if( G(igrd).mask_rho(i,j)==0 )
+                avg_h = G(igrd).h(i-1,j)*G(igrd).mask_rho(i-1,j) ...
+                      + G(igrd).h(i+1,j)*G(igrd).mask_rho(i+1,j) ...
+                      + G(igrd).h(i,j-1)*G(igrd).mask_rho(i,j-1) ...
+                      + G(igrd).h(i,j+1)*G(igrd).mask_rho(i,j+1);
+                tot_mask=G(igrd).mask_rho(i-1,j)+G(igrd).mask_rho(i+1,j) ...
+                        +G(igrd).mask_rho(i,j-1)+G(igrd).mask_rho(i,j+1);
+                if( tot_mask > 0 )
+                    G(igrd).h(i,j)=avg_h/tot_mask;
+                else
+                    G(igrd).h(i,j)=0;
+                end
+            end
+        end
+    end
+end
+%<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<TN:add
+
 %--------------------------------------------------------------------------
 % Set up nested grid connections.
 %--------------------------------------------------------------------------
@@ -353,6 +377,8 @@ S = boundary_contact(S);
 % drying is activated for an application.
 
 ImposeMask = false;
+% ImposeMask = true; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 S = Hweights(G, S, ImposeMask);
 
@@ -1647,7 +1673,7 @@ if ((S.grid(rg).refine_factor > 0) && (AreaAvg_dg > AreaAvg_rg))
 
 % RHO-contact points.
 
-    [INr,~] = inpolygon(R.xi_rho(:), R.eta_rho(:),                         ...
+    [INr,~] = inpolygon(R.x_rho(:), R.y_rho(:),                         ...
                         S.grid(rg).perimeter.X_psi,                     ...
                         S.grid(rg).perimeter.Y_psi);
 
@@ -1694,7 +1720,7 @@ if ((S.grid(rg).refine_factor > 0) && (AreaAvg_dg > AreaAvg_rg))
 
 % U-contact points.
 
-    [INu,ONu] = inpolygon(R.xi_u(:), R.eta_u(:),                           ...
+    [INu,ONu] = inpolygon(R.x_u(:), R.y_u(:),                           ...
                           S.grid(rg).perimeter.X_uv,                    ...
                           S.grid(rg).perimeter.Y_uv);
 
@@ -1729,7 +1755,7 @@ if ((S.grid(rg).refine_factor > 0) && (AreaAvg_dg > AreaAvg_rg))
     
 % V-contact points.
     
-    [INv,ONv] = inpolygon(R.xi_v(:), R.eta_v(:),                           ...
+    [INv,ONv] = inpolygon(R.x_v(:), R.y_v(:),                           ...
                           S.grid(rg).perimeter.X_uv,                    ...
                           S.grid(rg).perimeter.Y_uv);
 

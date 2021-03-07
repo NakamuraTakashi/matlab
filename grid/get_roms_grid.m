@@ -166,6 +166,9 @@ if (~isstruct(Ginp))
       spherical = 0;
     end
   end
+  
+  spherical = 0;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TN add for Yaeyama
+
   Gout.spherical = spherical;
   Gout.uniform = false;
   Gout.curvilinear = false;

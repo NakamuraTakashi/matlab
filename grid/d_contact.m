@@ -23,7 +23,7 @@ Gnames ={Gname2, Gname3};  %% for single nesting
 % Gnames ={Gname1, Gname2, Gname3};  %% for double nesting
 
 % Select 1 of 2
-[S,G] = contact(Gnames, Cname, true, false);  %% for single nesting
+[S,G] = contact(Gnames, Cname, true, false, true);  %% for single nesting
 % [S,G] = contact2(Gnames, Cname, true);  %% for double nesting
 
 

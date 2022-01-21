@@ -1,4 +1,4 @@
-function[h_scatter,h_contour,h_annot]= createfltplot4(XData1,YData1,X,Y,Z,zdata2, annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax)
+function[h_scatter,h_contour,h_annot]= createfltplot4(XData1,YData1,X,Y,Z,zdata2, annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList)
 %CREATEFIGURE(ZDATA1,YDATA1,XDATA1,CDATA1,ZDATA2)
 %  ZDATA1:  surface zdata
 %  YDATA1:  surface ydata
@@ -29,14 +29,15 @@ axes1 = axes('Parent',figure1,...
     'FontName','Arial',...
     'CLim',[Cmin Cmax],...
     'Box','on');
-%    'FontSmoothing','off',...
 
 % Axes
 %xlim(axes1,[-25 3125]);
  xlim(axes1,[xmin xmax]);
+ xticks('auto')
 % Axes
 %ylim(axes1,[-25 9525]);
  ylim(axes1,[ymin ymax]);
+ yticks('auto')
 hold(axes1,'all');
 pbaspect([dx dy 1])
 
@@ -46,7 +47,7 @@ pbaspect([dx dy 1])
 %    'LineStyle','none',...
 %    'CData', CData1);
 
-h_scatter=scatter(X,Y,3,Z,'fill'); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Point size
+h_scatter=scatter(X,Y,5,Z,'fill'); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Point size
 %h_scatter=plot(X,Y,'ro');
 %shading flat;
 %shading interp;
@@ -60,7 +61,7 @@ colorbar('peer',axes1,...
 % contour
 h_contour=contour(XData1,YData1,zdata2,...
     'LineColor',[0.48 0.06 0.92],...
-    'LevelList',[-9 0.5],...
+    'LevelList',LevelList,...
     'Parent',axes1,...
     'ShowText','off');
 
@@ -68,15 +69,25 @@ h_contour=contour(XData1,YData1,zdata2,...
 %    'LevelList',[-1 1],...
 %    'LevelList',[0 0.5 1 3],...
 
-% xlabel
-xlabel('X (m)','FontName','Arial');
-
-% ylabel
-ylabel('Y (m)','FontName','Arial');
+if strcmp(unit,'km')
+    % xlabel
+    xlabel('X (km)','FontName','Arial');
+    % ylabel
+    ylabel('Y (km)','FontName','Arial');
+elseif strcmp(unit,'m') 
+    % xlabel
+    xlabel('X (m)','FontName','Arial');
+    % ylabel
+    ylabel('Y (m)','FontName','Arial');
+elseif strcmp(unit,'latlon')
+    % xlabel
+    xlabel('Longitude','FontName','Arial');
+    % ylabel
+    ylabel('Latitude','FontName','Arial');
+end
 
 % title
 title(title1,'FontSize',12,'FontName','Arial', 'FontWeight', 'normal');
-
 
 % textbox
 % textbox

@@ -1,53 +1,77 @@
 %
-% === Copyright (c) 2014-2020 Takashi NAKAMURA  =====
+% === Copyright (c) 2014-2021 Takashi NAKAMURA  =====
 %
-grd='C:\cygwin64\home\Takashi\COAWST\Data\Yaeyama\Yaeyama2_grd_v9.6.nc';
-his='C:\cygwin64\home\Takashi\TSUBAME\Yaeyama2_his_19.nc';
+% CASE 1=> YAEYAMA1; 2=> YAEYAMA2; 3=> YAEYAMA3
+CASE = 1;
+
+% F_drawUV = true;
+F_drawUV = false;
+id = 7;  % <- Select 1,2,3,100
+
+if CASE == 1      % YAEYAMA1
+    grd='F:\COAWST_DATA\Yaeyama\Yaeyama1\Grid\Yaeyama1_grd_v10.nc';
+    his='H:\COAWST_OUTPUT\Yaeyama1\Yaeyama1_his_20010102.nc';
+%     his='K:\COAWST\output\Yaeyama1_2\Y1_his_nst_ctrace_20190801.nc';
+%     his='K:\COAWST\output\Yaeyama1_2\Y1_his_nst_ctrace_20190810.nc';
+    out_dirstr = 'output/figs_png_Y1srf2';
+elseif CASE == 2  % YAEYAMA2
+    grd='F:\COAWST_DATA\Yaeyama\Yaeyama2\Grid\Yaeyama2_grd_v11.2.nc';
+%     his='H:\COAWST_OUTPUT\Yaeyama2\Yaeyama2_his_19950529.nc';
+%     his='K:\COAWST\output\Yaeyama1_2\Y2_his_nst_ctrace_20190801.nc';
+    his='K:\COAWST\output\Yaeyama1_2\Y2_his_nst_ctrace_20190810.nc';
+    out_dirstr = 'output/figs_png_Y2Ctrace';  % Surface
+%     out_dirstr = 'output/figs_png_Y2btm';  % Bottom
+elseif CASE == 3  % YAEYAMA3
+    grd='F:\COAWST_DATA\Yaeyama\Yaeyama3\Grid\Yaeyama3_grd_v12.2.nc';
+    his='H:\COAWST_OUTPUT\Yaeyama3\Yaeyama3_his_19990104.nc';
+    out_dirstr = 'output/figs_png_Y3';
+end
+[status, msg] = mkdir( out_dirstr )
+
+Nz=15; % Surface
+% Nz=1; % Bottom
 
 starting_date=datenum(2000,1,1,0,0,0); % 
 
-%Jm=192;   % Mm+2
-%Im=64;    % Lm+2
-
 % My color map
 load('MyColormaps')
+colormap6=superjet(128,'NuvibZctgyorWq');
+title='Sea surface temperature (^oC)'; cmin=16; cmax=34; colmap=colormap6; ncname='temp'; % YAEYAMA1
+% title='Sea Surface Temperature (^oC)'; cmin=17; cmax=32; colmap=jet(128); ncname='temp'; % YAEYAMA1
+% title='Sea Surface Temperature (^oC)'; cmin=20; cmax=34; colmap=jet(128); ncname='temp'; % YAEYAMA2 surface
+% title='Sea Bottom Temperature (^oC)'; cmin=20; cmax=34; colmap=jet(128); ncname='temp'; % YAEYAMA2 bottom
 
-
-id = 7;  % <- Select 1,2,3,100
-
-
-title='Temperature (^oC)'; cmin=25; cmax=35; colmap=jet(128); ncname='temp';
 % title='Salinity (psu)'; cmin=33; cmax=35; colmap=jet(128); ncname='salt';
 
-% title='Coarse POC (umolC L^-^1)'; cmin=0; cmax=0.002; colmap=colmap1; ncname='POC_02';
-% title='Coarse PO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.001; colmap=colmap1; ncname='PO13C_02';
+% title='Coarse POC (umolC L^-^1)'; cmin=0; cmax=2; colmap=colmap1; ncname='POC_02';
+% title='Coarse PO^1^3C (umolC L^-^1)'; cmin=0; cmax=2; colmap=colmap1; ncname='PO13C_02';
 
-% title='Detritus (umolC L^-^1)';  cmin=0; cmax=20; colmap=jet(128); ncname='POC_01';
+% title='Detritus (umolC L^-^1)';  cmin=0; cmax=5; colmap=jet(128); ncname='POC_01';
 % title='^1^3C in Detritus (umolC L^-^1)'; cmin=0; cmax=0.0001; colmap=colmap1; ncname='PO13C_01';
 
 % title='Labile DOC (umolC L^-^1)';  cmin=0; cmax=50; colmap=jet(128); ncname='DOC_01';
 % title='Labile DO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.0005; colmap=colmap1; ncname='DO13C_01';
 
 % title='Refractory DOC (umolC L^-^1)';  cmin=40; cmax=70; colmap=jet(128); ncname='DOC_02';
-% title='Refractory DO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.0001; colmap=colmap1; ncname='DO13C_02';
+% title='Refractory DO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colmap1; ncname='DO13C_02';
 
-% title='DIC (umol kg^-^1)'; cmin=1700; cmax=2000; colmap=jet(128); ncname='TIC';
-% title='DI^1^3C (umol kg^-^1)'; cmin=0; cmax=0.005; colmap=colmap1; ncname='TI13C';
+% title='DIC (umol kg^-^1)'; cmin=1800; cmax=2000; colmap=jet(128); ncname='TIC';
+% title='DI^1^3C (umol kg^-^1)'; cmin=0; cmax=0.0005; colmap=colmap1; ncname='TI13C';
 
-% title='Dinoflagellate (umolC L^-^1)';  cmin=0; cmax=40; colmap=jet(128); ncname='phytoplankton_01';
-% title='^1^3C in Dinoflagellate (umolC L^-^1)'; cmin=0; cmax=0.0001; colmap=colmap1; ncname='phyt13C_01';
+% title='Dinoflagellate (umolC L^-^1)';  cmin=0; cmax=3; colmap=jet(128); ncname='phytoplankton_01';
+% title='^1^3C in Dinoflagellate (umolC L^-^1)'; cmin=0; cmax=0.000001; colmap=colmap1; ncname='phyt13C_01';
 
-% title='Diatom (umolC L^-^1)';  cmin=0; cmax=40; colmap=jet(128); ncname='phytoplankton_02';
-% title='^1^3C in Diatom (umolC L^-^1)'; cmin=0; cmax=0.0001; colmap=colmap1; ncname='phyt13C_02';
+% title='Diatom (umolC L^-^1)';  cmin=0; cmax=30; colmap=jet(128); ncname='phytoplankton_02';
+% title='^1^3C in Diatom (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colmap1; ncname='phyt13C_02';
 
-% title='Coccolithophorids (umolC L^-^1)';  cmin=0; cmax=40; colmap=jet(128); ncname='phytoplankton_03';
-% title='^1^3C in Coccolithophorids (umolC L^-^1)'; cmin=0; cmax=0.0001; colmap=colmap1; ncname='phyt13C_03';
+% title='Coccolithophorids (umolC L^-^1)';  cmin=0; cmax=10; colmap=jet(128); ncname='phytoplankton_03';
+% title='^1^3C in Coccolithophorids (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colmap1; ncname='phyt13C_03';
 
-% title='Particulate Inorganic C (umolC L^-^1)';  cmin=0; cmax=10; colmap=jet(128); ncname='PIC_01';
-% title='Particulate Inorganic ^1^3C (umolC L^-^1)'; cmin=0; cmax=0.0001; colmap=colmap1; ncname='PI13C_01';
+% title='Particulate Inorganic C (umolC L^-^1)';  cmin=0; cmax=5; colmap=jet(128); ncname='PIC_01';
+% title='Particulate Inorganic ^1^3C (umolC L^-^1)'; cmin=0; cmax=0.000001; colmap=colmap1; ncname='PI13C_01';
 
-% title='Zooplankton (umolC L^-^1)';  cmin=0; cmax=5; colmap=jet(128); ncname='zooplankton_01';
-% title='^1^3C in Zooplankton (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colmap1; ncname='zoop13C_01';
+% title='Zooplankton (umolC L^-^1)';  cmin=0; cmax=10; colmap=jet(128); ncname='zooplankton_01';
+% title='^1^3C in Zooplankton (umolC L^-^1)'; cmin=0; cmax=0.1; colmap=colmap1; ncname='zoop13C_01';
 
 if id == 3
     scale=0.08;  % for Wave
@@ -58,20 +82,28 @@ elseif id == 100
     s_interval=6;  % for Wind
     Vmax = 20;  % for Wind
 else
-%     scale=0.2;   % for berau1
-    scale=1.0;   % for berau2
-    s_interval=6; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
-    Vmax = 3; % for SHIRAHO
+    if CASE ==1       % YAEYAMA1
+        scale=8;
+        s_interval=8;
+        Vmax = 3;
+    elseif CASE == 2  % YAEYAMA2
+        scale=8;
+        s_interval=8;
+        Vmax = 3;
+    elseif CASE == 3  % YAEYAMA3
+        scale=8;
+        s_interval=8;
+        Vmax = 3;
+    end
 end
 
-Nz=15;  % for SHIRAHO
 
-% LOCAL_TIME='(UTC)';
-%LOCAL_TIME='(JST)';
-%LOCAL_TIME='(UTC+9)';
-LOCAL_TIME='';
+LOCAL_TIME=' (UTC)';
+%LOCAL_TIME=' (JST)';
+%LOCAL_TIME=' (UTC+9)';
+% LOCAL_TIME='';
 
-wet_dry = 1;  % Dry mask OFF: 0, ON: 1
+wet_dry = 0;  % Dry mask OFF: 0, ON: 1
 
 unit = 'km'; 
 % 'm', 'latlon'
@@ -79,10 +111,10 @@ unit = 'km';
 LevelList = [-1 1 10];
 
 h          = ncread(his,'h');
-y_rho    = ncread(his,'lat_rho');
-x_rho    = ncread(his,'lon_rho');
-% x_rho      = ncread(grd,'x_rho');
-% y_rho      = ncread(grd,'y_rho');
+% y_rho    = ncread(his,'lat_rho');
+% x_rho    = ncread(his,'lon_rho');
+x_rho      = ncread(grd,'x_rho');
+y_rho      = ncread(grd,'y_rho');
 x_rho=(x_rho-min(min(x_rho)))/1000; % m->km
 y_rho=(y_rho-min(min(y_rho)))/1000; % m->km
 
@@ -97,13 +129,25 @@ c(1:Im,1:Jm)=0;
 k=0;
 i=1;
 
-% xmin=116;   xmax=max(max(x_rho));  ymin=-6.5;   ymax=max(max(y_rho));  % for Berau1
-% xsize=400; ysize=700; % for Berau1
+if CASE == 1      % YAEYAMA1
+    xmin=min(min(x_rho))-1;   xmax=max(max(x_rho))+1;  ymin=min(min(y_rho))-1;   ymax=max(max(y_rho))+1;
+    xsize=640; ysize=520;
+elseif CASE == 2  % YAEYAMA2
+    xmin=min(min(x_rho))-0.3;   xmax=max(max(x_rho))+0.3;  ymin=min(min(y_rho))-0.3;   ymax=max(max(y_rho))+0.3;
+    xsize=620; ysize=550;
+elseif CASE == 3  % YAEYAMA3
+    xmin=min(min(x_rho))-0.1;   xmax=max(max(x_rho))+0.1;  ymin=min(min(y_rho))-0.1;   ymax=max(max(y_rho))+0.1;
+    xsize=640; ysize=520;
+else
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xsize=520; ysize=520;   
+end
 
-xmin=min(min(x_rho))-1;   xmax=max(max(x_rho))+1;  ymin=min(min(y_rho))-1;   ymax=max(max(y_rho))+1;
 % xmin=min(min(x_rho))-0.01;   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
 % xmin=123.6;   xmax=max(max(x_rho));  ymin=23.95;   ymax=max(max(y_rho));
-xsize=600; ysize=530; % for Berau2
+
+% xmin=116;   xmax=max(max(x_rho));  ymin=-6.5;   ymax=max(max(y_rho));  % for Berau1
+% xsize=400; ysize=700; % for Berau1
 
 close all
 % clear ubar vber ubar2 vbar2 ubar3 vbar3
@@ -190,8 +234,10 @@ for i=1:1:imax
         vbar = ncread(his,'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
         tmp = ncread(his,'salt',[1 1 Nz i],[Inf Inf 1 1]);  % Surface
     elseif id == 7
-        ubar = ncread(his,'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
-        vbar = ncread(his,'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
+        if F_drawUV
+            ubar = ncread(his,'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
+            vbar = ncread(his,'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
+        end
         tmp = ncread(his,ncname,[1 1 Nz i],[Inf Inf 1 1]);  % Surface
     elseif id == 100
         ubar = ncread(his1,'Uwind',[1 1 i],[Inf Inf 1]);
@@ -221,26 +267,33 @@ for i=1:1:imax
         vbar2=vbar;
         tmp=hypot(ubar2,vbar2);
     else
-        ubar2(1:Im, 1:Jm)=NaN;
-        ubar2(2:Im, 1:Jm)=ubar;%.*scale;
-        vbar2(1:Im, 1:Jm)=NaN;
-        vbar2(1:Im, 2:Jm)=vbar;%.*scale;
+        if F_drawUV
+            ubar2(1:Im, 1:Jm)=NaN;
+            ubar2(2:Im, 1:Jm)=ubar;%.*scale;
+            vbar2(1:Im, 1:Jm)=NaN;
+            vbar2(1:Im, 2:Jm)=vbar;%.*scale;
+        end
     end
 
-
-    % Down sampling
-    ubar3=ubar2(1:s_interval:Im,1:s_interval:Jm);
-    vbar3=vbar2(1:s_interval:Im,1:s_interval:Jm);
-
+    if F_drawUV
+        % Down sampling
+        ubar3=ubar2(1:s_interval:Im,1:s_interval:Jm);
+        vbar3=vbar2(1:s_interval:Im,1:s_interval:Jm);
+    end
+    
     set(h_surf,'CData',tmp)
-    set(h_quiver,'UData',ubar3*scale)
-    set(h_quiver,'VData',vbar3*scale)
+    if F_drawUV
+        set(h_quiver,'UData',ubar3*scale)
+        set(h_quiver,'VData',vbar3*scale)
+    end
     set(h_annot,'String',date_str)
 
     drawnow
+    
+    fname = strcat( ncname, datestr(date,'_yyyymmddHHMM') );
+    hgexport(figure(1), strcat(out_dirstr,'/', fname,'.png'),hgexport('factorystyle'),'Format','png');
+%     hgexport(figure(1), strcat('output/figs_eps/', fname,'.eps'),hgexport('factorystyle'),'Format','eps');
 
-    hgexport(figure(1), strcat('output/figs_png\v01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
-%     hgexport(figure(1), strcat('output/figs_eps\v01_',num2str(i,'%0.4u'),'.eps'),hgexport('factorystyle'),'Format','eps');
 end
 
 

@@ -5,25 +5,26 @@
 % close all;
 
 UTM_zone = '51 R';          % UTM zone, e.g. '30 T', '32 T', '11 S', '28 R', '15 S', '51 R'
-starting_date=datenum(2011,4,2,0,0,0);% for YAEYAMA2
+starting_date=datenum(2000,1,1,0,0,0);% for YAEYAMA2
 
 id=2;
 spherical=1;
 
-% LOCAL_TIME='(UTC)';
-%LOCAL_TIME='(JST)';
-LOCAL_TIME='(UTC+9)';
+% LOCAL_TIME=' (UTC)';
+%LOCAL_TIME=' (JST)';
+LOCAL_TIME=' (UTC+9)';
 starting_date = starting_date + 9/24;
 %LOCAL_TIME='';
 
-out_dirstr = 'output/figs_png_Y2_10000_flt_2011';
+out_dirstr = 'output/figs_png_Y2_online_float10000';
 [status, msg] = mkdir( out_dirstr )
 
 grd='F:/COAWST_DATA/Yaeyama/Yaeyama2/Grid/Yaeyama2_grd_v11.2.nc';
 
-his='D:/ROMS/Yaeyama/output/ocean_his_Yaeyama3_2g_Y2Y3_off.nc';
+% his='D:/ROMS/Yaeyama/output/ocean_his_Yaeyama3_2g_Y2Y3_off.nc';
 % flt='D:\cygwin64\home\Takashi\LTRANSv2b\Yaeyama2\output.nc';
-flt='D:\cygwin64\home\Takashi\LTRANSv2b\Yaeyama2\output_10000.nc';
+flt='D:\cygwin64\home\Takashi\COAWST\Projects\Yaeyama2_3_201004-_offline\Yaeyama2_flt_20110525.nc';
+% flt='E:\COAWTS_OUTPUT\Yaeyama2_float\Yaeyama2_flt_20110525.nc';
 
 plgn='C:\Users\Takashi\Dropbox\collaboration\Nanami\Sekisei_area_polygon.shp';
 S = shaperead(plgn);
@@ -72,7 +73,7 @@ close all
 clear xfloat yfloat lonfloat latfloat
 
 %time = nc_varget(his,'ocean_time',[i],[1]);
-time = ncread(flt,'model_time');
+time = ncread(flt,'ocean_time');
 imax=length(time);
 
 %---------------------------------------------------------------------
@@ -128,7 +129,7 @@ drawnow
 
 %for i=3:3:imax-1%336 %imax-1  %i=1:imax-1
 % for i=2527:1:imax%336 %imax-1  %i=1:imax-1
-for i=5752:1:imax%336 %imax-1  %i=1:imax-1
+for i=1:1:imax%336 %imax-1  %i=1:imax-1
     
     if (spherical)
         lonfloat=ncread(flt,'lon',[1 i],[Inf 1]);
@@ -165,7 +166,7 @@ for i=5752:1:imax%336 %imax-1  %i=1:imax-1
     title(['Number of particles inside the polygon: ' num2str(num_inpgn) '/' num2str(num_float)],'FontSize',12,'FontName','Arial', 'FontWeight', 'normal');
     drawnow
     fname = strcat( 'flt', datestr(date,'_yyyymmddHHMM') );
-    hgexport(figure(1), strcat(out_dirstr,'/', fname,'.png'),hgexport('factorystyle'),'Format','png');
+%     hgexport(figure(1), strcat(out_dirstr,'/', fname,'.png'),hgexport('factorystyle'),'Format','png');
     
 end
 

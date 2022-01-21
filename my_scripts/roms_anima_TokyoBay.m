@@ -1,8 +1,12 @@
 %
-% === Copyright (c) 2014-2020 Takashi NAKAMURA  =====
+% === Copyright (c) 2014-2021 Takashi NAKAMURA  =====
 %
-grd='D:\cygwin64\home\Takashi\COAWST\Data\Yaeyama\Yaeyama1_grd_v10.nc';
-his='K:\COAWST\output\Yaeyama1_loric\YY1mb1_his_190610_kkl_roms_30lyr_clmoff.nc';
+% TokyoBay2
+grd='F:/COAWST_DATA/TokyoBay/TokyoBay2/Grid/TokyoBay2_grd_v2.0.nc';
+his='D:\cygwin64\home\Takashi\COAWST\Projects\TokyoBay2_3\TokyoBay2_his_20180605.nc';
+% TokyoBay3
+% grd='F:/COAWST_DATA/TokyoBay/TokyoBay3/Grid/TokyoBay3_grd_v1.0.nc';
+% his='D:\cygwin64\home\Takashi\COAWST\Projects\TokyoBay2_3\TokyoBay3_his_20180605.nc';
 
 starting_date=datenum(2000,1,1,0,0,0); % 
 
@@ -16,7 +20,7 @@ load('MyColormaps')
 id = 7;  % <- Select 1,2,3,100
 
 
-title='Temperature (^oC)'; cmin=26; cmax=32; colmap=jet(128); ncname='temp';
+title='Temperature (^oC)'; cmin=19; cmax=25; colmap=jet(128); ncname='temp';
 % title='Salinity (psu)'; cmin=33; cmax=35; colmap=jet(128); ncname='salt';
 
 % title='Coarse POC (umolC L^-^1)'; cmin=0; cmax=0.002; colmap=colmap1; ncname='POC_02';
@@ -58,34 +62,37 @@ elseif id == 100
     s_interval=6;  % for Wind
     Vmax = 20;  % for Wind
 else
-%     scale=0.2;   % for berau1
-    scale=5;   % for berau2
-    s_interval=4; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
-    Vmax = 3; % for SHIRAHO
+  % TokyoBay2
+    scale=0.04;
+    s_interval=3;
+  % TokyoBay3
+%     scale=0.04;
+%     s_interval=5;
+
+    Vmax = 3;
 end
 
-% Nz=15;  % for SHIRAHO
-Nz=30;  % for SHIRAHO
+Nz=30;  % 
 
-% LOCAL_TIME='(UTC)';
+LOCAL_TIME=' (UTC)';
 %LOCAL_TIME='(JST)';
-%LOCAL_TIME='(UTC+9)';
-LOCAL_TIME='';
+% LOCAL_TIME='(UTC+9)';
+% LOCAL_TIME='';
 
 wet_dry = 1;  % Dry mask OFF: 0, ON: 1
 
-unit = 'km'; 
+% unit = 'km'; 
 % 'm', 'latlon'
-% unit = 'latlon';
-LevelList = [-1 1 10];
+unit = 'latlon';
+LevelList = [-1 1 10 20 50 100 500 1000 5000];
 
 h          = ncread(his,'h');
-% y_rho    = ncread(his,'lat_rho');
-% x_rho    = ncread(his,'lon_rho');
-x_rho      = ncread(grd,'x_rho');
-y_rho      = ncread(grd,'y_rho');
-x_rho=(x_rho-min(min(x_rho)))/1000; % m->km
-y_rho=(y_rho-min(min(y_rho)))/1000; % m->km
+y_rho    = ncread(his,'lat_rho');
+x_rho    = ncread(his,'lon_rho');
+% x_rho      = ncread(grd,'x_rho');
+% y_rho      = ncread(grd,'y_rho');
+% x_rho=(x_rho-min(min(x_rho)))/1000; % m->km
+% y_rho=(y_rho-min(min(y_rho)))/1000; % m->km
 
 mask_u   = ncread(his,'mask_u');
 mask_v   = ncread(his,'mask_v');
@@ -101,10 +108,16 @@ i=1;
 % xmin=116;   xmax=max(max(x_rho));  ymin=-6.5;   ymax=max(max(y_rho));  % for Berau1
 % xsize=400; ysize=700; % for Berau1
 
-xmin=min(min(x_rho))-1;   xmax=max(max(x_rho))+1;  ymin=min(min(y_rho))-1;   ymax=max(max(y_rho))+1;
-% xmin=min(min(x_rho))-0.01;   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-% xmin=123.6;   xmax=max(max(x_rho));  ymin=23.95;   ymax=max(max(y_rho));
-xsize=650; ysize=500; % for Berau2
+% xmin=min(min(x_rho))-1;   xmax=max(max(x_rho))+1;  ymin=min(min(y_rho))-1;   ymax=max(max(y_rho))+1;
+% xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+
+% TokyoBay2
+xmin=139.05;   xmax=140.15;  ymin=34.92;   ymax=35.7;
+xsize=780; ysize=500;
+% TokyoBay3
+% xmin=139.6;   xmax=140.13;  ymin=35.13;   ymax=35.7;
+% xsize=700; ysize=650;
+
 
 close all
 % clear ubar vber ubar2 vbar2 ubar3 vbar3

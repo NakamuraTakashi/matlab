@@ -19,7 +19,14 @@ for i=0:10
     if(min(dx/10^i,dy/10^i)<10)
         break
     end
-end  
+end
+
+if strcmp(unit,'latlon')
+    lat_m=median(YData1,'all');
+    aspr=1/cos(lat_m/180*pi);
+else
+    aspr=1;
+end
 
 % axes
 axes1 = axes('Parent',figure1,...
@@ -29,25 +36,23 @@ axes1 = axes('Parent',figure1,...
     'FontName','Arial',...
     'CLim',[Cmin Cmax],...
     'Box','on');
+
 % Axes
-%xlim(axes1,[-25 3125]);
  xlim(axes1,[xmin xmax]);
  xticks('auto')
 % Axes
-%ylim(axes1,[-25 9525]);
  ylim(axes1,[ymin ymax]);
 % ylim auto
 yticks('auto')
 hold(axes1,'all');
-pbaspect([dx dy 1])
+pbaspect([dx dy*aspr 1])
 
 
 % surface
 
 % colorbar
-%colormap(colmap);
 colorbar('peer',axes1,...
-    'FontSize',9);
+    'FontSize',9,'FontName','Arial');
 
 h_surf=pcolor(XData1,YData1,CData1);
 shading flat;
@@ -59,10 +64,6 @@ h_contour=contour(XData1,YData1,zdata2,...
     'Parent',axes1,...
     'ShowText','off');
 
-%    'LevelList',[0 0.25 0.5 1 3 5],...
-%    'LevelList',[-1 1],...
-%    'LevelList',[0 0.5 1 3],...
-
 % quiver
 U=UData2*scale;
 V=VData2*scale;
@@ -72,19 +73,19 @@ h_quiver=quiver(XData2,YData2,U,V,...
 
 if strcmp(unit,'km')
     % xlabel
-    xlabel('X (km)','FontName','Arial');
+    xlabel('X (km)','FontSize',9,'FontName','Arial');
     % ylabel
-    ylabel('Y (km)','FontName','Arial');
+    ylabel('Y (km)','FontSize',9,'FontName','Arial');
 elseif strcmp(unit,'m') 
     % xlabel
-    xlabel('X (m)','FontName','Arial');
+    xlabel('X (m)','FontSize',9,'FontName','Arial');
     % ylabel
-    ylabel('Y (m)','FontName','Arial');
+    ylabel('Y (m)','FontSize',9,'FontName','Arial');
 elseif strcmp(unit,'latlon')
     % xlabel
-    xlabel('Longitude','FontName','Arial');
+    xlabel('Longitude','FontSize',9,'FontName','Arial');
     % ylabel
-    ylabel('Latitude','FontName','Arial');
+    ylabel('Latitude','FontSize',9,'FontName','Arial');
 end
 
 % title
@@ -103,6 +104,7 @@ h_annot=annotation(figure1,'textbox',...
     'FontSize',11,...
     'FitBoxToText','on',...
     'LineStyle','none');
+
 
 
 

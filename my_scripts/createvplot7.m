@@ -55,7 +55,8 @@ colorbar('peer',axes1,...
     'FontSize',9,'FontName','Arial');
 
 h_surf=pcolor(XData1,YData1,CData1);
-shading flat;
+% shading flat;
+shading interp;
 
 % contour
 h_contour=contour(XData1,YData1,zdata2,...

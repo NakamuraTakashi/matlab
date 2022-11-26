@@ -2,9 +2,9 @@
 #
 name='temp'
 
-img_dir='figs_png_S3btm'
+img_dir='figs_png_S3prof'
 
-tag='S3btm'
+tag='S3prof'
 
 printf "file '%s'\n" ${img_dir}/${name}*.png > imglist.txt
 

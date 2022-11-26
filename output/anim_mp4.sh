@@ -1,22 +1,14 @@
 #!/bin/bash
 #
-#name='temp'
-#name='Hs'
-#name='vel'
-name='mort27oC'
-#name='Zoox_31oC'
-#
-anim_dir='figs_png_'${name}
-echo ${anim_dir}
-#cp -r figs_png ${anim_dir}
-#rm figs_png/*.png
-#
-#echo 'copy fin.'
-#
-#convert -layers optimize -delay 10 figs_png_${name}/*.png anim/anim_${name}.gif
-#convert -layers optimize -delay 2 figs_png_${name}/*.png -q 10 anim/anim_${name}.mp4
-#ffmpeg -r 30 -i figs_png_${name}/t01_%04d.png -vcodec libx264 -pix_fmt yuv420p -r 60 anim/anim_${name}.mp4
-#ffmpeg -r 30 -i figs_png_${name}/t01_%04d.png -pix_fmt yuv420p -r 60 -an anim/anim_${name}.mp4
-ffmpeg -pattern_type glob -i "figs_png_${name}/t01_*.png" -q 5 -r 30 -an anim/anim_${name}.mp4
+name=''
 
-#-start_number
+img_dir='figs_png'
+
+tag='SH'
+
+printf "file '%s'\n" ${img_dir}/${name}*.png > imglist.txt
+
+#ffmpeg -r:v 30 -f concat -i imglist.txt -codec:v libx264 -pix_fmt yuv420p -crf 22 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -an anim/${tag}_${name}.mp4
+ffmpeg -r:v 20 -f concat -i imglist.txt -codec:v libx264 -pix_fmt yuv420p -crf 22 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -an anim/${tag}_${name}.mp4
+#
+# -r:v 30 => 30 frame per sec.

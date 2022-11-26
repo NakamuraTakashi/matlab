@@ -10,16 +10,16 @@ close all
 
 % --- Configurations
 
-grid_file   = 'Bolinao2_grd_v8.1.nc'; 
-name_case   = 'HYCOMpNAO_fish_farm_grd_v8.1_cd1.5_zob0.03_riv2';
+grid_file   = 'F:\COAWST_DATA\Shizugawa\Shizugawa3\Grid\Shizugawa3_grd_v0.0.nc';
+name_case   = 'shizugawa';
 period_case = '201210_01';
-% transect    = xlsread('transect.xlsx', 'A3:B34');  % Transect 1
+transect    = xlsread('transect_SZ.xlsx', 'A3:B141');  % Transect 1
 % transect    = xlsread('transect.xlsx', 'C3:D49');  % Transect 2
-transect    = xlsread('transect.xlsx', 'E3:F50');  % Transect 3
-temp_range  = [27 31];  % Range of temperature for plot
-nz          = 10;       % Number of vertical layers
+% transect    = xlsread('transect.xlsx', 'E3:F50');  % Transect 3
+temp_range  = [5 20];  % Range of temperature for plot
+nz          = 15;       % Number of vertical layers
 wll_max     = 2;        % Maximum water level (m)
-h_min       = -18;      % Elevation of first layer (m)
+h_min       = -55;      % Elevation of first layer (m)
 dz          = 0.1;      % Vertical resolution of contour (m)
 % min_date    = datenum(2012,10,8,0,0,0);   % Period 1 start
 % max_date    = datenum(2012,10,17,0,0,0);  % Period 1 end
@@ -30,12 +30,13 @@ dz          = 0.1;      % Vertical resolution of contour (m)
 % min_date    = datenum(2012,12,4,0,0,0);   % Period 3 start
 % max_date    = datenum(2012,12,14,0,0,0);  % Period 3 end
 % out_dir     = 't3_contour_p3_figs_png';   % Period 3
-min_date    = datenum(2012,12,20,0,0,0);  % Period 4 start
-max_date    = datenum(2012,12,31,0,0,0);  % Period 4 end
+min_date    = datenum(2021,6,1,0,0,0);  % Period 4 start
+max_date    = datenum(2021,11,1,0,0,0);  % Period 4 end
 out_dir     = 't3_contour_p4_figs_png';   % Period 4
 
 ref_date    = datenum(2000,1,1,8,0,0);    % for Bolinao
-his         = ['I:/COAWST_Bolinao2/Bolinao2_', name_case, '_his_', period_case, '.nc'];
+% his         = ['I:/COAWST_Bolinao2/Bolinao2_', name_case, '_his_', period_case, '.nc'];
+his         = ['E:\COAWTS_OUTPUT\Shizugawa3\Shizugawa3_his_20210104.nc'];
 
 % --- Variables to be derived
 
@@ -61,6 +62,9 @@ for z = 1 : n_zgrid
     grid_elev(z,:) = h_min + z*dz;
     grid_x(z,:) = 1:1:n_point;
 end
+
+load('MyColormaps')
+colormap6=superjet(128,'NuvibZctgyorWq');
 
 % --- Read ocean time
 
@@ -114,7 +118,7 @@ for t = 1 : nt
         figure (1)
 
         contourf(grid_x, grid_elev, grid_temp, 'LineStyle', 'none', 'LevelStep', 0.01)
-        colormap('jet');
+        colormap(colormap6);
         colorbar
         caxis([temp_range(1) temp_range(2)]);
         set(gcf,'Position',[100 100 800 300])
@@ -130,7 +134,7 @@ for t = 1 : nt
         'FitBoxToText','on',...
         'LineStyle','none');
 
-        hgexport(figure(1), strcat(['output/',name_case,'/',out_dir,'/v01_'],num2str(t,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
+        hgexport(figure(1), strcat(['output/figs_png_SZ3/temp_'],num2str(t,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
         close(figure(1))
     end
 end

@@ -4,7 +4,7 @@
 
 % Coral Triangle case
 grd='../Data/Coral_Triangle/CT_0.08_grd_v2.nc'; 
-his='D:\cygwin64\home\Takashi\COAWST\Projects\Coral_Triangle\CT_0.08_his_201704.nc';
+his='K:\COAWST\Projects\Coral_Triangle\CT_0.08_his_201704.nc';
 
 starting_date=datenum(2000,1,1,0,0,0); % 
 
@@ -22,8 +22,8 @@ elseif id == 100
     s_interval=6;  % for Wind
     Vmax = 20;  % for Wind
 else
-    scale=1.5;   % for SHIRAHO
-    s_interval=7; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
+    scale=2;   % for SHIRAHO
+    s_interval=15; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
     Vmax = 2; % for SHIRAHO
 end
 
@@ -109,7 +109,8 @@ elseif id == 4
 elseif id == 5
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Water elevation (m)',-1.5,2.5,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 6
-    [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Salinity (psu)',31,35,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+%     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Salinity (psu)',31,35,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Salinity (psu)',31,35,gray(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 100
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Wind velocity (m s^-^1)',0,Vmax,colmap4,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 end
@@ -192,7 +193,7 @@ for i=1:1:imax
 
     drawnow
 
-    hgexport(figure(1), strcat('output/figs_png\v01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
+%     hgexport(figure(1), strcat('output/figs_png\v01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
 %     hgexport(figure(1), strcat('output/figs_eps\v01_',num2str(i,'%0.4u'),'.eps'),hgexport('factorystyle'),'Format','eps');
 end
 

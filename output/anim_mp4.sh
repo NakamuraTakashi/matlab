@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-name=''
+name='wave'
 
-img_dir='figs_png'
+img_dir='figs_png_panay0_wave'
 
-tag='SH'
+tag='Panay0'
 
 printf "file '%s'\n" ${img_dir}/${name}*.png > imglist.txt
 

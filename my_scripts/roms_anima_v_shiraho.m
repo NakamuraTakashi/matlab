@@ -3,9 +3,9 @@
 %
 
 %Shiraho reef case
-grd='D:\ROMS\Data\Shiraho_reef\shiraho_reef_grid16.2.nc'; 
+grd='../Data/Shiraho_reef/shiraho_reef_grid16.3.nc'; 
 % his='D:\ROMS\output\Shiraho_reef\OAv12_ctrl\ocean_his_10.nc';
-his='K:\ROMS\output\Shiraho_reef\test01\ocean_his_10cwm2.nc';
+his='D:\ROMS\output\Shiraho_reef\OAv12_ctrl\ocean_his_10.nc';
 
 % starting_date=datenum(2009,8,25,0,0,0);% for SHIRAHO
 starting_date=datenum(2010,8,20,0,0,0); % for Shiraho
@@ -206,7 +206,7 @@ for i=145:3:imax
 
     drawnow
 
-    hgexport(figure(1), strcat('output/figs_png\v01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
+%     hgexport(figure(1), strcat('output/figs_png\v01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
 %     hgexport(figure(1), strcat('output/figs_eps\v01_',num2str(i,'%0.4u'),'.eps'),hgexport('factorystyle'),'Format','eps');
 end
 

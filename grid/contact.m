@@ -478,6 +478,7 @@ function R = refine_coordinates(cr, dg, rg, G, S, MaskInterp)
 
 spherical = S.spherical;
 
+
 % Check Matlab version and use "griddedInterpolant" (release 2011b), if
 % available. Otherwise, use "interp2".  The "griddedInterpolant" is
 % faster the interpolant can be used several times for the same C-grid

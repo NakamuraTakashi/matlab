@@ -3,10 +3,10 @@
 %
 
 % Coral Triangle case
-% grd='../Data/Berau/Berau1_grd_v1.2.nc'; 
-grd='../Data/Berau/Berau2_grd_v3.1.nc'; 
-% his='../Projects/Berau/Berau1_his_201704_3.nc';
-his='../Projects/Berau/Berau2_his_201704_2.nc';
+grd='../Data/Berau/Berau1_grd_v1.2.nc'; 
+% grd='../Data/Berau/Berau2_grd_v3.1.nc'; 
+his='K:\COAWST\Projects\Berau\Berau1_his_201704_3.nc';
+% his='K:\COAWST\Projects\Berau\Berau2_his_201704_2.nc';
 
 starting_date=datenum(2000,1,1,0,0,0); % 
 
@@ -25,8 +25,8 @@ elseif id == 100
     Vmax = 20;  % for Wind
 else
 %     scale=0.2;   % for berau1
-    scale=0.07;   % for berau2
-    s_interval=7; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
+    scale=0.5;   % for berau2
+    s_interval=15; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
     Vmax = 2; % for SHIRAHO
 end
 
@@ -61,11 +61,11 @@ c(1:Im,1:Jm)=0;
 k=0;
 i=1;
 
-% xmin=116;   xmax=max(max(x_rho));  ymin=-6.5;   ymax=max(max(y_rho));  % for Berau1
-% xsize=400; ysize=700; % for Berau1
+xmin=116;   xmax=max(max(x_rho));  ymin=-6.5;   ymax=max(max(y_rho));  % for Berau1
+xsize=400; ysize=700; % for Berau1
 
-xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-xsize=600; ysize=550; % for Berau2
+% xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+% xsize=600; ysize=550; % for Berau2
 
 close all
 % clear ubar vber ubar2 vbar2 ubar3 vbar3
@@ -113,7 +113,8 @@ elseif id == 4
 elseif id == 5
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Water elevation (m)',-1.5,2.5,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 6
-    [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Salinity (psu)',31,35,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+%     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Salinity (psu)',31,35,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Salinity (psu)',31,35,gray(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 100
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Wind velocity (m s^-^1)',0,Vmax,colmap4,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 end

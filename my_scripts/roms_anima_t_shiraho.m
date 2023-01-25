@@ -2,7 +2,7 @@
 % === ver 2016/03/10   Copyright (c) 2014-2016 Takashi NAKAMURA  =====
 %                for MATLAB R2015a,b  
 
-grd='D:\ROMS\Data\Shiraho_reef\shiraho_reef_grid16.2.nc';
+grd='../Data/Shiraho_reef/shiraho_reef_grid16.3.nc'; 
 % his='D:\ROMS\output\Shiraho_reef\OAv12_ctrl\ocean_his_10.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching01\ocean_his_10.nc';
 % his='K:\ROMS\output\Shiraho_reef\doc01\ocean_his_10.nc';
@@ -13,7 +13,7 @@ grd='D:\ROMS\Data\Shiraho_reef\shiraho_reef_grid16.2.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_29.5.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_30.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_31.nc';
-his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_33.nc';
+his='D:\ROMS\output\Shiraho_reef\OAv12_ctrl\ocean_his_10.nc';
 
 % starting_date=datenum(2009,8,25,0,0,0); % for Shiraho
 starting_date=datenum(2010,8,20,0,0,0); % for Shiraho
@@ -61,7 +61,7 @@ xmin=0;   xmax=max(max(x_rho));  ymin=0;   ymax=max(max(y_rho));
 xsize=240; ysize=490; % for SHIRAHO for Animation
 
 % id = 32;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-id = 36;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+id = 3;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 close all
@@ -105,7 +105,8 @@ elseif id == 2
 %     [h_surf,h_contour,h_annot]=createfigure5(x_rho,y_rho,tmp,h,date_str,'Salinity (psu)', 33, 36.0, colmap1,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
     [h_surf,h_contour,h_annot]=createfigure5(x_rho,y_rho,tmp,h,date_str,'Salinity (psu)', 32, 36, jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 3
-    [h_surf,h_contour,h_annot]=createfigure5(x_rho,y_rho,tmp,h,date_str,'DIC (\mumol kg^-^1)',1600,2100,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+%     [h_surf,h_contour,h_annot]=createfigure5(x_rho,y_rho,tmp,h,date_str,'DIC (\mumol kg^-^1)',1600,2100,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    [h_surf,h_contour,h_annot]=createfigure5(x_rho,y_rho,tmp,h,date_str,'DIC (\mumol kg^-^1)',1600,1950,gray(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 4
     [h_surf,h_contour,h_annot]=createfigure5(x_rho,y_rho,tmp,h,date_str,'TA (\mumol kg^-^1)',2050,2350,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 5
@@ -195,9 +196,9 @@ end
 drawnow
 %set(figure(1),'OuterPosition',[0 0 320 700])%[0 0 400 800]%[0 0 290 620]
 
-% for i=145:3:imax
+for i=1100:3:1100
 % for i=imax:1:imax
-for i=1:3:imax   
+% for i=1:3:imax   
 
     if id == 1
 %         tmp = ncread(his,'temp',[1 1 Nz i],[Inf Inf 1 1]);  % Surface
@@ -333,7 +334,7 @@ for i=1:3:imax
     set(h_annot,'String',date_str)
     drawnow
     
-    hgexport(figure(1), strcat('output/figs_png\t01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
+%     hgexport(figure(1), strcat('output/figs_png\t01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
 %     hgexport(figure(1), strcat('output/figs_eps\t01_',num2str(i,'%0.4u'),'.eps'),hgexport('factorystyle'),'Format','eps');
 
 end

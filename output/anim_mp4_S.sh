@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-name='temp'
+name=''
 
-img_dir='figs_png_S3prof'
+img_dir='figs_png_S3btm_25h_ave_flow'
 
-tag='S3prof'
+tag='S3btm_25h_ave_flow'
 
 printf "file '%s'\n" ${img_dir}/${name}*.png > imglist.txt
 

@@ -1,10 +1,21 @@
 #!/bin/bash
 #
-name='temp'
+#name='wave'
+#name='temp'
+#name='mud_01'
+name='Hs'
 
-img_dir='figs_png_BCY3srf'
 
-tag='BCY3srf'
+#img_dir='figs_png_panay0_wave'
+#img_dir='figs_png_BCY1srf'
+#img_dir='figs_png_BCY3srf'
+#img_dir='figs_png_PNY1srf'
+img_dir='figs_png_TGLNsrf'
+
+#tag='PNY0wav'
+#tag='PNY0srf'
+#tag='PNY1srf'
+tag='TGLNsrf'
 
 printf "file '%s'\n" ${img_dir}/${name}*.png > imglist.txt
 

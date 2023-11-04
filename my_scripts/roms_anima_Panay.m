@@ -1,20 +1,20 @@
 %
 % === Copyright (c) 2014-2023 Takashi NAKAMURA  =====
 %
-% CASE 1=> Boracay1 (Panay0); 2=> Boracay2; 3=> Boracay3; 4=> Panay1; 5=> Tangalan
+% CASE 1=> Panay0; 2=> Boracay2; 3=> Boracay3; 4=> Panay1; 5=> Tangalan
 % CASE = 1;
 % CASE = 4;
 CASE = 5;
 
 F_drawUV = true;
 % F_drawUV = false;
-% id = 7;  % <- Select 1,2,3,100
-id = 3;  % <- Select 1,2,3,100
+% id = 7;  % <- 4D var
+id = 3;  % <- Wave hight
 
-if CASE == 1      % Boracay1
-    grd='F:\COAWST_DATA\Boracay\Boracay1\Grid\Boracay1_grd_v1.0.nc';
-    his=["E:\COAWTS_OUTPUT\Boracay1\Boracay1_his_20210102.nc"];
-    out_dirstr = 'output/figs_png_BCY1srf';
+if CASE == 1      % Panay0
+    grd='F:\COAWST_DATA\Panay\Panay0\Grid\Panay0_grd_v1.0.nc';
+    his=["E:\COAWTS_OUTPUT\Panay\Panay0\Panay0_sed_his_20210102.nc"];
+    out_dirstr = 'output/figs_png_PNY0srf';
 %     out_dirstr = 'output/figs_png_BCY1btm';
     
     LevelList = [-10 0 250 500 750 1000 1250 1500 1750 2000];
@@ -69,17 +69,17 @@ elseif CASE == 3  % Boracay3
     v_legend = 1.0;
 
 elseif CASE == 4  % Panay1
-    grd='F:/COAWST_DATA/Panay/Panay1/Grid/Panay1_grd_v1.3.nc';
+    grd='F:/COAWST_DATA/Panay/Panay1/Grid/Panay1_grd_v1.4.nc';
 %     his=["E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210107.nc"
 %          "E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210227.nc"
 %          "E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210514.nc"];
 %     his=["E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210808.nc"];
-    his=["E:/COAWTS_OUTPUT/Panay/Panay1/Panay1_his_20210105_T3_1.nc"];
+    his=["E:/COAWTS_OUTPUT/Panay/Panay1/Panay1_sed_wav_his_20210105.nc"];
 
     out_dirstr = 'output/figs_png_PNY1srf';
 %     out_dirstr = 'output/figs_png_PNY1btm';
     
-    LevelList = [-5 0 1 3 5 10 100 200 300 400 500 600 700 800 900 1000];
+    LevelList = [-5 5 10 100 200 300 400 500 600 700 800 900 1000];
     
     Nz=15; % Surface
 %     Nz=1; % Bottom
@@ -91,15 +91,14 @@ elseif CASE == 4  % Panay1
     v_legend = 1.0;   
     
 elseif CASE == 5  % Tangalan
-    grd='F:/COAWST_DATA/Panay/Tangalan/Grid/Tangalan_grd_v1.0.nc';
-%     his=["E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210107.nc"
-%          "E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210227.nc"
-%          "E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210514.nc"];
-%     his=["E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210808.nc"];
-    his=["E:/COAWTS_OUTPUT/Panay/Tangalan/Tangalan_his_20210105_T3_2_MUD_ERATE_0.nc"];
+    grd='F:/COAWST_DATA/Panay/Tangalan/Grid/Tangalan_grd_v2.1.nc';
 
-    out_dirstr = 'output/figs_png_TGLNsrf';
-%     out_dirstr = 'output/figs_png_TGLNbtm';
+%     his=["E:/COAWTS_OUTPUT/Panay/Tangalan/Tangalan_sed_wav_his_20210107.nc"
+%          "E:/COAWTS_OUTPUT/Panay/Tangalan/Tangalan_sed_wav_his_20211010.nc"];
+    his=["E:/COAWTS_OUTPUT/Panay/Tangalan/Tangalan_sed_wav_his_20211010.nc"];
+
+    out_dirstr = 'output/figs_png_TGLsrf';
+%     out_dirstr = 'output/figs_png_TGLbtm';
     
     LevelList = [-5 0 1 3 5 10 100 200 300 400 500 600 700 800 900 1000];
     
@@ -132,7 +131,7 @@ colormap7=superjet(128,'xvbZctgyorWq');
 
 % title='Sea surface temperature (^oC)'; cmin=0; cmax=30; colmap=colormap6; ncname='temp'; % YAEYAMA1
 % title='Sea surface temperature (^oC)'; cmin=6; cmax=12; colmap=jet(128); ncname='temp'; % YAEYAMA1
-% title='Sea surface temperature (^oC)'; cmin=23; cmax=34; colmap=colormap6; ncname='temp'; % YAEYAMA2 surface
+% title='Sea surface temperature (^oC)'; cmin=23; cmax=34; colmap=colormap6; ncname='temp'; % Pany
 % title='Sea bottom temperature (^oC)'; cmin=23; cmax=34; colmap=colormap6; ncname='temp'; % YAEYAMA2 bottom
 
 % title='Salinity (psu)'; cmin=33; cmax=35; colmap=jet(128); ncname='salt';
@@ -168,12 +167,13 @@ colormap7=superjet(128,'xvbZctgyorWq');
 % title='^1^3C in Zooplankton (umolC L^-^1)'; cmin=0; cmax=0.1; colmap=colmap1; ncname='zoop13C_01';
 
 % title='SS \phi=5um (kg m^-^3)'; cmin=0; cmax=0.1; colmap=colmap1; ncname='mud_01';
-title='Suspended Solid (kg m^-^3)'; cmin=0; cmax=0.01; colmap=colmap1; ncname='mud_01';
+title='Suspended Solid (kg m^-^3)'; cmin=0; cmax=0.01; colmap=colmap1; ncname='mud_01';  % Panay setting
+% title='Bottom Suspended Solid (kg m^-^3)'; cmin=0; cmax=0.01; colmap=colmap1; ncname='mud_01';  % Panay setting
 % title='NO3 (umolN L^-^1)';  cmin=0; cmax=50; colmap=jet(128); ncname='NO3';
 % title='Phytoplankton (umolC L^-^1)';  cmin=0; cmax=0.5; colmap=jet(128); ncname='phytoplankton_02';
 
 
-if CASE ==1       % Boracay1
+if CASE ==1       % Panay0
     scale=10;
     s_interval=4;
 elseif CASE == 2  % Boracay2
@@ -187,7 +187,7 @@ elseif CASE == 4  % Panay1
         scale=1.5;
         s_interval=7;
     else
-        scale=1;
+        scale=3;
         s_interval=5;
     end
 elseif CASE == 5  % Tangalan

@@ -15,10 +15,9 @@ grd='../Data/Shiraho_reef/shiraho_reef_grid16.3.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_31.nc';
 his='../Projects/Shiraho_reef/ocean_his_10_5.nc';
 
-% starting_date=datenum(2009,8,25,0,0,0); % for Shiraho
-starting_date=datenum(2010,8,20,0,0,0); % for Shiraho
-%starting_date=datenum(2013,6,1,0,0,0);
-% starting_date=datenum(2000,1,1,0,0,0);
+
+starting_date=datenum(2000,1,1,0,0,0);
+
 
 Nz=8; % for Shiraho
 % Nz=15; %30-1
@@ -341,6 +340,7 @@ drawnow
 
 % for i=1100:3:1100
 % for i=imax:1:imax
+% for i=1:1:1
 for i=1:1:imax   
 
     if id == 1

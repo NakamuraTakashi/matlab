@@ -13,8 +13,10 @@ grd='../Data/Shiraho_reef/shiraho_reef_grid16.3.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_29.5.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_30.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_31.nc';
-his='../Projects/Shiraho_reef/ocean_his_10_5.nc';
+% his='../Projects/Shiraho_reef/ocean_his_10_5.nc';
 % his='/Users/yuta/mount/takagi/SedimentData/ocean_his_10_5.nc';
+his='/Users/yuta/COAWST/Projects/Shiraho_reef/shiraho_sediment_his.nc';
+
 
 
 transect_Y_position = 2; % Y position to create vertical profile along x-axis at Y (km) 
@@ -60,14 +62,14 @@ core_X_position = 2.5; % X position along the transect to create vertical concen
 % id = 51; % Sediment Temperature
 % id = 52; % Sediment Salinity
 % id = 53; % Sediment TA
-id = 54; % Sediment DO
+% id = 54; % Sediment DO
 % id = 55; % Sediment DIC
 % id = 56; % Sediment N2
 % id = 57; % Sediment DOC Labile
 % id = 58; % Sediment DOC Refractory
 % id = 59; % Sediment POC Labile
 % id = 60; % Sediment POC Refractory
-% id = 61; % Sediment POC Non-degradable
+id = 61; % Sediment POC Non-degradable
 % id = 62; % Sediment NO3
 % id = 63; % Sediment NH4
 % id = 64; % Sediment PO4
@@ -100,7 +102,7 @@ id = 54; % Sediment DO
 
 output_folder = strcat('figs_png','_',num2str(id,'%0.4u'));
 if (exist(strcat('output/', output_folder),'dir'))
-    error(strcat('Output directory /output/',output_folder,' already exists. Program terminated to prevent overwrite.'))
+    % error(strcat('Output directory /output/',output_folder,' already exists. Program terminated to prevent overwrite.'))
 else
     mkdir(strcat('output/',output_folder)); 
 end
@@ -317,19 +319,19 @@ elseif id == 57
         xsize,ysize,xmin,xmax,ymin,ymax,zmin,zmax,xunit,yunit,zunit,axisratio,LevelList,transect_Y_position,core_X_position);
 elseif id == 58
     [h_surf,h_surf2,h_contour,h_core,h_annot,axes1,axes2,axes3]=createfiguresedtransect(x_rho,x_rho2,y_rho,z_sed,tmp,tmp2,h,date_str, ...
-        'Sediment DOC Refractory (umol L^-^1)', 0, 2100, ...
+        'Sediment DOC Refractory (umol L^-^1)', 0, 2100, jet(128),...
         xsize,ysize,xmin,xmax,ymin,ymax,zmin,zmax,xunit,yunit,zunit,axisratio,LevelList,transect_Y_position,core_X_position);
 elseif id == 59
     [h_surf,h_surf2,h_contour,h_core,h_annot,axes1,axes2,axes3]=createfiguresedtransect(x_rho,x_rho2,y_rho,z_sed,tmp,tmp2,h,date_str, ...
-        'Sediment POC Labile (nmol g^-^1)', 0, 100, colmap1, ...
+        'Sediment POC Labile (nmol g^-^1)', 0, 4, colmap1, ...
         xsize,ysize,xmin,xmax,ymin,ymax,zmin,zmax,xunit,yunit,zunit,axisratio,LevelList,transect_Y_position,core_X_position);
 elseif id == 60
     [h_surf,h_surf2,h_contour,h_core,h_annot,axes1,axes2,axes3]=createfiguresedtransect(x_rho,x_rho2,y_rho,z_sed,tmp,tmp2,h,date_str, ...
-        'Sediment POC Refractory (nmol g^-^1)', 0, 1000000, colmap1, ...
+        'Sediment POC Refractory (nmol g^-^1)', 832000, 852000, jet(128), ...
         xsize,ysize,xmin,xmax,ymin,ymax,zmin,zmax,xunit,yunit,zunit,axisratio,LevelList,transect_Y_position,core_X_position);
 elseif id == 61
     [h_surf,h_surf2,h_contour,h_core,h_annot,axes1,axes2,axes3]=createfiguresedtransect(x_rho,x_rho2,y_rho,z_sed,tmp,tmp2,h,date_str, ...
-        'Sediment POC Non-degradable (nmol g^-^1)', 0, 1000000, colmap1, ...
+        'Sediment POC Non-degradable (nmol g^-^1)', 832000, 852000, jet(128), ...
         xsize,ysize,xmin,xmax,ymin,ymax,zmin,zmax,xunit,yunit,zunit,axisratio,LevelList,transect_Y_position,core_X_position);
 elseif id == 62
     [h_surf,h_surf2,h_contour,h_core,h_annot,axes1,axes2,axes3]=createfiguresedtransect(x_rho,x_rho2,y_rho,z_sed,tmp,tmp2,h,date_str, ...

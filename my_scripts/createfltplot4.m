@@ -47,16 +47,6 @@ pbaspect([dx dy 1])
 %    'LineStyle','none',...
 %    'CData', CData1);
 
-h_scatter=scatter(X,Y,5,Z,'fill'); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Point size
-%h_scatter=plot(X,Y,'ro');
-%shading flat;
-%shading interp;
-
-% colorbar
-colormap(colmap);
-colorbar('peer',axes1,...
-    'FontSize',9);
-
 
 % contour
 h_contour=contour(XData1,YData1,zdata2,...
@@ -68,6 +58,18 @@ h_contour=contour(XData1,YData1,zdata2,...
 %    'LevelList',[0 0.25 0.5 1 3 5],...
 %    'LevelList',[-1 1],...
 %    'LevelList',[0 0.5 1 3],...
+
+
+h_scatter=scatter(X,Y,7,Z,'fill'); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Point size
+%h_scatter=plot(X,Y,'ro');
+%shading flat;
+%shading interp;
+
+% colorbar
+colormap(colmap);
+colorbar('peer',axes1,...
+    'FontSize',9);
+
 
 if strcmp(unit,'km')
     % xlabel

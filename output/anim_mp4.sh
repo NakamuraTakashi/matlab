@@ -1,10 +1,14 @@
 #!/bin/bash
 #
-name='wave'
+#name='DO'
+#name='PhyC02_01'
+name='S0_01'
 
-img_dir='figs_png_panay0_wave'
+#img_dir='figs_png_TB3_sed1'
+img_dir='figs_png_TB3_sed2'
 
-tag='Panay0'
+#tag='TB3_sed1'
+tag='TB3_sed2'
 
 printf "file '%s'\n" ${img_dir}/${name}*.png > imglist.txt
 

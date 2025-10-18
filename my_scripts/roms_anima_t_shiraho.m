@@ -13,12 +13,12 @@ grd='../Data/Shiraho_reef/shiraho_reef_grid16.3.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_29.5.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_30.nc';
 % his='K:\ROMS\output\Shiraho_reef\bleaching02\ocean_his_10_31.nc';
-his='D:\ROMS\output\Shiraho_reef\OAv12_ctrl\ocean_his_10.nc';
+his='../Projects/Shiraho_reef/ocean_his_10.nc';
 
 % starting_date=datenum(2009,8,25,0,0,0); % for Shiraho
-starting_date=datenum(2010,8,20,0,0,0); % for Shiraho
+% starting_date=datenum(2010,8,20,0,0,0); % for Shiraho
 %starting_date=datenum(2013,6,1,0,0,0);
-% starting_date=datenum(2000,1,1,0,0,0);
+starting_date=datenum(2000,1,1,0,0,0);
 
 Nz=8; % for Shiraho
 % Nz=15; %30-1
@@ -61,7 +61,7 @@ xmin=0;   xmax=max(max(x_rho));  ymin=0;   ymax=max(max(y_rho));
 xsize=240; ysize=490; % for SHIRAHO for Animation
 
 % id = 32;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-id = 3;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+id = 1;  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 close all
@@ -196,9 +196,9 @@ end
 drawnow
 %set(figure(1),'OuterPosition',[0 0 320 700])%[0 0 400 800]%[0 0 290 620]
 
-for i=1100:3:1100
+% for i=1100:3:1100
 % for i=imax:1:imax
-% for i=1:3:imax   
+for i=1:3:imax   
 
     if id == 1
 %         tmp = ncread(his,'temp',[1 1 Nz i],[Inf Inf 1 1]);  % Surface
@@ -334,7 +334,7 @@ for i=1100:3:1100
     set(h_annot,'String',date_str)
     drawnow
     
-%     hgexport(figure(1), strcat('output/figs_png\t01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
+    hgexport(figure(1), strcat('output/figs_png\t01_',num2str(i,'%0.4u'),'.png'),hgexport('factorystyle'),'Format','png');
 %     hgexport(figure(1), strcat('output/figs_eps\t01_',num2str(i,'%0.4u'),'.eps'),hgexport('factorystyle'),'Format','eps');
 
 end

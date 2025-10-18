@@ -1,83 +1,126 @@
 %
-% === Copyright (c) 2014-2023 Takashi NAKAMURA  =====
+% === Copyright (c) 2014-2024 Takashi NAKAMURA  =====
 %
-% CASE 1=> Shizugawa1; 2=> Shizugawa2; 3=> Shizugawa3
-CASE = 3;
+% CASE 1=> YAEYAMA1; 2=> YAEYAMA2; 3=> YAEYAMA3; 4=> SHIRAHO REEF
+% CASE = 2;
+CASE = 4;
 
 F_drawUV = true;
 % F_drawUV = false;
-id = 8;  % <- Select 1,2,3,100
+id = 7;  % <- Select 1,2,3,7,100
 
-if CASE == 1      % Shizugawa1
-    grd='F:\COAWST_DATA\Shizugawa\Shizugawa1\Grid\Shizugawa1_grd_v0.1.nc';
-    his=["E:\COAWTS_OUTPUT\Shizugawa1\Shizugawa1_his_20210102.nc"
-         "E:\COAWTS_OUTPUT\Shizugawa1\Shizugawa1_his_20210131.nc"
-         "E:\COAWTS_OUTPUT\Shizugawa1\Shizugawa1_his_20211231.nc"];
-%     out_dirstr = 'output/figs_png_S1srf';
-    out_dirstr = 'output/figs_png_S1btm';
-    
-    LevelList = [-10 0 200 400 600 800 1000 1200 1400 1600 1800 2000 2200];
-    
-%     Nz=15; % Surface
-    Nz=1; % Bottom
-    unit = 'km'; 
-%          'm', 'latlon'
-%     unit = 'latlon';
-    x_arrow_txt = 50; y_arrow_txt=230;
-    I_arrow_legend = 1; J_arrow_legend=25;
-    v_legend = 1;
-    
-elseif CASE == 2  % Shizugawa2
-    grd='F:\COAWST_DATA\Shizugawa\Shizugawa2\Grid\Shizugawa2_grd_v0.0.nc';
-    his=["E:\COAWTS_OUTPUT\Shizugawa2\Shizugawa2_his_20210103.nc"
-         "E:\COAWTS_OUTPUT\Shizugawa2\Shizugawa2_his_20220102.nc"];
-%     out_dirstr = 'output/figs_png_S2srf';
-    out_dirstr = 'output/figs_png_S2btm';
-    
-    LevelList = [-10 0 20 40 60 80 100 120 140 160 180 200 220];
-    
-%     Nz=15; % Surface
-    Nz=1; % Bottom
-    unit = 'km'; 
-%          'm', 'latlon'
-%     unit = 'latlon';
-    x_arrow_txt = 18; y_arrow_txt=72;
-    I_arrow_legend = 1; J_arrow_legend=45;
-    v_legend = 0.3;
+Coral_mask = true;
+% Coral_mask = false;
+wet_dry = 1;  % Dry mask OFF: 0, ON: 1
 
-
-elseif CASE == 3  % Shizugawa3
-    grd='D:\COAWST_DATA\Shizugawa\Shizugawa3\Grid\Shizugawa3_grd_v0.3b.nc';
-    his=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa3_eco\SZ3_noaqdrag_his_20230701.nc"];
-    out_dirstr = 'output/figs_png_S3srf_25h_ave_flow_noaqdrag';
-    % out_dirstr = 'output/figs_png_S3btm_25h_ave_flow_noaqdrag';
+if CASE == 1      % Yaeyama1
+    grd='F:\COAWST_DATA\Yaeyama\Yaeyama1\Grid\Yaeyama1_grd_v10.nc';
+    his=["F:\COAWST_OUTPUT\Yaeyama1\Yaeyama1_his_20160113.nc"];  %<-Yaeyama1_his_20180606_00020.nc
+    out_dirstr = 'output/figs_png_Y1srf3';
     
-    LevelList = [-10 0 10 20 30 40 50 60 70 80 90 100 110 120 130];
+    LevelList = [-1 1 10];
     
     Nz=15; % Surface
-    % Nz=1; % Bottom
-    unit = 'km'; 
-%          'm', 'latlon'
-%     unit = 'latlon';
-    x_arrow_txt = 2.8; y_arrow_txt=8.25;
-    I_arrow_legend = 5; J_arrow_legend=20;
-    v_legend = 0.1;
-   
-    
-elseif CASE == 4  % SHIRAHO_REEF
-    grd='F:/COAWST_DATA/Yaeyama/Shiraho_reef2/Grid/shiraho_reef_grid16.3.nc';
-    his=["D:/cygwin64/home/Takashi/COAWST/Projects/Shiraho_reef2/shiraho_eco_his_201904.nc"
-         "D:/cygwin64/home/Takashi/COAWST/Projects/Shiraho_reef2/shiraho_eco_his_201904.nc"];
-    out_dirstr = 'output/figs_png_SH';
-    
-    LevelList = [-1 0.2 0.5 3];
-
-    Nz=8; % Surface
 %     Nz=1; % Bottom
     unit = 'km'; 
 %          'm', 'latlon'
 %     unit = 'latlon';
-    x_arrow_txt = 18; y_arrow_txt=72;
+
+    scale=10;
+    s_interval=6;
+    Vmax = 3;
+
+    x_arrow_txt = 12; y_arrow_txt=205;
+    I_arrow_legend = 3; J_arrow_legend=22;
+    v_legend = 2;
+    
+elseif CASE == 2  % Yaeyama2
+    grd="F:\COAWST_DATA\Yaeyama\Yaeyama2\Grid\Yaeyama2_grd_v11.2.nc";
+    his=["E:\COAWTS_OUTPUT\Yaeyama2_coral_bleaching\Yaeyama2_his_20150813.nc"  ];
+    out_dirstr = 'output/figs_png_cbl2015_temp_btm';  % Surface
+%     out_dirstr = 'output/figs_png_Y2btm3';  % Bottom
+    
+    LevelList = [-1 1 10];
+    
+%     Nz=15; % Surface
+    Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+%     unit = 'latlon';
+
+    scale=4;
+    s_interval=6;
+    Vmax = 3;
+
+    x_arrow_txt = 20; y_arrow_txt=43;
+    I_arrow_legend = 13; J_arrow_legend=23;
+    v_legend = 1;
+
+
+elseif CASE == 3  % Yaeyama3
+    grd="F:\COAWST_DATA\Yaeyama\Yaeyama3\Grid\Yaeyama3_grd_v12.2.nc";
+    his=["E:\COAWTS_OUTPUT\Yaeyama3\Yaeyama3_his_20160501.nc" 
+         "E:\COAWTS_OUTPUT\Yaeyama3\Yaeyama3_his_20160927.nc"];
+    out_dirstr = 'output/figs_png_Y3_2';
+    
+    LevelList = [-1 1 10];
+    
+    Nz=15; % Surface
+%     Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+%     unit = 'latlon';
+
+    scale=2;
+    s_interval=6;
+    Vmax = 3;
+
+    x_arrow_txt = 1; y_arrow_txt=20;
+    I_arrow_legend = 4; J_arrow_legend=32;
+    v_legend = 0.5;
+   
+    
+elseif CASE == 4  % SHIRAHO_REEF
+%     grd='F:/COAWST_DATA/Yaeyama/Shiraho_reef2/Grid/shiraho_reef_grid16.3.nc';
+%     his=["D:/cygwin64/home/Takashi/COAWST/Projects/Shiraho_reef2/shiraho_eco_his_201904.nc"
+%          "D:/cygwin64/home/Takashi/COAWST/Projects/Shiraho_reef2/shiraho_eco_his_201904.nc"];
+%     out_dirstr = 'output/figs_png_SH';
+% 
+%     LevelList = [-1 0.2 0.5 3];
+% 
+%     Nz=8; % Surface
+% %     Nz=1; % Bottom
+%     unit = 'km'; 
+% %          'm', 'latlon'
+% %     unit = 'latlon';
+% 
+%     scale=2;
+%     s_interval=3;
+%     Vmax = 0.6;
+% 
+%     x_arrow_txt = 18; y_arrow_txt=72;
+%     I_arrow_legend = 4; J_arrow_legend=32;
+%     v_legend = 0.5;
+    grd="D:\COAWST_DATA\Yaeyama\Shiraho_reef2\Grid\shiraho_reef_grd_v17.0.nc";
+    his=["E:\COAWST_OUTPUT\Yaeyama\Shiraho_reef2\Shiraho_his_20090815.nc"  ];
+    out_dirstr = 'output/figs_png_SR_temp_surf';  % Surface
+%     out_dirstr = 'output/figs_png_Y2btm3';  % Bottom
+    
+    LevelList = [-1 0.2 0.5 3];
+    
+    Nz=8; % Surface
+    % Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+%     unit = 'latlon';
+
+    scale=2;
+    s_interval=3;
+    Vmax = 0.6;
+
+    x_arrow_txt = 20; y_arrow_txt=43;
+    I_arrow_legend = 13; J_arrow_legend=23;
+    v_legend = 1;
 
 end
 
@@ -88,19 +131,19 @@ LOCAL_TIME=' (UTC)';
 %LOCAL_TIME=' (UTC+9)';
 % LOCAL_TIME='';
 
-wet_dry = 1;  % Dry mask OFF: 0, ON: 1
+
 
 starting_date=datenum(2000,1,1,0,0,0); % 
 
 % My color map
 load('MyColormaps')
 colormap6=superjet(128,'NuvibZctgyorWq');
-colormap7=superjet(128,'xvbZctgyorWq');
 
-% title='Sea surface temperature (^oC)'; cmin=0; cmax=30; colmap=colormap6; ncname='temp'; % YAEYAMA1
-% title='Sea surface temperature (^oC)'; cmin=6; cmax=12; colmap=jet(128); ncname='temp'; % YAEYAMA1
+% title='Sea surface temperature (^oC)'; cmin=24; cmax=33; colmap=colormap6; ncname='temp'; % YAEYAMA1
+% title='Sea surface temperature (^oC)'; cmin=27; cmax=35; colmap=jet(128); ncname='temp'; % YAEYAMA1
 % title='Sea surface temperature (^oC)'; cmin=16; cmax=34; colmap=colormap6; ncname='temp'; % YAEYAMA2 surface
-title='Sea bottom temperature (^oC)'; cmin=0; cmax=30; colmap=colormap6; ncname='temp'; % YAEYAMA2 bottom
+% title='Sea bottom temperature (^oC)'; cmin=29; cmax=36; colmap=colormap6; ncname='temp'; % YAEYAMA2 bottom
+title='Sea bottom temperature (^oC)'; cmin=24; cmax=33; colmap=colormap6; ncname='temp'; % YAEYAMA2 bottom
 
 % title='Salinity (psu)'; cmin=33; cmax=35; colmap=jet(128); ncname='salt';
 
@@ -116,8 +159,10 @@ title='Sea bottom temperature (^oC)'; cmin=0; cmax=30; colmap=colormap6; ncname=
 % title='Refractory DOC (umolC L^-^1)';  cmin=40; cmax=70; colmap=jet(128); ncname='DOC_02';
 % title='Refractory DO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colmap1; ncname='DO13C_02';
 
-% title='DIC (umol kg^-^1)'; cmin=1800; cmax=2000; colmap=jet(128); ncname='TIC';
+% title='DIC (umol kg^-^1)'; cmin=1800; cmax=1950; colmap=jet(128); ncname='TIC';
 % title='DI^1^3C (umol kg^-^1)'; cmin=0; cmax=0.0005; colmap=colmap1; ncname='TI13C';
+
+% title='TA (umol kg^-^1)'; cmin=2000; cmax=2300; colmap=jet(128); ncname='alkalinity';
 
 % title='Dinoflagellate (umolC L^-^1)';  cmin=0; cmax=3; colmap=jet(128); ncname='phytoplankton_01';
 % title='^1^3C in Dinoflagellate (umolC L^-^1)'; cmin=0; cmax=0.000001; colmap=colmap1; ncname='phyt13C_01';
@@ -146,24 +191,6 @@ elseif id == 100
     scale=1;  % for Wind
     s_interval=6;  % for Wind
     Vmax = 20;  % for Wind
-else
-    if CASE ==1       % Shizugawa1
-        scale=10;
-        s_interval=5;
-        Vmax = 0.5;
-    elseif CASE == 2  % Shizugawa2
-        scale=10;
-        s_interval=5;
-        Vmax = 0.5;
-    elseif CASE == 3  % Shizugawa3
-        scale=8;
-        s_interval=5;
-        Vmax = 0.2;
-    elseif CASE == 4  % SHIRAHO_REEF
-        scale=2;
-        s_interval=3;
-        Vmax = 0.6;
-    end
 end
 
 
@@ -194,18 +221,15 @@ agl2 = agl(1:s_interval:Im,1:s_interval:Jm);
 k=0;
 i=1;
 
-if CASE == 1      % Shizugawa1
-%     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-    xsize=490; ysize=520;
-elseif CASE == 2  % Shizugawa2
-%     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-    xmin=10;   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=84;
-    xsize=360; ysize=620;
-elseif CASE == 3  % Shizugawa3
-%     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-    xmin=0.7;   xmax=11.5;  ymin=1.5;   ymax=11;
-    xsize=620; ysize=500;
+if CASE == 1      % YAEYAMA1
+    xmin=min(min(x_rho))-1;   xmax=max(max(x_rho))+1;  ymin=min(min(y_rho))-1;   ymax=max(max(y_rho))+1;
+    xsize=640; ysize=520;
+elseif CASE == 2  % YAEYAMA2
+    xmin=min(min(x_rho))-0.3;   xmax=max(max(x_rho))+0.3;  ymin=min(min(y_rho))-0.3;   ymax=max(max(y_rho))+0.3;
+    xsize=620; ysize=550;
+elseif CASE == 3  % YAEYAMA3
+    xmin=min(min(x_rho))-0.1;   xmax=max(max(x_rho))+0.1;  ymin=min(min(y_rho))-0.1;   ymax=max(max(y_rho))+0.1;
+    xsize=640; ysize=520;
 elseif CASE == 4  % SHIRAHO_REEF
     xmin=min(min(x_rho))-0.05;   xmax=max(max(x_rho))+0.05;  ymin=min(min(y_rho))-0.05;   ymax=max(max(y_rho))+0.05;
 %     xsize=500; ysize=650; % for SHIRAHO zoom
@@ -229,7 +253,15 @@ mask_u = mask_u ./mask_u;
 mask_v = mask_v ./mask_v;
 mask_rho = mask_rho ./mask_rho;
 
+if Coral_mask
+    p_coral    = ncread(grd,'p_coral');
+    p_coral2    = ncread(grd,'p_coral2');
+    crl_mask = (p_coral==0).*0+(p_coral>0).*1;
+    crl_mask = crl_mask ./crl_mask;
+    crl2_mask = (p_coral2==0).*0+(p_coral2>0).*1;
+    crl2_mask = crl2_mask ./crl2_mask;
 
+end
 
 tmp = zeros(size(x_rho));
 
@@ -259,7 +291,7 @@ elseif id == 6
 elseif id == 7
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,title,cmin,cmax,colmap,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 8
-    [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Tidal residual current (m s^-^1)',0,Vmax,colmap4,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Coral chlorophyll (ug cm^-^2)',1,2.6,flipud(jet(128)),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 100
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Wind velocity (m s^-^1)',0,Vmax,colmap4,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 end
@@ -273,24 +305,17 @@ end
 drawnow
 %set(figure(1),'OuterPosition',[0 0 320 700])%[0 0 400 800]
 
-%% --- Check time ---------------------------------------------------------
-Nhis = size(his,1);
-for ihis=1:Nhis
-    nc(ihis).time = ncread(his(ihis),'ocean_time');
-    nc(ihis).is=1;
-    nc(ihis).ie=length(nc(ihis).time);   
-end
-for ihis=2:Nhis
-    [tmp2 imax]=min(abs(nc(ihis-1).time-nc(ihis).time(1)));
-    nc(ihis-1).ie = imax-1;
-end
-%% --- Loop start ---------------------------------------------------------
-j=1;
+for ihis=1:size(his,1)
+% for ihis=30:size(his,1)
+% for ihis=1:1
 
-for ihis=1:Nhis
-  
-    for i=nc(ihis).is:1:nc(ihis).ie
-%     for i=1:3:imax
+    time = ncread(his(ihis),'ocean_time');
+    imax=length(time);
+    
+%     for i=4500:1:5500  %Yaeyama1
+%     for i=7000:1:8000  %Yaeyama2
+%     for i=2000:1:3000  %Yaeyama3
+    for i=1:1:imax
 
         if id == 1
             ubar = ncread(his(ihis),'ubar',[1 1 i],[Inf Inf 1]);
@@ -331,13 +356,14 @@ for ihis=1:Nhis
                 wetdry_mask_rho = wetdry_mask_rho ./wetdry_mask_rho;
                 tmp = tmp .* wetdry_mask_rho;
             end
+
         elseif id == 8
-            uave(:,:,j) = ncread(his(ihis),'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
-            vave(:,:,j) = ncread(his(ihis),'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
-            j=j+1;
-            if j==26
-                j=1;
-            end
+            ubar = ncread(his(ihis),'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
+            vbar = ncread(his(ihis),'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
+            tmp1 = ncread(his(ihis),'coral1_densZoox',[1 1 i],[Inf Inf 1]);  % 2D
+            tmp2 = ncread(his(ihis),'coral1_Zoox_chl',[1 1 i],[Inf Inf 1]);  % 2D
+            tmp = tmp1.*tmp2.*crl_mask*1e-6; 
+
         elseif id == 100
             ubar = ncread(his1,'Uwind',[1 1 i],[Inf Inf 1]);
             vbar = ncread(his2,'Vwind',[1 1 i],[Inf Inf 1]);
@@ -345,9 +371,9 @@ for ihis=1:Nhis
 
 
         if id <100
-            date=starting_date+nc(ihis).time(i)/24/60/60;
+            date=starting_date+time(i)/24/60/60;
         else
-            date=starting_date+nc(ihis).time(i);
+            date=starting_date+time(i);
         end
         date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
 
@@ -361,12 +387,6 @@ for ihis=1:Nhis
             ubar2=ubar;
             vbar2=vbar;
             vel=hwave;
-        elseif id == 8
-            ubar2(1:Im, 1:Jm)=NaN;
-            ubar2(2:Im, 1:Jm)=mean(uave,3);%.*scale;
-            vbar2(1:Im, 1:Jm)=NaN;
-            vbar2(1:Im, 2:Jm)=mean(vave,3);%.*scale;
-            tmp=hypot(ubar2,vbar2);
         elseif id == 100
             ubar2=ubar;
             vbar2=vbar;
@@ -403,7 +423,7 @@ for ihis=1:Nhis
         drawnow
 
         fname = strcat( ncname, datestr(date,'_yyyymmddHHMM') );
-        hgexport(figure(1), strcat(out_dirstr,'/', fname,'.png'),hgexport('factorystyle'),'Format','png');
+        % hgexport(figure(1), strcat(out_dirstr,'/', fname,'.png'),hgexport('factorystyle'),'Format','png');
     %     hgexport(figure(1), strcat('output/figs_eps/', fname,'.eps'),hgexport('factorystyle'),'Format','eps');
 
     end

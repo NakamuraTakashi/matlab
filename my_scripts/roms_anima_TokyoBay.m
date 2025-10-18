@@ -2,8 +2,8 @@
 % === Copyright (c) 2014-2021 Takashi NAKAMURA  =====
 %
 % TokyoBay2
-grd='F:/COAWST_DATA/TokyoBay/TokyoBay2/Grid/TokyoBay2_grd_v2.0.nc';
-his='D:\cygwin64\home\Takashi\COAWST\Projects\TokyoBay2_3\TokyoBay2_his_20180605.nc';
+grd='D:/COAWST_DATA/TokyoBay/tky3/TDA/present_set/grd/TokyoBay3_grd_v3.2.nc';
+his='../../TSUBAME/gs1/nakamura/COAWST/COAWST_OUTPUT/TokyoBay/TDA/present_set/TB3_eco_offline_dia_20180718_sed1_2.nc';
 % TokyoBay3
 % grd='F:/COAWST_DATA/TokyoBay/TokyoBay3/Grid/TokyoBay3_grd_v1.0.nc';
 % his='D:\cygwin64\home\Takashi\COAWST\Projects\TokyoBay2_3\TokyoBay3_his_20180605.nc';

@@ -1,84 +1,116 @@
 %
 % === Copyright (c) 2014-2023 Takashi NAKAMURA  =====
 %
-% CASE 1=> Shizugawa1; 2=> Shizugawa2; 3=> Shizugawa3
-CASE = 3;
+% CASE 1=> Panay0; 2=> Boracay2; 3=> Boracay3; 4=> Panay1; 5=> Tangalan
+% CASE = 1;
+% CASE = 4;
+CASE = 5;
 
 F_drawUV = true;
 % F_drawUV = false;
-id = 8;  % <- Select 1,2,3,100
+% id = 7;  % <- 4D var
+id = 3;  % <- Wave hight
 
-if CASE == 1      % Shizugawa1
-    grd='F:\COAWST_DATA\Shizugawa\Shizugawa1\Grid\Shizugawa1_grd_v0.1.nc';
-    his=["E:\COAWTS_OUTPUT\Shizugawa1\Shizugawa1_his_20210102.nc"
-         "E:\COAWTS_OUTPUT\Shizugawa1\Shizugawa1_his_20210131.nc"
-         "E:\COAWTS_OUTPUT\Shizugawa1\Shizugawa1_his_20211231.nc"];
-%     out_dirstr = 'output/figs_png_S1srf';
-    out_dirstr = 'output/figs_png_S1btm';
+if CASE == 1      % Panay0
+    grd='F:\COAWST_DATA\Panay\Panay0\Grid\Panay0_grd_v1.0.nc';
+    his=["E:\COAWTS_OUTPUT\Panay\Panay0\Panay0_sed_his_20210102.nc"];
+    out_dirstr = 'output/figs_png_PNY0srf';
+%     out_dirstr = 'output/figs_png_BCY1btm';
     
-    LevelList = [-10 0 200 400 600 800 1000 1200 1400 1600 1800 2000 2200];
-    
-%     Nz=15; % Surface
-    Nz=1; % Bottom
-    unit = 'km'; 
-%          'm', 'latlon'
-%     unit = 'latlon';
-    x_arrow_txt = 50; y_arrow_txt=230;
-    I_arrow_legend = 1; J_arrow_legend=25;
-    v_legend = 1;
-    
-elseif CASE == 2  % Shizugawa2
-    grd='F:\COAWST_DATA\Shizugawa\Shizugawa2\Grid\Shizugawa2_grd_v0.0.nc';
-    his=["E:\COAWTS_OUTPUT\Shizugawa2\Shizugawa2_his_20210103.nc"
-         "E:\COAWTS_OUTPUT\Shizugawa2\Shizugawa2_his_20220102.nc"];
-%     out_dirstr = 'output/figs_png_S2srf';
-    out_dirstr = 'output/figs_png_S2btm';
-    
-    LevelList = [-10 0 20 40 60 80 100 120 140 160 180 200 220];
-    
-%     Nz=15; % Surface
-    Nz=1; % Bottom
-    unit = 'km'; 
-%          'm', 'latlon'
-%     unit = 'latlon';
-    x_arrow_txt = 18; y_arrow_txt=72;
-    I_arrow_legend = 1; J_arrow_legend=45;
-    v_legend = 0.3;
-
-
-elseif CASE == 3  % Shizugawa3
-    grd='D:\COAWST_DATA\Shizugawa\Shizugawa3\Grid\Shizugawa3_grd_v0.3b.nc';
-    his=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa3_eco\SZ3_noaqdrag_his_20230701.nc"];
-    out_dirstr = 'output/figs_png_S3srf_25h_ave_flow_noaqdrag';
-    % out_dirstr = 'output/figs_png_S3btm_25h_ave_flow_noaqdrag';
-    
-    LevelList = [-10 0 10 20 30 40 50 60 70 80 90 100 110 120 130];
+    LevelList = [-10 0 250 500 750 1000 1250 1500 1750 2000];
     
     Nz=15; % Surface
-    % Nz=1; % Bottom
-    unit = 'km'; 
-%          'm', 'latlon'
-%     unit = 'latlon';
-    x_arrow_txt = 2.8; y_arrow_txt=8.25;
-    I_arrow_legend = 5; J_arrow_legend=20;
-    v_legend = 0.1;
-   
-    
-elseif CASE == 4  % SHIRAHO_REEF
-    grd='F:/COAWST_DATA/Yaeyama/Shiraho_reef2/Grid/shiraho_reef_grid16.3.nc';
-    his=["D:/cygwin64/home/Takashi/COAWST/Projects/Shiraho_reef2/shiraho_eco_his_201904.nc"
-         "D:/cygwin64/home/Takashi/COAWST/Projects/Shiraho_reef2/shiraho_eco_his_201904.nc"];
-    out_dirstr = 'output/figs_png_SH';
-    
-    LevelList = [-1 0.2 0.5 3];
-
-    Nz=8; % Surface
 %     Nz=1; % Bottom
     unit = 'km'; 
 %          'm', 'latlon'
 %     unit = 'latlon';
-    x_arrow_txt = 18; y_arrow_txt=72;
+    x_arrow_txt = 165; y_arrow_txt=85;
+    I_arrow_legend = 31; J_arrow_legend=10;
+    v_legend = 1;
+    
+elseif CASE == 2  % Boracay2
+    grd='F:\COAWST_DATA\Boracay\Boracay2\Grid\Boracay2_grd_v1.0.nc';
+    his=["E:\COAWTS_OUTPUT\Boracay2\Boracay2_his_20210105.nc"];
+    out_dirstr = 'output/figs_png_BCY2srf';
+%     out_dirstr = 'output/figs_png_BCY2btm';
+    
+    LevelList = [-10 0 1 3 5 10 100 200 300 400 500 600 700 800 900 1000];
+    
+    Nz=15; % Surface
+%     Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+%     unit = 'latlon';
+    x_arrow_txt = 23; y_arrow_txt=11;
+    I_arrow_legend = 21; J_arrow_legend=8;
+    v_legend = 1.0;
 
+
+elseif CASE == 3  % Boracay3
+    grd='F:\COAWST_DATA\Boracay\Boracay3\Grid\Boracay3_grd_v1.1.nc';
+%     his=["E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210107.nc"
+%          "E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210227.nc"
+%          "E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210514.nc"];
+%     his=["E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210808.nc"];
+    his=["E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20211205.nc"];
+
+%     out_dirstr = 'output/figs_png_BCY3srf';
+    out_dirstr = 'output/figs_png_BCY3btm';
+    
+    LevelList = [-5 0 1 3 5 10 100 200 300 400 500 600 700 800 900 1000];
+    
+%     Nz=15; % Surface
+    Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+%     unit = 'latlon';
+    x_arrow_txt = 6.6; y_arrow_txt=8.6;
+    I_arrow_legend = 20; J_arrow_legend=15;
+    v_legend = 1.0;
+
+elseif CASE == 4  % Panay1
+    grd='F:/COAWST_DATA/Panay/Panay1/Grid/Panay1_grd_v1.4.nc';
+%     his=["E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210107.nc"
+%          "E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210227.nc"
+%          "E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210514.nc"];
+%     his=["E:\COAWTS_OUTPUT\Boracay3\Boracay3_his_20210808.nc"];
+    his=["E:/COAWTS_OUTPUT/Panay/Panay1/Panay1_sed_wav_his_20210105.nc"];
+
+    out_dirstr = 'output/figs_png_PNY1srf';
+%     out_dirstr = 'output/figs_png_PNY1btm';
+    
+    LevelList = [-5 5 10 100 200 300 400 500 600 700 800 900 1000];
+    
+    Nz=15; % Surface
+%     Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+%     unit = 'latlon';
+    x_arrow_txt = 30; y_arrow_txt=32;
+    I_arrow_legend = 30; J_arrow_legend=1;
+    v_legend = 1.0;   
+    
+elseif CASE == 5  % Tangalan
+    grd='F:/COAWST_DATA/Panay/Tangalan/Grid/Tangalan_grd_v2.1.nc';
+
+%     his=["E:/COAWTS_OUTPUT/Panay/Tangalan/Tangalan_sed_wav_his_20210107.nc"
+%          "E:/COAWTS_OUTPUT/Panay/Tangalan/Tangalan_sed_wav_his_20211010.nc"];
+    his=["E:/COAWTS_OUTPUT/Panay/Tangalan/Tangalan_sed_wav_his_20211010.nc"];
+
+    out_dirstr = 'output/figs_png_TGLsrf';
+%     out_dirstr = 'output/figs_png_TGLbtm';
+    
+    LevelList = [-5 0 1 3 5 10 100 200 300 400 500 600 700 800 900 1000];
+    
+    Nz=15; % Surface
+%     Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+%     unit = 'latlon';
+    x_arrow_txt = 3.7; y_arrow_txt=5.5;
+    I_arrow_legend = 15; J_arrow_legend=5;
+    v_legend = 1.0;   
+    
 end
 
 [status, msg] = mkdir( out_dirstr )
@@ -99,8 +131,8 @@ colormap7=superjet(128,'xvbZctgyorWq');
 
 % title='Sea surface temperature (^oC)'; cmin=0; cmax=30; colmap=colormap6; ncname='temp'; % YAEYAMA1
 % title='Sea surface temperature (^oC)'; cmin=6; cmax=12; colmap=jet(128); ncname='temp'; % YAEYAMA1
-% title='Sea surface temperature (^oC)'; cmin=16; cmax=34; colmap=colormap6; ncname='temp'; % YAEYAMA2 surface
-title='Sea bottom temperature (^oC)'; cmin=0; cmax=30; colmap=colormap6; ncname='temp'; % YAEYAMA2 bottom
+% title='Sea surface temperature (^oC)'; cmin=23; cmax=34; colmap=colormap6; ncname='temp'; % Pany
+% title='Sea bottom temperature (^oC)'; cmin=23; cmax=34; colmap=colormap6; ncname='temp'; % YAEYAMA2 bottom
 
 % title='Salinity (psu)'; cmin=33; cmax=35; colmap=jet(128); ncname='salt';
 
@@ -134,37 +166,40 @@ title='Sea bottom temperature (^oC)'; cmin=0; cmax=30; colmap=colormap6; ncname=
 % title='Zooplankton (umolC L^-^1)';  cmin=0; cmax=10; colmap=jet(128); ncname='zooplankton_01';
 % title='^1^3C in Zooplankton (umolC L^-^1)'; cmin=0; cmax=0.1; colmap=colmap1; ncname='zoop13C_01';
 
-% title='SS \phi=5um (kg m^-^3)'; cmin=0; cmax=0.2; colmap=colmap1; ncname='mud_01';
+% title='SS \phi=5um (kg m^-^3)'; cmin=0; cmax=0.1; colmap=colmap1; ncname='mud_01';
+title='Suspended Solids (kg m^-^3)'; cmin=0; cmax=0.01; colmap=colmap1; ncname='mud_01';  % Panay setting
+% title='Bottom Suspended Solid (kg m^-^3)'; cmin=0; cmax=0.01; colmap=colmap1; ncname='mud_01';  % Panay setting
 % title='NO3 (umolN L^-^1)';  cmin=0; cmax=50; colmap=jet(128); ncname='NO3';
 % title='Phytoplankton (umolC L^-^1)';  cmin=0; cmax=0.5; colmap=jet(128); ncname='phytoplankton_02';
 
-if id == 3
-    scale=0.08;  % for Wave
-    s_interval=4; % for SHIRAHO & YAEYAMA1 & YAEYAMA3
-elseif id == 100
-%     scale=1.5;  % for Wind
-    scale=1;  % for Wind
-    s_interval=6;  % for Wind
-    Vmax = 20;  % for Wind
-else
-    if CASE ==1       % Shizugawa1
-        scale=10;
+
+if CASE ==1       % Panay0
+    scale=10;
+    s_interval=4;
+elseif CASE == 2  % Boracay2
+    scale=2;
+    s_interval=4;
+elseif CASE == 3  % Boracay3
+    scale=1;
+    s_interval=5;
+elseif CASE == 4  % Panay1
+    if id==3 %wave
+        scale=1.5;
+        s_interval=7;
+    else
+        scale=3;
         s_interval=5;
-        Vmax = 0.5;
-    elseif CASE == 2  % Shizugawa2
-        scale=10;
+    end
+elseif CASE == 5  % Tangalan
+    if id==3 %wave
+        scale=0.3;
+        s_interval=7;
+    else
+        scale=0.7;
         s_interval=5;
-        Vmax = 0.5;
-    elseif CASE == 3  % Shizugawa3
-        scale=8;
-        s_interval=5;
-        Vmax = 0.2;
-    elseif CASE == 4  % SHIRAHO_REEF
-        scale=2;
-        s_interval=3;
-        Vmax = 0.6;
     end
 end
+
 
 
 h          = ncread(grd,'h');
@@ -194,26 +229,29 @@ agl2 = agl(1:s_interval:Im,1:s_interval:Jm);
 k=0;
 i=1;
 
-if CASE == 1      % Shizugawa1
+if CASE == 1      % Boracay1
 %     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-    xsize=490; ysize=520;
-elseif CASE == 2  % Shizugawa2
-%     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-    xmin=10;   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=84;
-    xsize=360; ysize=620;
-elseif CASE == 3  % Shizugawa3
-%     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-    xmin=0.7;   xmax=11.5;  ymin=1.5;   ymax=11;
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=24.5;   ymax=max(max(y_rho));
     xsize=620; ysize=500;
-elseif CASE == 4  % SHIRAHO_REEF
-    xmin=min(min(x_rho))-0.05;   xmax=max(max(x_rho))+0.05;  ymin=min(min(y_rho))-0.05;   ymax=max(max(y_rho))+0.05;
-%     xsize=500; ysize=650; % for SHIRAHO zoom
-%     xsize=250; ysize=500; % for SHIRAHO for Publish
-    xsize=240; ysize=500; % for SHIRAHO for Animation
+elseif CASE == 2  % Boracay2
+%     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=3;   ymax=max(max(y_rho));
+    xsize=620; ysize=500;
+elseif CASE == 3  % Boracay3
+%     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=1;   ymax=max(max(y_rho));
+    xsize=620; ysize=500;
+elseif CASE == 4  % Panay1
+%     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=15;   ymax=max(max(y_rho));
+    xsize=620; ysize=450;
+elseif CASE == 5  % Tangalan
+%     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=2;   ymax=max(max(y_rho));
+    xsize=620; ysize=490;
 else
     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-    xsize=520; ysize=520;   
+    xsize=620; ysize=500;   
 end
 
 % xmin=min(min(x_rho))-0.01;   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
@@ -249,7 +287,8 @@ date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
 if id==1 || id==2
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Velocity (m s^-^1)',0,Vmax,colmap4,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 3
-    [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Hs (m)',0,1.5,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    ncname='Hs';
+    [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Hs (m)',0,2.5,colormap7,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 4
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Temperature (^oC)',3,24,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 5
@@ -258,8 +297,6 @@ elseif id == 6
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Salinity (psu)',31,35,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 7
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,title,cmin,cmax,colmap,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
-elseif id == 8
-    [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Tidal residual current (m s^-^1)',0,Vmax,colmap4,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 100
     [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,'Wind velocity (m s^-^1)',0,Vmax,colmap4,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 end
@@ -267,29 +304,32 @@ end
 %     'Color', 'k',...
 %     'AutoScale','off');
 if F_drawUV
-    text(x_arrow_txt,y_arrow_txt,[num2str(v_legend), ' m s^-^1']);
+    if id==3
+    else
+        text(x_arrow_txt,y_arrow_txt,[num2str(v_legend), ' m s^-^1']);
+    end
 end
 
 drawnow
 %set(figure(1),'OuterPosition',[0 0 320 700])%[0 0 400 800]
 
-%% --- Check time ---------------------------------------------------------
-Nhis = size(his,1);
-for ihis=1:Nhis
-    nc(ihis).time = ncread(his(ihis),'ocean_time');
-    nc(ihis).is=1;
-    nc(ihis).ie=length(nc(ihis).time);   
+for ihis=1:size(his,1)
+    time = ncread(his(ihis),'ocean_time');
+    time_min(ihis)=min(time);
 end
-for ihis=2:Nhis
-    [tmp2 imax]=min(abs(nc(ihis-1).time-nc(ihis).time(1)));
-    nc(ihis-1).ie = imax-1;
-end
-%% --- Loop start ---------------------------------------------------------
-j=1;
 
-for ihis=1:Nhis
-  
-    for i=nc(ihis).is:1:nc(ihis).ie
+for ihis=1:size(his,1)
+% for ihis=30:size(his,1)
+% for ihis=1:1
+
+    time = ncread(his(ihis),'ocean_time');
+    if(ihis<size(his,1))
+        imax = find(time<time_min(ihis+1), 1 , 'last');
+    else
+        imax=length(time);
+    end
+    
+    for i=1:1:imax
 %     for i=1:3:imax
 
         if id == 1
@@ -301,8 +341,8 @@ for ihis=1:Nhis
         elseif id == 3
             dwave = ncread(his(ihis),'Dwave',[1 1 i],[Inf Inf 1]);
             tmp = ncread(his(ihis),'Hwave',[1 1 i],[Inf Inf 1]);
-            ubar = cos(pi*dwave/180);
-            vbar = sin(pi*dwave/180);
+            ubar = cos(pi*dwave/180).*mask_rho;
+            vbar = sin(pi*dwave/180).*mask_rho;
             if wet_dry == 1
                 wetdry_mask_rho = ncread(his,'wetdry_mask_rho',[1 1 i],[Inf Inf 1]);
                 wetdry_mask_rho = wetdry_mask_rho ./wetdry_mask_rho;
@@ -331,13 +371,7 @@ for ihis=1:Nhis
                 wetdry_mask_rho = wetdry_mask_rho ./wetdry_mask_rho;
                 tmp = tmp .* wetdry_mask_rho;
             end
-        elseif id == 8
-            uave(:,:,j) = ncread(his(ihis),'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
-            vave(:,:,j) = ncread(his(ihis),'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
-            j=j+1;
-            if j==26
-                j=1;
-            end
+
         elseif id == 100
             ubar = ncread(his1,'Uwind',[1 1 i],[Inf Inf 1]);
             vbar = ncread(his2,'Vwind',[1 1 i],[Inf Inf 1]);
@@ -345,9 +379,9 @@ for ihis=1:Nhis
 
 
         if id <100
-            date=starting_date+nc(ihis).time(i)/24/60/60;
+            date=starting_date+time(i)/24/60/60;
         else
-            date=starting_date+nc(ihis).time(i);
+            date=starting_date+time(i);
         end
         date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
 
@@ -360,13 +394,7 @@ for ihis=1:Nhis
         elseif id == 3
             ubar2=ubar;
             vbar2=vbar;
-            vel=hwave;
-        elseif id == 8
-            ubar2(1:Im, 1:Jm)=NaN;
-            ubar2(2:Im, 1:Jm)=mean(uave,3);%.*scale;
-            vbar2(1:Im, 1:Jm)=NaN;
-            vbar2(1:Im, 2:Jm)=mean(vave,3);%.*scale;
-            tmp=hypot(ubar2,vbar2);
+            vel=tmp;
         elseif id == 100
             ubar2=ubar;
             vbar2=vbar;
@@ -384,13 +412,16 @@ for ihis=1:Nhis
             % Down sampling
             ubar3=ubar2(1:s_interval:Im,1:s_interval:Jm);
             vbar3=vbar2(1:s_interval:Im,1:s_interval:Jm);
-            ubar4=ubar3.*cos(agl2)-vbar3.*sin(agl2);
-            vbar4=ubar3.*sin(agl2)+vbar3.*cos(agl2);
-
-            ubar4(I_arrow_legend,J_arrow_legend)=v_legend;
-            vbar4(I_arrow_legend,J_arrow_legend)=0;
-
-
+            if id==3
+                ubar4=ubar3;
+                vbar4=vbar3;
+            else
+                ubar4=ubar3.*cos(agl2)-vbar3.*sin(agl2);
+                vbar4=ubar3.*sin(agl2)+vbar3.*cos(agl2);
+    
+                ubar4(I_arrow_legend,J_arrow_legend)=v_legend;
+                vbar4(I_arrow_legend,J_arrow_legend)=0;
+            end
         end
 
         set(h_surf,'CData',tmp)

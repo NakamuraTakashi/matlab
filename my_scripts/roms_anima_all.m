@@ -9,7 +9,7 @@ clear all
 
 % CASE 17=> FORP-JPN02 offline
 
-CASE = 4;
+CASE = 5;
 
 % --- Plotting period --- %
 % min_date    = datenum(2018,6,15,0,0,0);  % Period 4 start
@@ -26,11 +26,12 @@ CASE = 4;
 
 % min_date    = datenum(2023,9,13,0,0,0);  % Period 4 start
 % max_date    = datenum(2024,1,1,0,0,0);  % Period 4 end
-% min_date    = datenum(2006,1,9,0,0,0);  % Period 4 start
-% max_date    = datenum(2006,1,10,0,0,0);  % Period 4 end
 
-min_date    = datenum(2006,1,9,0,0,0);  % Period 4 start
-max_date    = datenum(2006,1,10,0,0,0);  % Period 4 end
+% min_date    = datenum(2006,1,9,0,0,0);   % FORP start
+% max_date    = datenum(2006,1,10,0,0,0);  % FORP end
+
+min_date    = datenum(2019,8,1,0,0,0);  % Y1Y2 start
+max_date    = datenum(2019,9,1,0,0,0);  % Y1Y2 end
 
 ref_date     = datenum(2000,1,1,0,0,0);  % 
 
@@ -343,8 +344,8 @@ elseif CASE == 5  % Yaeyama2
     %         "E:/COAWST_OUTPUT/Yaeyama/Yaeyama2/Yaeyama2_his_20231031.nc" ];%51
     his=["E:\COAWST_OUTPUT\Yaeyama\Y1Y2_nst_eco\Y2_his_nst_eco_20190801.nc"
          "E:\COAWST_OUTPUT\Yaeyama\Y1Y2_nst_eco\Y2_his_nst_eco_20190805.nc"];
-    Fqck=true;
-    % Fqck=false;
+    % Fqck=true;
+    Fqck=false;
     qck=["E:\COAWST_OUTPUT\Yaeyama\Y1Y2_nst_eco\Y2_qck_nst_eco_20190801.nc"
          "E:\COAWST_OUTPUT\Yaeyama\Y1Y2_nst_eco\Y2_qck_nst_eco_20190805.nc"];
     Fdia=false;
@@ -356,8 +357,8 @@ elseif CASE == 5  % Yaeyama2
     
     LevelList = [-1 1 10];
     
-    % Nz=15; % Surface
-    Nz=1; % Bottom (Sediment: surface layer)
+    Nz=15; % Surface
+    % Nz=1; % Bottom (Sediment: surface layer)
     unit = 'km'; 
 %          'm', 'latlon'
 %     unit = 'latlon';
@@ -917,10 +918,11 @@ colormap8=superjet(128,'vbwwrW');
 % title='Zooplankton (umolC L^-^1)';  cmin=0; cmax=10; colmap=jet(128); ncname='zooplankton_01';
 % title='^1^3C in Zooplankton (umolC L^-^1)'; cmin=0; cmax=0.1; colmap=colmap1; ncname='zoop13C_01';
 
-% title='Sea surface NO3 (umolN L^-^1)';  cmin=0; cmax=10; colmap=colormap7; ncname='NO3_01';
-% title='Sea surface PO4 (umolP L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PO4_01';
-% title='Bottom PO4 (umolP L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PO4_01';
-% title='Bottom PO4 (umolP L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PO4_02';
+% title='Surface NO_3 (umolN L^-^1)';  cmin=0; cmax=10; colmap=colormap7; ncname='NO3_01';
+% title='Surface PO_4 (umolP L^-^1)';  cmin=0; cmax=0.5; colmap=colormap7; ncname='PO4_01';
+title='Surface ^tPO_4 (umolP L^-^1)';  cmin=0; cmax=0.000001; colmap=colormap7; ncname='PO4_02';
+% title='Bottom PO_4 (umolP L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PO4_01';
+% title='Bottom ^tPO_4 (umolP L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PO4_02';
 % title='Phytoplankton (umolC L^-^1)';  cmin=0; cmax=0.3; colmap=colormap7; ncname='PhyC02_01';
 
 
@@ -929,8 +931,8 @@ colormap8=superjet(128,'vbwwrW');
 % title='Sediment RPO^1^3C (nmolC g^-^1; surface layer)'; cmin=0; cmax=1e-5; colmap=colmap1; ncname='sediment_POC02_02'; % Sediment model
 
 % === for ID = 8 ===
-% title='Bottom DIN (umol L^-^1)'; cmin=0; cmax=30; colmap=colormap7; ncname='DIN_01'; % ID =8
-% title='Bottom DIN (umol L^-^1)'; cmin=0; cmax=30; colmap=colormap7; ncname='DIN_02'; % ID =8
+% title='Surface DIN (umolN L^-^1)'; cmin=0; cmax=5; colmap=colormap7; ncname='DIN_01'; % ID =8
+% title='Surface DI^1^5N (umolN L^-^1)'; cmin=0; cmax=0.00001; colmap=colormap7; ncname='DIN_02'; % ID =8
 
 % === for ID = 10 ===
 % title='Sediment mass change (kg m^-^2)'; cmin=-0.002; cmax=0.002; colmap=colormap8; ncname='mudmass_01'; % Shiraho surf
@@ -940,7 +942,12 @@ colormap8=superjet(128,'vbwwrW');
 % title='Max bottom stress (N m^-^2)'; cmin=0; cmax=30; colmap=colormap7; ncname='bstrcwmax'; % Shiraho surf
 
 % === for ID = 12 ===
-% title='Phy N biomass (umol L^-^1)'; cmin=0; cmax=0.5; colmap=colormap7; ncname='PhyNTot_02'; % Shiraho surf
+% title='Total Phytoplankton C biomass (umolC L^-^1)'; cmin=0; cmax=50; colmap=colormap7; ncname='PhyCtot_01'; % Shiraho surf
+% title='Total Phytoplankton ^1^3C biomass (umolC L^-^1)'; cmin=0; cmax=0.000001; colmap=colormap7; ncname='PhyCtot_02'; % Shiraho surf
+% title='Total Phytoplankton N biomass (umolN L^-^1)'; cmin=0; cmax=10; colmap=colormap7; ncname='PhyNtot_01'; % Shiraho surf
+% title='Total Phytoplankton ^1^5N biomass (umolN L^-^1)'; cmin=0; cmax=0.00001; colmap=colormap7; ncname='PhyNtot_02'; % Shiraho surf
+% title='Total Phytoplankton P biomass (umolP L^-^1)'; cmin=0; cmax=0.5; colmap=colormap7; ncname='PhyPtot_01'; % Shiraho surf
+% title='Total Phytoplankton ^tP biomass (umolP L^-^1)'; cmin=0; cmax=0.000001; colmap=colormap7; ncname='PhyPtot_02'; % Shiraho surf
 
 % === for ID = 13 ===
 % title='Sg C biomass (mmolC m^-^2)'; cmin=0; cmax=8; colmap=colormap7; ncname='seagrass_SgCBm01_01'; % Shiraho surf
@@ -1183,10 +1190,8 @@ for ihis=1:size(his,1)
                 elseif Fqck
                     tmp = ncread(qck(ihis),ncname,[1 1 Nz i],[Inf Inf 1 1]);
                 else
-                    tmp = ncread(his(ihis),'NO3_01',[1 1 Nz i],[Inf Inf 1 1]);
-                    tmp = tmp + ncread(his(ihis),'NH4_01',[1 1 Nz i],[Inf Inf 1 1]);
-                    % tmp = ncread(his(ihis),'NO3_02',[1 1 Nz i],[Inf Inf 1 1]);
-                    % tmp = tmp + ncread(his(ihis),'NH4_02',[1 1 Nz i],[Inf Inf 1 1]);
+                    tmp =       ncread(his(ihis), replace(ncname,'DIN','NO3'), [1 1 Nz i],[Inf Inf 1 1]);
+                    tmp = tmp + ncread(his(ihis), replace(ncname,'DIN','NH4'), [1 1 Nz i],[Inf Inf 1 1]);
                 end
                 if wet_dry == 1
                     wetdry_mask_rho = ncread(his(ihis),'wetdry_mask_rho',[1 1 i],[Inf Inf 1]);
@@ -1220,10 +1225,10 @@ for ihis=1:size(his,1)
                     ubar = ncread(his(ihis),'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
                     vbar = ncread(his(ihis),'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
                 end
-                tmp =       ncread(his(ihis),'PhyN01_02',[1 1 Nz i],[Inf Inf 1 1]);
-                tmp = tmp + ncread(his(ihis),'PhyN02_02',[1 1 Nz i],[Inf Inf 1 1]);
-                tmp = tmp + ncread(his(ihis),'PhyN03_02',[1 1 Nz i],[Inf Inf 1 1]);
-                tmp = tmp + ncread(his(ihis),'PhyN04_02',[1 1 Nz i],[Inf Inf 1 1]);
+                tmp =       ncread(his(ihis), replace(ncname,'tot','01'),[1 1 Nz i],[Inf Inf 1 1]);
+                tmp = tmp + ncread(his(ihis), replace(ncname,'tot','02'),[1 1 Nz i],[Inf Inf 1 1]);
+                tmp = tmp + ncread(his(ihis), replace(ncname,'tot','03'),[1 1 Nz i],[Inf Inf 1 1]);
+                tmp = tmp + ncread(his(ihis), replace(ncname,'tot','04'),[1 1 Nz i],[Inf Inf 1 1]);
                 if wet_dry == 1
                     wetdry_mask_rho = ncread(his(ihis),'wetdry_mask_rho',[1 1 i],[Inf Inf 1]);
                     wetdry_mask_rho = wetdry_mask_rho ./wetdry_mask_rho;

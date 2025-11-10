@@ -1,4 +1,4 @@
-function[h_scatter,h_contour,h_annot]= createfltplot4(XData1,YData1,X,Y,Z,zdata2, annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList)
+function[h_scatter,h_contour,h_annot]= createfltplot5(XData1,YData1,X,Y,Z,zdata2, annot_str, title1,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList,PointSize)
 %CREATEFIGURE(ZDATA1,YDATA1,XDATA1,CDATA1,ZDATA2)
 %  ZDATA1:  surface zdata
 %  YDATA1:  surface ydata
@@ -9,7 +9,6 @@ function[h_scatter,h_contour,h_annot]= createfltplot4(XData1,YData1,X,Y,Z,zdata2
 figure1 = figure('PaperSize',[20 30],...
     'Color',[1 1 1],...
     'Colormap',colmap,...
-    'GraphicsSmoothing','off',...
     'Position',[0 0 xsize ysize]);
 
 dx=xmax-xmin;
@@ -38,7 +37,7 @@ axes1 = axes('Parent',figure1,...
 %ylim(axes1,[-25 9525]);
  ylim(axes1,[ymin ymax]);
  yticks('auto')
-hold(axes1,'all');
+hold(axes1,'on');
 pbaspect([dx dy 1])
 
 
@@ -60,7 +59,7 @@ h_contour=contour(XData1,YData1,zdata2,...
 %    'LevelList',[0 0.5 1 3],...
 
 
-h_scatter=scatter(X,Y,2,Z,'fill'); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Point size
+h_scatter=scatter(X,Y,PointSize,Z,'fill'); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Point size
 %h_scatter=plot(X,Y,'ro');
 %shading flat;
 %shading interp;

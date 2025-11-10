@@ -8,8 +8,9 @@ clear all
 % CASE 7=> Shiraho reef
 
 % CASE 17=> FORP-JPN02 offline
+% CASE 18=> Kushimoto
 
-CASE = 5;
+CASE = 18;
 
 % --- Plotting period --- %
 % min_date    = datenum(2018,6,15,0,0,0);  % Period 4 start
@@ -30,13 +31,16 @@ CASE = 5;
 % min_date    = datenum(2006,1,9,0,0,0);   % FORP start
 % max_date    = datenum(2006,1,10,0,0,0);  % FORP end
 
-min_date    = datenum(2019,8,1,0,0,0);  % Y1Y2 start
-max_date    = datenum(2019,9,1,0,0,0);  % Y1Y2 end
+% min_date    = datenum(2019,8,1,0,0,0);  % Y1Y2 start
+% max_date    = datenum(2019,9,1,0,0,0);  % Y1Y2 end
+
+min_date    = datenum(2010,6,21,0,0,0);  % Period 4 start
+max_date    = datenum(2010,8,10,0,0,0);  % Period 4 end
 
 ref_date     = datenum(2000,1,1,0,0,0);  % 
 
-% F_drawUV = true;
-F_drawUV = false;
+F_drawUV = true;
+% F_drawUV = false;
 % id = 2;  % <- Select 1,2,3,7,100 2=> uv velocity
 % id = 3;  % <- Select 1,2,3,7,100 3=> Wave
 id = 7;  % <- Select 1,2,3,7,100
@@ -203,8 +207,8 @@ elseif CASE == 4      % Yaeyama1
     %      "E:\COAWST_OUTPUT\Yaeyama\Yaeyama1\Yaeyama1_his_20231130.nc"  ];  %<-Yaeyama1_his_20180606_00020.nc
     his=["E:\COAWST_OUTPUT\Yaeyama\Y1Y2_nst_eco\Y1_his_nst_eco_20190801.nc"
          "E:\COAWST_OUTPUT\Yaeyama\Y1Y2_nst_eco\Y1_his_nst_eco_20190805.nc"];
-    Fqck=true;
-    % Fqck=false;
+    % Fqck=true;
+    Fqck=false;
     qck=["E:\COAWST_OUTPUT\Yaeyama\Y1Y2_nst_eco\Y1_qck_nst_eco_20190801.nc"
          "E:\COAWST_OUTPUT\Yaeyama\Y1Y2_nst_eco\Y1_qck_nst_eco_20190805.nc"];
     Fdia=false;
@@ -216,8 +220,8 @@ elseif CASE == 4      % Yaeyama1
     
     LevelList = [-1 1 10];
 
-    % Nz=15; % Surface
-    Nz=1; % Bottom (Sediment: surface layer)
+    Nz=15; % Surface
+    % Nz=1; % Bottom (Sediment: surface layer)
     unit = 'km'; 
 %          'm', 'latlon'
 %     unit = 'latlon';
@@ -839,6 +843,55 @@ elseif CASE == 17  % FORP
     end
 
 
+%==================== Kushimoto ==============================================
+elseif CASE == 18  % Kushimoto
+    grd='D:/COAWST_DATA/Kushimoto/Grid/Kushimoto_grd_v0.1.nc';
+    his=["F:\COAWST_OUTPUT\Kushimoto\Kushimoto_his_20100621.nc"];
+    Fqck=false;
+    % Fqck=true;
+    qck=["F:\COAWST_OUTPUT\Kushimoto\Kushimoto_qck_20100621.nc"];
+    Fdia=false;
+    % Fdia=true;
+    dia=["F:\COAWST_OUTPUT\Kushimoto\Kushimoto_dia_20100621.nc"];
+
+    % out_dirstr = 'output/figs_png_Palau2_srf';
+    out_dirstr = 'output/figs_png_Kushimoto_srf';
+      
+    Nz=15; % Surface
+    % Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+    % unit = 'latlon';
+
+    % LevelList = [-1 10 100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000];
+    LevelList = [-1 5];
+    
+
+    if id==3 % Wave direction
+        scale=5;
+        s_interval=7;
+    elseif id==100 % Wind
+        scale=1;
+        s_interval=5;
+        x_arrow_txt = 150; y_arrow_txt=40;
+        d_arrow_txt = -7;
+        v_legend = 20;
+    else % Water Velocity
+    % Whole area
+        scale=1.3;
+        s_interval=10;
+        x_arrow_txt = 3; y_arrow_txt=27;
+        d_arrow_txt = -1;
+        v_legend = 2;
+
+    % close up
+        % scale=3;
+        % s_interval=4;
+        % x_arrow_txt = 118; y_arrow_txt=105;
+        % d_arrow_txt = -2;
+        % v_legend = 2;
+    end
+%==========================================================================
 
 end
 %==========================================================================
@@ -869,6 +922,7 @@ colormap8=superjet(128,'vbwwrW');
 % title='Sea bottom temperature (^oC)'; cmin=23; cmax=34; colmap=colormap7; ncname='temp'; % Pany
 % title='Sea surface temperature (^oC)'; cmin=22; cmax=33; colmap=colormap7; ncname='temp'; % Palau
 % title='Sea bottom temperature (^oC)'; cmin=23; cmax=34; colmap=colormap7; ncname='temp'; % Palau
+title='Sea surface temperature (^oC)'; cmin=19; cmax=31; colmap=colormap7; ncname='temp'; % Kushimoto
 
 % title='Sea surface Salinity (psu)'; cmin=20; cmax=34.7; colmap=colormap7; ncname='salt';
 % title='Sea surface Salinity (psu)'; cmin=30; cmax=34.0; colmap=colormap7; ncname='salt';
@@ -885,23 +939,44 @@ colormap8=superjet(128,'vbwwrW');
 % title='Surface S0 (umol L^-^1)'; cmin=0; cmax=500; colmap=colormap7; ncname='S0_01';
 % title='Surface Phytoplankton (umolC L^-^1)';  cmin=0; cmax=500; colmap=colormap7; ncname='PhyC02_01';
 
-% title='Coarse PON (umolN L^-^1)'; cmin=0; cmax=0.1; colmap=colmap1; ncname='PON03_01';
-% title='Coarse PON (umolN L^-^1)'; cmin=0; cmax=0.001; colmap=colmap1; ncname='PON03_02';
-% title='Coarse PO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.0001; colmap=colmap1; ncname='POC03_02';
+% title='Labile POC (umolC L^-^1)';  cmin=0; cmax=5; colmap=colormap7; ncname='POC01_01';
+% title='Labile PO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colormap7; ncname='POC01_02';
+% title='Labile PON (umolN L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PON01_01';
+% title='Labile PO^1^5N (umolN L^-^1)'; cmin=0; cmax=0.000003; colmap=colormap7; ncname='PON01_02';
+% title='Labile POP (umolP L^-^1)';  cmin=0; cmax=0.05; colmap=colormap7; ncname='POP01_01';
+% title='Labile PO^tP (umolP L^-^1)'; cmin=0; cmax=0.0000001; colmap=colormap7; ncname='POP01_02';
 
-% title='Detritus (umolC L^-^1)';  cmin=0; cmax=3; colmap=colormap7; ncname='POC_01';
-% title='Sea bottom POC (umolC L^-^1)';  cmin=0; cmax=3; colmap=colormap7; ncname='POC_01';
-% title='^1^3C in Detritus (umolC L^-^1)'; cmin=0; cmax=0.0001; colmap=colmap1; ncname='PO13C_01';
+% title='Refractory POC (umolC L^-^1)';  cmin=0; cmax=5; colmap=colormap7; ncname='POC02_01';
+% title='Refractory PO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colormap7; ncname='POC02_02';
+% title='Refractory PON (umolN L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PON02_01';
+% title='Refractory PO^1^5N (umolN L^-^1)'; cmin=0; cmax=0.000003; colmap=colormap7; ncname='PON02_02';
+% title='Refractory POP (umolP L^-^1)';  cmin=0; cmax=0.05; colmap=colormap7; ncname='POP02_01';
+% title='Refractory PO^tP (umolP L^-^1)'; cmin=0; cmax=0.0000001; colmap=colormap7; ncname='POP02_02';
 
-% title='Labile DOC (umolC L^-^1)';  cmin=0; cmax=50; colmap=jet(128); ncname='DOC_01';
-% title='Labile DO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.0005; colmap=colmap1; ncname='DO13C_01';
+% title='Coarse POC (umolC L^-^1)'; cmin=0; cmax=0.001; colmap=colormap7; ncname='POC03_01';
+% title='Coarse PO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.001; colmap=colormap7; ncname='POC03_02';
+% title='Coarse PON (umolN L^-^1)'; cmin=0; cmax=1.0e-4; colmap=colormap7; ncname='PON03_01';
+% title='Coarse PO^1^5N (umolN L^-^1)'; cmin=0; cmax=1.0e-4; colmap=colormap7; ncname='PON03_02';
+% title='Coarse POP (umolP L^-^1)';  cmin=0; cmax=1.0e-5; colmap=colormap7; ncname='POP03_01';
+% title='Coarse PO^tP (umolP L^-^1)'; cmin=0; cmax=1.0e-5; colmap=colormap7; ncname='POP03_02';
 
-% title='Refractory DOC (umolC L^-^1)';  cmin=40; cmax=70; colmap=jet(128); ncname='DOC_02';
-% title='Refractory DO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colmap1; ncname='DO13C_02';
+% title='Labile DOC (umolC L^-^1)';  cmin=0; cmax=50; colmap=colormap7; ncname='DOC01_01';
+% title='Labile DO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colormap7; ncname='DOC01_02';
+% title='Labile DON (umolN L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='DON01_01';
+% title='Labile DO^1^5N (umolN L^-^1)'; cmin=0; cmax=0.000003; colmap=colormap7; ncname='DON01_02';
+% title='Labile DOP (umolP L^-^1)';  cmin=0; cmax=0.05; colmap=colormap7; ncname='DOP01_01';
+% title='Labile DO^tP (umolP L^-^1)'; cmin=0; cmax=0.0000001; colmap=colormap7; ncname='DOP01_02';
+
+% title='Refractory DOC (umolC L^-^1)';  cmin=0; cmax=60; colmap=colormap7; ncname='DOC02_01';
+% title='Refractory DO^1^3C (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colormap7; ncname='DOC02_02';
+% title='Refractory DON (umolN L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='DON02_01';
+% title='Refractory DO^1^5N (umolN L^-^1)'; cmin=0; cmax=0.000003; colmap=colormap7; ncname='DON02_02';
+% title='Refractory DOP (umolP L^-^1)';  cmin=0; cmax=0.05; colmap=colormap7; ncname='DOP02_01';
+% title='Refractory DO^tP (umolP L^-^1)'; cmin=0; cmax=0.0000001; colmap=colormap7; ncname='DOP02_02';
 
 % title='TA (umol kg^-^1)'; cmin=2000; cmax=2350; colmap=colormap7; ncname='TA';
 % title='DIC (umol kg^-^1)'; cmin=1750; cmax=2150; colmap=colormap7; ncname='DIC_01';
-% title='DI^1^3C (umol kg^-^1)'; cmin=0; cmax=0.0005; colmap=colmap1; ncname='TI13C';
+% title='DI^1^3C (umol kg^-^1)'; cmin=0; cmax=0.0001; colmap=colormap7; ncname='DIC_02';
 
 % title='Dinoflagellate (umolC L^-^1)';  cmin=0; cmax=3; colmap=jet(128); ncname='PhyC01_01';
 % title='^1^3C in Dinoflagellate (umolC L^-^1)'; cmin=0; cmax=0.000001; colmap=colmap1; ncname='PhyC01_02';
@@ -912,15 +987,16 @@ colormap8=superjet(128,'vbwwrW');
 % title='Coccolithophorids (umolC L^-^1)';  cmin=0; cmax=10; colmap=jet(128); ncname='PhyC03_01';
 % title='^1^3C in Coccolithophorids (umolC L^-^1)'; cmin=0; cmax=0.00001; colmap=colmap1; ncname='PhyC03_02';
 
-% title='Particulate Inorganic C (umolC L^-^1)';  cmin=0; cmax=5; colmap=jet(128); ncname='PIC_01';
-% title='Particulate Inorganic ^1^3C (umolC L^-^1)'; cmin=0; cmax=0.000001; colmap=colmap1; ncname='PI13C_01';
-
-% title='Zooplankton (umolC L^-^1)';  cmin=0; cmax=10; colmap=jet(128); ncname='zooplankton_01';
-% title='^1^3C in Zooplankton (umolC L^-^1)'; cmin=0; cmax=0.1; colmap=colmap1; ncname='zoop13C_01';
+% title='Zooplankton C biomass (umolC L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='ZooC01_01';
+% title='Zooplankton ^1^3C biomass (umolC L^-^1)'; cmin=0; cmax=1.0e-8; colmap=colormap7; ncname='ZooC01_02';
+% title='Zooplankton N biomass (umolN L^-^1)';  cmin=0; cmax=0.1; colmap=colormap7; ncname='ZooN01_01';
+% title='Zooplankton ^1^5N biomass (umolN L^-^1)'; cmin=0; cmax=5.0e-9; colmap=colormap7; ncname='ZooN01_02';
+% title='Zooplankton P biomass (umolP L^-^1)';  cmin=0; cmax=0.01; colmap=colormap7; ncname='ZooP01_01';
+% title='Zooplankton ^tP biomass (umolP L^-^1)'; cmin=0; cmax=5.0e-10; colmap=colormap7; ncname='ZooP01_02';
 
 % title='Surface NO_3 (umolN L^-^1)';  cmin=0; cmax=10; colmap=colormap7; ncname='NO3_01';
 % title='Surface PO_4 (umolP L^-^1)';  cmin=0; cmax=0.5; colmap=colormap7; ncname='PO4_01';
-title='Surface ^tPO_4 (umolP L^-^1)';  cmin=0; cmax=0.000001; colmap=colormap7; ncname='PO4_02';
+% title='Surface ^tPO_4 (umolP L^-^1)';  cmin=0; cmax=0.000001; colmap=colormap7; ncname='PO4_02';
 % title='Bottom PO_4 (umolP L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PO4_01';
 % title='Bottom ^tPO_4 (umolP L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PO4_02';
 % title='Phytoplankton (umolC L^-^1)';  cmin=0; cmax=0.3; colmap=colormap7; ncname='PhyC02_01';
@@ -928,11 +1004,11 @@ title='Surface ^tPO_4 (umolP L^-^1)';  cmin=0; cmax=0.000001; colmap=colormap7; 
 
 % title='Sediment DO (umol L^-^1; surface layer)'; cmin=100; cmax=250; colmap=colormap7; ncname='sediment_O2'; % Sediment model
 % title='Sediment POC (nmolC g^-^1; surface layer)'; cmin=0; cmax=570; colmap=colormap7; ncname='sediment_POCf'; % Sediment model
-% title='Sediment RPO^1^3C (nmolC g^-^1; surface layer)'; cmin=0; cmax=1e-5; colmap=colmap1; ncname='sediment_POC02_02'; % Sediment model
+% title='Sediment RPO^1^3C (nmolC g^-^1; surface layer)'; cmin=0; cmax=1e-6; colmap=colmap1; ncname='sediment_POC02_02'; % Sediment model
 
 % === for ID = 8 ===
-% title='Surface DIN (umolN L^-^1)'; cmin=0; cmax=5; colmap=colormap7; ncname='DIN_01'; % ID =8
-% title='Surface DI^1^5N (umolN L^-^1)'; cmin=0; cmax=0.00001; colmap=colormap7; ncname='DIN_02'; % ID =8
+% title='DIN (umolN L^-^1)'; cmin=0; cmax=5; colmap=colormap7; ncname='DIN_01'; % ID =8
+% title='DI^1^5N (umolN L^-^1)'; cmin=0; cmax=0.00001; colmap=colormap7; ncname='DIN_02'; % ID =8
 
 % === for ID = 10 ===
 % title='Sediment mass change (kg m^-^2)'; cmin=-0.002; cmax=0.002; colmap=colormap8; ncname='mudmass_01'; % Shiraho surf
@@ -1050,6 +1126,9 @@ elseif CASE == 17  % FORP
     % Close up
     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
     xsize=750; ysize=550;   
+elseif CASE == 18  % Kushimoto
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xsize=780; ysize=520;   
 else
     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
     xsize=520; ysize=520;   

@@ -1,23 +1,27 @@
 %
 % === ver 2021/12/22   Copyright (c) 2015-2025 Takashi NAKAMURA  =====
 %
-% clear all;
-% close all;
+clear all;
+close all;
 
 % CASE 1=> Shizugawa1; 2=> Shizugawa2; 3=> Shizugawa3
 % CASE 4=> Yaeyama1; 5=> Yaeyama2; 6=> Yaeyama3
 % CASE 7=> Shiraho reef
 
-CASE = 15;
+% CASE 17=> FORP-JPN02 offline
+% CASE 18=> Kushimoto
+
+CASE = 18;
 
 % --- Plotting period --- %
-min_date    = datenum(2024,1,6,0,0,0);  % Period 4 start
-max_date    = datenum(2024,1,17,0,0,0);  % Period 4 end
+min_date    = datenum(2010,6,21,0,0,0);  % Period 4 start
+max_date    = datenum(2010,8,10,0,0,0);  % Period 4 end
 
 ref_date     = datenum(2000,1,1,0,0,0);  % 
 
 id=1;
 % id=2;
+% id=10;
 
 %==================== Shizugawa ==============================================
 if CASE == 1      % Shizugawa1
@@ -230,6 +234,43 @@ elseif CASE == 15  % Palau2
 %          'm', 'latlon'
     % unit = 'latlon';
     spherical=1;
+
+%==================== Kushimoto ==============================================
+elseif CASE == 18  % Kushimoto
+    grd='D:/COAWST_DATA/Kushimoto/Grid/Kushimoto_grd_v0.1.nc';
+
+% [memo] Due to the HDF library issue, nc file by ROMSPath should be
+% converted to a classic netcdf fil as follows:
+% $nccopy -k classic P2_ROMSPath_flt.nc P2_ROMSPath_flt_v2.nc
+
+    flt='F:/COAWST_OUTPUT/Kushimoto/Kushimoto_ROMSPath_flt_srf_HTurb1.0_20100621_v3.nc'; %LTRANS/ROMSPath float
+
+    out_dirstr = 'output/figs_png_Kushimoto_flt_v2';
+    
+    % LevelList = [-1 10 100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000];
+    LevelList = [-1 5];
+    
+    Nz=15; % Surface
+    % Nz=1; % Bottom (Sediment: surface layer)
+    unit = 'km'; 
+%          'm', 'latlon'
+    % unit = 'latlon';
+    spherical=1;
+
+    wplgn_file = 'F:\Dropbox\Projects\Kushimoto\GIS\density_counting_area\west2.shp';
+    eplgn_file = 'F:\Dropbox\Projects\Kushimoto\GIS\density_counting_area\east2.shp';
+    Sw = shaperead(wplgn_file);
+    N_wpt = size(Sw.X,2);
+    X_wplgn = Sw.X(1:N_wpt-1);
+    Y_wplgn = Sw.Y(1:N_wpt-1);
+    Se = shaperead(eplgn_file);
+    N_ept = size(Se.X,2);
+    X_eplgn = Se.X(1:N_ept-1);
+    Y_eplgn = Se.Y(1:N_ept-1);
+
+    fid=fopen('inpolygon.csv','w');   
+
+%==========================================================================
 end
 %==========================================================================
 
@@ -244,18 +285,11 @@ LOCAL_TIME=' (UTC)';
 
 
 % plgn='C:\Users\Takashi\Dropbox\collaboration\Nanami\Sekisei_area_polygon.shp';
-% S = shaperead(plgn);
-% %% 
-% 
-% N_pt = size(S.X,2);
-% X_pgon = S.X(1:N_pt-1);
-% Y_pgon = S.Y(1:N_pt-1);
-
 
 %% 
 
 % LevelList = [-1 1 10];
-LevelList = [-1 0.2 0.5 3];
+% LevelList = [-1 0.2 0.5 3];
 unit = 'km'; 
 
 h          = ncread(grd,'h');
@@ -282,6 +316,11 @@ elseif strcmp(unit,'km')
     y_rho      = ncread(grd,'y_rho');
     x_rho=(x_rho-min(min(x_rho)))/1000; % m->km
     y_rho=(y_rho-min(min(y_rho)))/1000; % m->km
+
+    X_wplgn = (X_wplgn- x_corner_m)/1000; % m->km;
+    Y_wplgn = (Y_wplgn- y_corner_m)/1000; % m->km;
+    X_eplgn = (X_eplgn- x_corner_m)/1000; % m->km;
+    Y_eplgn = (Y_eplgn- y_corner_m)/1000; % m->km;
 end
 
 k=0;
@@ -336,6 +375,10 @@ elseif CASE == 15  % Palau2
     xmin=80;   xmax=140;  ymin=50;   ymax=150;
     % xmin=90;   xmax=100;  ymin=60;   ymax=70;
     xsize=550; ysize=750;   
+elseif CASE == 18  % Kushimoto
+    % xmin=min(min(x_rho))+0.3;   xmax=max(max(x_rho))-0.3;  ymin=min(min(y_rho))+0.3;   ymax=max(max(y_rho))-0.3;
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xsize=780; ysize=520;   
 else
     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
     xsize=520; ysize=520;   
@@ -363,48 +406,59 @@ imax=length(time);
 if (spherical)
     lonfloat=ncread(flt,'lon',[1 1],[Inf 1]);
     latfloat=ncread(flt,'lat',[1 1],[Inf 1]);
-    [xfloat(:), yfloat(:), UTM_zone] = deg2utm(latfloat(:),lonfloat(:));
+    [xfloat0(:), yfloat0(:), UTM_zone] = deg2utm(latfloat(:),lonfloat(:));
 
-    xfloat=(xfloat - x_corner_m)/1000; % m->km
-    yfloat=(yfloat - y_corner_m)/1000; % m->km
+    xfloat0=(xfloat0 - x_corner_m)/1000; % m->km
+    yfloat0=(yfloat0 - y_corner_m)/1000; % m->km
 else  
-    xfloat=ncread(flt,'x',[1 1],[Inf 1]).*0.001;
-    yfloat=ncread(flt,'y',[1 1],[Inf 1]).*0.001;
+    xfloat0=ncread(flt,'x',[1 1],[Inf 1]).*0.001;
+    yfloat0=ncread(flt,'y',[1 1],[Inf 1]).*0.001;
 
 end
- 
+sfloat=ncread(flt,'status',[1 2],[Inf 1]);
+xfloat= xfloat0; %(sfloat==1);
+yfloat= yfloat0; %(sfloat==1);
+% xfloat= xfloat0(sfloat==1);
+% yfloat= yfloat0(sfloat==1);
 
 
-num_float=size(lonfloat,1);
+num_float=size(xfloat,2);
 ifloat = 1:num_float;
 %% 
+NumColor = 256; 
+% NumColor = 11 % for Palau case
 
 % My color map
 load('MyColormaps')
-colormap6=superjet(11,'uvbZctjgorW');
-colormap7=superjet(11,'vbZctgyorW');
+colormap6=superjet(NumColor,'uvbZctjgorW');
+colormap7=superjet(NumColor,'vbZctgyorW');
+colormap8=superjet(NumColor,'bZctgyorW');
 
 
 date=ref_date+time(i+1)/24/60/60;
 date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
 
 if id == 1
-    [h_scatter,h_contour,h_annot]=createfltplot4(x_rho,y_rho,xfloat,yfloat,ifloat,h,date_str,'',1,num_float,flipud(jet(11)),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
-    % [h_scatter,h_contour,h_annot]=createfltplot4(x_rho,y_rho,xfloat,yfloat,ifloat,h,date_str,'',1,num_float,flipud(colormap6),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    % [h_scatter,h_contour,h_annot]=createfltplot4(x_rho,y_rho,xfloat,yfloat,ifloat,h,date_str,'',1,num_float,flipud(jet(NumColor)),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    [h_scatter,h_contour,h_annot]=createfltplot5(x_rho,y_rho,xfloat,yfloat,ifloat,h,date_str,'',1,num_float,flipud(colormap7),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList,4);
 elseif id == 2
-    % dfloat=ncread(flt,'depth',[1 1],[Inf 1]).*-1;
-    dfloat=ncread(flt,'zp',[1 1],[Inf 1]).*-1;
+    % dfloat0=ncread(flt,'depth',[1 1],[Inf 1]).*-1;
+    % dfloat0=ncread(flt,'zp',[1 1],[Inf 1]).*-1;
+    dfloat=zeros(size(xfloat,2),1);
 %     [h_scatter,h_contour,h_annot]=createfltplot2(x_rho,y_rho,xfloat(:,i),yfloat(:,i),dfloat(:,i),h,date_str,'Larvae',-1,40,flipud(winter(256)),xsize,ysize,xmin,xmax,ymin,ymax);
-    [h_scatter,h_contour,h_annot]=createfltplot4(x_rho,y_rho,xfloat(:),yfloat(:),dfloat(:),h,date_str,'Larvae (depth/m)',-2,50,flipud(jet(128)),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    [h_scatter,h_contour,h_annot]=createfltplot5(x_rho,y_rho,xfloat(:),yfloat(:),dfloat(:),h,date_str,'Larvae (depth/m)',-2,2,flipud(jet(128)),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList,4);
 elseif id == 3
     tempfloat=ncread(flt,'temp');
-    [h_scatter,h_contour,h_annot]=createfltplot4(x_rho,y_rho,xfloat(:,i),yfloat(:,i),tempfloat(:,i),h,date_str,'Larvae (temperature)',22,29,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    [h_scatter,h_contour,h_annot]=createfltplot5(x_rho,y_rho,xfloat(:,i),yfloat(:,i),tempfloat(:,i),h,date_str,'Larvae (temperature)',22,29,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList,4);
 elseif id == 4
     saltfloat=ncread(flt,'salt');
-    [h_scatter,h_contour,h_annot]=createfltplot4(x_rho,y_rho,xfloat(:,i),yfloat(:,i),saltfloat(:,i),h,date_str,'Larvae (salinity)',30,36,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    [h_scatter,h_contour,h_annot]=createfltplot5(x_rho,y_rho,xfloat(:,i),yfloat(:,i),saltfloat(:,i),h,date_str,'Larvae (salinity)',30,36,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList,2);
 elseif id == 5
     phy1float=ncread(flt,'phytoplankton');
-    [h_scatter,h_contour,h_annot]=createfltplot4(x_rho,y_rho,xfloat(:,i),yfloat(:,i),phy1float(:,i),h,date_str,'Larvae (phytoplankton)',0.2,0.4,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+    [h_scatter,h_contour,h_annot]=createfltplot5(x_rho,y_rho,xfloat(:,i),yfloat(:,i),phy1float(:,i),h,date_str,'Larvae (phytoplankton)',0.2,0.4,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
+elseif id == 10
+    ifloat=zeros(size(xfloat,2),1);
+    [h_scatter,h_contour,h_annot]=createfltplot5(x_rho,y_rho,xfloat,yfloat,ifloat,h,date_str,'Particle density (particles km^-^2)',0,2e3,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList,2);
 end
 % plot(pgon,'FaceColor','b','FaceAlpha',0.05);
 drawnow
@@ -421,15 +475,19 @@ for i=1:1:imax%336 %imax-1  %i=1:imax-1
         if (spherical)
             lonfloat=ncread(flt,'lon',[1 i],[Inf 1]);
             latfloat=ncread(flt,'lat',[1 i],[Inf 1]);
-            [xfloat(:), yfloat(:), UTM_zone] = deg2utm(latfloat(:),lonfloat(:));
+            [xfloat0(:), yfloat0(:), UTM_zone] = deg2utm(latfloat(:),lonfloat(:));
             
-            xfloat=(xfloat - x_corner_m)/1000; % m->km
-            yfloat=(yfloat - y_corner_m)/1000; % m->km
+            xfloat0=(xfloat0 - x_corner_m)/1000; % m->km
+            yfloat0=(yfloat0 - y_corner_m)/1000; % m->km
         else  
-            xfloat=ncread(flt,'x',[1 i],[Inf 1]).*0.001;
-            yfloat=ncread(flt,'y',[1 i],[Inf 1]).*0.001;
+            xfloat0=ncread(flt,'x',[1 i],[Inf 1]).*0.001;
+            yfloat0=ncread(flt,'y',[1 i],[Inf 1]).*0.001;
     
         end
+        sfloat=ncread(flt,'status',[1 i],[Inf 1]);
+        xfloat= xfloat0(sfloat==1);
+        yfloat= yfloat0(sfloat==1);
+
         % in = inpolygon(xfloat, yfloat, X_pgon, Y_pgon);
         % num_inpgn = sum(in);
         
@@ -437,10 +495,12 @@ for i=1:1:imax%336 %imax-1  %i=1:imax-1
         date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
         
         if id == 1
+            ifloat = find(sfloat==1);
             set(h_scatter,'XData',xfloat(:),'YData',yfloat(:),'CData',ifloat)
         elseif id == 2
-            % dfloat=ncread(flt,'depth',[1 i],[Inf 1]).*-1;
-            dfloat=ncread(flt,'zp',[1 i],[Inf 1]).*-1;
+            % dfloat0=ncread(flt,'depth',[1 i],[Inf 1]).*-1;
+            dfloat0=ncread(flt,'zp',[1 i],[Inf 1]).*-1;
+            dfloat=dfloat0(sfloat==1);
             set(h_scatter,'XData',xfloat(:),'YData',yfloat(:),'CData',dfloat(:))
         elseif id == 3
             set(h_scatter,'XData',xfloat(:,i),'YData',yfloat(:,i),'CData',tempfloat(:,i))
@@ -448,13 +508,23 @@ for i=1:1:imax%336 %imax-1  %i=1:imax-1
             set(h_scatter,'XData',xfloat(:,i),'YData',yfloat(:,i),'CData',saltfloat(:,i))
         elseif id == 5
             set(h_scatter,'XData',xfloat(:,i),'YData',yfloat(:,i),'CData',phy1float(:,i))
+        elseif id == 10
+            dist=1.0; % (km); Cell size for counting particle density
+            dens = point_density( xfloat, yfloat, dist, dist );
+            set(h_scatter,'XData',xfloat(:),'YData',yfloat(:),'CData',dens(:))
         end
         
         set(h_annot,'String',date_str)
-        % title(['Number of particles inside the polygon: ' num2str(num_inpgn) '/' num2str(num_float)],'FontSize',12,'FontName','Arial', 'FontWeight', 'normal');
         drawnow
         fname = strcat( 'flt', datestr(date,'_yyyymmddHHMM') );
-        exportgraphics(figure(1), strcat(out_dirstr,'/', fname,'.png'));
+        % exportgraphics(figure(1), strcat(out_dirstr,'/', fname,'.png'));
+
+
+        ine = inpolygon(xfloat, yfloat, X_eplgn, Y_eplgn);
+        num_ineplgn = sum(ine);
+        inw = inpolygon(xfloat, yfloat, X_wplgn, Y_wplgn);
+        num_inwplgn = sum(inw);
+        fprintf(fid,'%s, %d, %d\r\n',datestr(date,'yyyy/mm/dd HH:MM'),num_ineplgn,num_inwplgn);   
     
     end
 end

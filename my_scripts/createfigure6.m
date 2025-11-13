@@ -1,4 +1,4 @@
-function[h_surf,h_contour,axes1,h_annot,h_annot2]= createfigure5(XData1,YData1,CData1,zdata2, annot_str, title1,units,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList)
+function[h_surf,h_contour,axes1,h_annot,h_annot2]= createfigure5(XData1,YData1,CData1,alphaData,zdata2, annot_str, title1,units,Cmin,Cmax, colmap, xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList)
 %CREATEFIGURE(ZDATA1,YDATA1,XDATA1,CDATA1,ZDATA2)
 %  ZDATA1:  surface zdata
 %  YDATA1:  surface ydata
@@ -51,6 +51,9 @@ pbaspect([dx dy 1])
 h_surf=pcolor(XData1,YData1,CData1);
 shading flat;
 %shading interp;
+
+set(h_surf,'facealpha','flat')
+set(h_surf,'alphadata',alphaData)
 
 % colorbar
 %colormap(colmap);

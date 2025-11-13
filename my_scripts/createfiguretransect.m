@@ -2,7 +2,7 @@ function[h_surf,h_surf2,h_contour,h_annot,axes1,axes2] ...
     = createfiguretransect(XData1,XData2,YData1,YData2,CData1,CData2,zdata2, ...
     annot_str, title1, units, Cmin,Cmax, colmap, marker_color,...
     xsize,ysize,xmin,xmax,ymin,ymax,zmin,zmax,xunit,yunit,zunit,axisratio,LevelList, ...
-    transect_Y_position)
+    transect_Y_position,layertext)
 
 figure1 = figure('PaperSize',[30 60],...
     'Color',[1 1 1],...
@@ -109,7 +109,9 @@ yl1.Position(1) = xmin - 0.1*(xmax-xmin);
 
 
 % title
-title('Surface layer map','FontSize',14,'FontName','Arial', 'FontWeight', 'normal');
+% title('Surface layer map','FontSize',14,'FontName','Arial', 'FontWeight', 'normal');
+% title('Surface sediment layer map','FontSize',14,'FontName','Arial', 'FontWeight', 'normal');
+title(layertext,'FontSize',14,'FontName','Arial', 'FontWeight', 'normal');
 
 
 
@@ -151,7 +153,7 @@ annotation(figure1,'textbox',...
 % transect plot
 
 dx=xmax-xmin;
-dz=(zmax-zmin)/axisratio;
+dz=(zmax-0)/axisratio;
 
 zinterval = zmax/5;
 
@@ -214,10 +216,14 @@ end
 
 % use xlabel as title
 xl2 = xlabel('Vertical transect','FontSize',14,'FontName','Arial','FontWeight', 'normal');
-xl2.Position(2) = 1.15*zmax;
+xl2.Position(2) = zmax + 0.15*(zmax-zmin);
 
 yl1.Position(1) = xmin - 0.1*(xmax-xmin);
 
+% bottom contour
+line(XData2(:, end),YData2(:, end),...
+    'Color',[0.48 0.06 0.92],...
+    'Parent',axes2);
 
 
 % Title textbox

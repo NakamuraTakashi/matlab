@@ -2,7 +2,7 @@ function[h_surf,h_surf2,h_contour,h_core1,h_core2,h_annot,axes1,axes2,axes3,axes
     = createfiguresedtransect(XData1,XData2,YData1,YData2,CData1,CData2,zdata2, ...
     annot_str, title1, units, Cmin,Cmax, colmap, marker_color,...
     xsize,ysize,xmin,xmax,ymin,ymax,zmin,zmax,xunit,yunit,zunit,axisratio,LevelList, ...
-    transect_Y_position,core_X_position)
+    transect_Y_position,core_X_position,layertext)
 
 figure1 = figure('PaperSize',[30 60],...
     'Color',[1 1 1],...
@@ -114,7 +114,7 @@ yl1.Position(1) = xmin - 0.1*(xmax-xmin);
 
 
 % title
-title('Surface layer map','FontSize',14,'FontName','Arial', 'FontWeight', 'normal');
+title(layertext,'FontSize',14,'FontName','Arial', 'FontWeight', 'normal');
 
 
 

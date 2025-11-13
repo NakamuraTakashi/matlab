@@ -32,11 +32,16 @@ addpath('/Users/yuta/Documents/TiTech/Nakamura_Lab/Simulation/matlab/')
 % his_qck='/Users/yuta/mount/takagi/SeagrassData/Shiraho_reef_seagrass_unconstrained_low_SGD/ocean_seagrass_unconstrained_low_SGD_01_qck.nc';
 % his_dia='/Users/yuta/mount/takagi/SeagrassData/Shiraho_reef_seagrass_unconstrained_low_SGD/ocean_seagrass_unconstrained_low_SGD_01_dia.nc';
 
-% % -------------- Seagrass 2025/04/14 ------------------------------
+% % -------------- Seagrass 2025/07/29 ------------------------------
 grd='/Volumes/syn1/yuta/COAWST_DATA/Yaeyama/Shiraho_reef2/Grid/shiraho_roms_grd_JCOPET_v18.1.nc'; 
-his_his='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_sg_his_20231001_test_14.nc';
-his_qck='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_sg_qck_20231001_test_14.nc';
-his_dia='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_sg_dia_20231001_test_14.nc';
+his_his='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_sg_his_20231001_test_17.nc';
+his_qck='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_sg_qck_20231001_test_17.nc';
+his_dia='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_sg_dia_20231001_test_17.nc';
+
+grd_nosg='/Volumes/syn1/yuta/COAWST_DATA/Yaeyama/Shiraho_reef2/Grid/shiraho_roms_grd_JCOPET_v18.1_nosg.nc'; 
+his_his_nosg='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_nosg_his_20231001_test_14.nc';
+his_qck_nosg='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_nosg_qck_20231001_test_14.nc';
+his_dia_nosg='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_nosg_dia_20231001_test_14.nc';
 
 % ncdisp(grd)
 % ncdisp(his_his)
@@ -57,34 +62,34 @@ core_X_position = [0.8 1.4]; % X position along the transect to create vertical 
 
 soil_density = 2.5; % (g/cm3)
 
-% id = 1; his=his_his; Cbounds=[25 40];     color=colmap6;    % Temperature
-% id = 2; his=his_his; Cbounds=[20 36];     color=colmap6;    % Salinity
-% id = 3; his=his_his; Cbounds=[1700 2300]; color=colmap6;    % DIC
-% id = 4; his=his_his; Cbounds=[1600 2800]; color=colmap6;    % TA    Cbounds=[2230 2360]
-% id = 5; his=his_his; Cbounds=[0 250];    color=colmap7;    % DO
-% id = 8; his=his_dia; Cbounds=[7 9];     color=colmap6;    % pH
+id = 1; his=his_his; his_nosg=his_his_nosg; Cbounds=[-1 1];     color=colmap10;    % Temperature
+% id = 2; his=his_his; his_nosg=his_his_nosg; Cbounds=[-0.1 0.1];     color=colmap10;    % Salinity
+% id = 3; his=his_his; his_nosg=his_his_nosg; Cbounds=[-5 5]; color=colmap10;    % DIC
+% id = 4; his=his_his; his_nosg=his_his_nosg; Cbounds=[-1 1]; color=colmap10;    % TA    Cbounds=[2230 2360]
+% id = 5; his=his_his; his_nosg=his_his_nosg; Cbounds=[-5 5];    color=colmap10;    % DO
+% id = 8; his=his_dia; his_nosg=his_dia_nosg; Cbounds=[-0.5 0.5];     color=colmap10;    % pH
     % id = 23; % Phytoplankton1
     % id = 24; % Phytoplankton2
     % id = 25; % Phytoplankton
-% id = 26; his=his_his; Cbounds=[0 30]; color=colmap7;    % NO3
-% id = 27; his=his_his; Cbounds=[0 30]; color=colmap7;    % NO3+NH4
-% id = 28; his=his_his; Cbounds=[0 30]; color=colmap7;    % NH4
-% id = 29; his=his_his; Cbounds=[0 3];  color=colmap7;    % PO4
+% id = 26; his=his_his; his_nosg=his_his_nosg; Cbounds=[-20 20]; color=colmap10;    % NO3
+% id = 27; his=his_his; his_nosg=his_his_nosg; Cbounds=[-20 20]; color=colmap10;    % NO3+NH4
+% id = 28; his=his_his; his_nosg=his_his_nosg; Cbounds=[-1 1]; color=colmap10;    % NH4
+% id = 29; his=his_his; his_nosg=his_his_nosg; Cbounds=[-0.2 0.2];  color=colmap10;    % PO4
     % id = 35; % DOC
     % id = 51; his=his_qck; Cbounds=[27 36];        color=colmap6; fix_bottom=true;    % Sediment Temperature
     % id = 52; his=his_qck; Cbounds=[32 36];        color=colmap6; fix_bottom=true;    % Sediment Salinity
     % id = 53; his=his_qck; Cbounds=[2050 2350];    color=colmap6; fix_bottom=true;    % Sediment TA
-% id = 54; his=his_qck; Cbounds=[0 250]; color=colmap7; fix_bottom=true;    % Sediment DO
-% id = 55; his=his_qck; Cbounds=[1700 2500]; color=colmap6; fix_bottom=true;    % Sediment DIC
+% id = 54; his=his_qck; his_nosg=his_qck_nosg; Cbounds=[-200 200]; color=colmap10; fix_bottom=true;    % Sediment DO
+% id = 55; his=his_qck; his_nosg=his_qck_nosg; Cbounds=[-1000 1000]; color=colmap10; fix_bottom=true;    % Sediment DIC
     % id = 56; his=his_qck; Cbounds=[0 10]; color=colmap7; fix_bottom=true;    % Sediment N2
     % id = 57; his=his_qck; Cbounds=[25 40]; color=colmap6; fix_bottom=true;    % Sediment DOC Labile          0, 1, colmap7, marker_color, ...
     % id = 58; his=his_qck; Cbounds=[25 40]; color=colmap6; fix_bottom=true;    % Sediment DOC Refractory          0, 2100, colmap6, marker_color, ...
     % id = 59; his=his_qck; Cbounds=[25 40]; color=colmap6; fix_bottom=true;    % Sediment POC Labile          0, 4, colmap7, marker_color, ...
     % id = 60; his=his_qck; Cbounds=[25 40]; color=colmap6; fix_bottom=true;    % Sediment POC Refractory          832000, 852000, colmap6, marker_color, ...
     % id = 61; his=his_qck; Cbounds=[25 40]; color=colmap6; fix_bottom=true;    % Sediment POC Non-degradable          832000, 852000, colmap6, marker_color, ...
-% id = 62; his=his_qck; Cbounds=[0 30]; color=colmap7; fix_bottom=true;    % Sediment NO3
-% id = 63; his=his_qck; Cbounds=[0 30]; color=colmap7; fix_bottom=true;    % Sediment NH4
-% id = 64; his=his_qck; Cbounds=[0 3]; color=colmap7; fix_bottom=true;    % Sediment PO4         0, 12, colmap7, marker_color, ...
+% id = 62; his=his_qck; his_nosg=his_qck_nosg; Cbounds=[-30 30]; color=colmap10; fix_bottom=true;    % Sediment NO3
+% id = 63; his=his_qck; his_nosg=his_qck_nosg; Cbounds=[-30 30]; color=colmap10; fix_bottom=true;    % Sediment NH4
+% id = 64; his=his_qck; his_nosg=his_qck_nosg; Cbounds=[-5 5]; color=colmap10; fix_bottom=true;    % Sediment PO4         0, 12, colmap7, marker_color, ...
     % id = 65; his=his_qck; Cbounds=[25 40]; color=colmap6; fix_bottom=true;    % Sediment DON Labile          0, 1, colmap7, marker_color, ...
     % id = 66; his=his_qck; Cbounds=[25 40]; color=colmap6; fix_bottom=true;    % Sediment DON Refractory          0, 200, colmap7, marker_color, ...
     % id = 67; his=his_qck; Cbounds=[25 40]; color=colmap6; fix_bottom=true;    % Sediment PON Labile          0, 100, colmap7, marker_color, ...
@@ -105,20 +110,20 @@ soil_density = 2.5; % (g/cm3)
     % id = 82; his=his_qck; Cbounds=[0 40]; color=colmap7; fix_bottom=true;    % Sediment H2S       0, 0.01, colmap7, marker_color, ...
     % id = 83; his=his_qck; Cbounds=[0 40]; color=colmap7; fix_bottom=true;    % Sediment SO4        0, 30000, colmap7, marker_color, ...
     % id = 84; his=his_qck; Cbounds=[25 40]; color=colmap6; fix_bottom=true;    % Sediment S0         0, 30, colmap7, marker_color, ...
-% id = 91; his=his_qck; Cbounds=[4.98 5.12]; color=colmap6; fix_bottom=true;    % Sediment sum of OC
-% id = 92; his=his_qck; Cbounds=[0.7 1.5]; color=colmap6; fix_bottom=true;    % Sediment sum of ON
-% id = 93; his=his_qck; Cbounds=[0.04 0.07]; color=colmap6; fix_bottom=true;    % Sediment sum of OP
-% id = 401; his=his_his; Cbounds=[0 100];  color=colmap7;    % sum of DOC
-% id = 402; his=his_his; Cbounds=[0 15];  color=colmap7;    % sum of DON
-id = 403; his=his_his; Cbounds=[0 0.8];  color=colmap7;    % sum of DOP
-% id = 404; his=his_his; Cbounds=[0 100];  color=colmap7;    % sum of POC
-% id = 405; his=his_his; Cbounds=[0 15];  color=colmap7;    % sum of PON
-% id = 406; his=his_his; Cbounds=[0 0.8];  color=colmap7;    % sum of POP
+% id = 91; his=his_qck; his_nosg=his_qck_nosg; Cbounds=[-5 5]; color=colmap10; fix_bottom=true;    % Sediment sum of OC
+% id = 92; his=his_qck; his_nosg=his_qck_nosg; Cbounds=[-1 1]; color=colmap10; fix_bottom=true;    % Sediment sum of ON
+% id = 93; his=his_qck; his_nosg=his_qck_nosg; Cbounds=[-0.1 0.1]; color=colmap10; fix_bottom=true;    % Sediment sum of OP
+% id = 401; his=his_his; his_nosg=his_his_nosg; Cbounds=[-1 1]; color=colmap10;    % sum of DOC
+% id = 402; his=his_his; his_nosg=his_his_nosg; Cbounds=[-0.1 0.1]; color=colmap10;    % sum of DON
+% id = 403; his=his_his; his_nosg=his_his_nosg; Cbounds=[-0.01 0.01]; color=colmap10;    % sum of DOP
+% id = 404; his=his_his; his_nosg=his_his_nosg; Cbounds=[-1 1]; color=colmap10;    % sum of POC
+% id = 405; his=his_his; his_nosg=his_his_nosg; Cbounds=[-0.1 0.1]; color=colmap10;    % sum of PON
+% id = 406; his=his_his; his_nosg=his_his_nosg; Cbounds=[-0.01 0.01]; color=colmap10;    % sum of POP
     % id = 407; his=his_his; Cbounds=[0 100];  color=colmap7;    % sum of OC
     % id = 408; his=his_his; Cbounds=[0 10];  color=colmap7;    % sum of ON
     % id = 409; his=his_his; Cbounds=[0 1];  color=colmap7;    % sum of OP
-% id = 410; his=his_his; Cbounds=[0 6];  color=colmap7;    % sum of phytoplankton
-% id = 411; his=his_his; Cbounds=[0 0.6];  color=colmap7;    % sum of zooplankton
+% id = 410; his=his_his; his_nosg=his_his_nosg; Cbounds=[-3 3]; color=colmap10;    % sum of phytoplankton
+% id = 411; his=his_his; his_nosg=his_his_nosg; Cbounds=[-0.01 0.01]; color=colmap10;    % sum of zooplankton
     % id = 1001; % Air temperature
     % id = 1002; % Air pressure
     % id = 1003; % Humidity
@@ -126,7 +131,7 @@ id = 403; his=his_his; Cbounds=[0 0.8];  color=colmap7;    % sum of DOP
     % id = 1005; % Cloud fraction
 
 
-output_folder = strcat('figs_png','_',num2str(id,'%0.4u'));
+output_folder = strcat('figs_png_dif','_',num2str(id,'%0.4u'));
 if (exist(strcat('output/', output_folder),'dir'))
     % error(strcat('Output directory /output/',output_folder,' already exists. Program terminated to prevent overwrite.'))
 else
@@ -144,7 +149,6 @@ layertext = "Bottom layer map";
 
 SedLayer=1;
 sedlayertext = "Surface sediment layer map";
-
 
 % LOCAL_TIME='(UTC)';
 LOCAL_TIME=' (JST)';
@@ -510,7 +514,7 @@ elseif id == 56
 elseif id == 57
     [h_surf,h_surf2,h_contour,h_core1,h_core2,h_annot,axes1,axes2,axes3,axes4]=createfiguresedtransect(x_rho,x_rho2,y_rho,z_sed,tmp,tmp2,h,date_str, ...
         'Sediment DOC Labile',"umol L^{-1}",Cbounds(1),Cbounds(2),color,marker_color, ...
-        xsize,ysize,xmin,xmax,ymin,ymax,zmin,zmax,xunit,yunit,zunit,axisratio,LevelList,transect_Y_position,core_X_position,sedlayertext);
+        xsize,ysize,xmin,xmax,ymin,ymax,zmin,zmax,xunit,yunit,zunit,axisratio,LevelList,transect_Y_position,core_X_position),sedlayertext;
 elseif id == 58
     [h_surf,h_surf2,h_contour,h_core1,h_core2,h_annot,axes1,axes2,axes3,axes4]=createfiguresedtransect(x_rho,x_rho2,y_rho,z_sed,tmp,tmp2,h,date_str, ...
         'Sediment DOC Refractory',"umol L^{-1}",Cbounds(1),Cbounds(2),color,marker_color, ...
@@ -690,10 +694,10 @@ drawnow
 %set(figure(1),'OuterPosition',[0 0 320 700])%[0 0 400 800]%[0 0 290 620]
 
 % for i=1100:3:1100
-% for i=imax:1:imax
 % for i=360:1:imax
 % for i=1:1:1
-for i=1:1:imax   
+for i=imax:1:imax
+% for i=1:1:imax   
 
     cont_z = nan(nz+2, n_p);
 
@@ -712,28 +716,41 @@ for i=1:1:imax
 
 
     if id == 1
-        tmp = ncread(his,'temp',[1 1 plotZ i],[Inf Inf 1 1]);  
-        % tmp = ncread(his,'temp',[1 1 1 i],[Inf Inf 1 1]);  % bottom
-        tmp2 =  squeeze(ncread(his,'temp',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg = ncread(his,'temp',[1 1 plotZ i],[Inf Inf 1 1]);  
+        % tmp_sg = ncread(his,'temp',[1 1 1 i],[Inf Inf 1 1]);  % bottom
+        tmp2_sg =  squeeze(ncread(his,'temp',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'temp',[1 1 plotZ i],[Inf Inf 1 1]);  
+        % tmp_nosg = ncread(his_nosg,'temp',[1 1 1 i],[Inf Inf 1 1]);  % bottom
+        tmp2_nosg =  squeeze(ncread(his_nosg,'temp',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 2
-        tmp =  ncread(his,'salt',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'salt',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'salt',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'salt',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'salt',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'salt',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 3
-        tmp = ncread(his,'DIC_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'DIC_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg = ncread(his,'DIC_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'DIC_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'DIC_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'DIC_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 4
-        tmp = ncread(his,'TA',[1 1 plotZ i],[Inf Inf 1 1]) ;
-        tmp2 =  squeeze(ncread(his,'TA',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg = ncread(his,'TA',[1 1 plotZ i],[Inf Inf 1 1]) ;
+        tmp2_sg =  squeeze(ncread(his,'TA',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'TA',[1 1 plotZ i],[Inf Inf 1 1]) ;
+        tmp2_nosg =  squeeze(ncread(his_nosg,'TA',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 5
-        tmp = ncread(his,'DO',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'DO',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg = ncread(his,'DO',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'DO',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'DO',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'DO',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     % elseif id == 6
     %     tmp = ncread(his,'d13C_DIC',[1 1 plotZ i],[Inf Inf 1 1]);
     % elseif id == 7
     %     tmp = ncread(his,'Hwave',[1 1 i],[Inf Inf 1]);
     elseif id == 8 
-        tmp = ncread(his,'pH',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'pH',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg = ncread(his,'pH',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'pH',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'pH',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'pH',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     % elseif id == 9
     % %    tmp = ncread(his,'Warg',[i,0 0],[1,Jm,Im]);
     %     tmp = ncread(his,'Omega_arg',[1 1 i],[Inf Inf 1]);
@@ -771,19 +788,29 @@ for i=1:1:imax
     %     tmp = ncread(his,'phytoplankton1',[1 1 plotZ i],[Inf Inf 1 1]) ;
     %     tmp = tmp+ncread(his,'phytoplankton2',[1 1 plotZ i],[Inf Inf 1 1]) ;
     elseif id == 26
-        tmp = ncread(his,'NO3_01',[1 1 plotZ i],[Inf Inf 1 1]) ;
-        tmp2 =  squeeze(ncread(his,'NO3_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg = ncread(his,'NO3_01',[1 1 plotZ i],[Inf Inf 1 1]) ;
+        tmp2_sg =  squeeze(ncread(his,'NO3_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'NO3_01',[1 1 plotZ i],[Inf Inf 1 1]) ;
+        tmp2_nosg =  squeeze(ncread(his_nosg,'NO3_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 27
-        tmp = ncread(his,'NO3_01',[1 1 plotZ i],[Inf Inf 1 1]) ...
+        tmp_sg = ncread(his,'NO3_01',[1 1 plotZ i],[Inf Inf 1 1]) ...
             + ncread(his,'NH4_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'NO3_01',[1 transectYindex 1 i],[Inf 1 Inf 1])) ...
+        tmp2_sg =  squeeze(ncread(his,'NO3_01',[1 transectYindex 1 i],[Inf 1 Inf 1])) ...
              +  squeeze(ncread(his,'NH4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'NO3_01',[1 1 plotZ i],[Inf Inf 1 1]) ...
+            + ncread(his_nosg,'NH4_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'NO3_01',[1 transectYindex 1 i],[Inf 1 Inf 1])) ...
+             +  squeeze(ncread(his_nosg,'NH4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 28
-        tmp = ncread(his,'NH4_01',[1 1 plotZ i],[Inf Inf 1 1]) ;
-        tmp2 =  squeeze(ncread(his,'NH4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg = ncread(his,'NH4_01',[1 1 plotZ i],[Inf Inf 1 1]) ;
+        tmp2_sg =  squeeze(ncread(his,'NH4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'NH4_01',[1 1 plotZ i],[Inf Inf 1 1]) ;
+        tmp2_nosg =  squeeze(ncread(his_nosg,'NH4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 29
-        tmp = ncread(his,'PO4_01',[1 1 plotZ i],[Inf Inf 1 1]) ;
-        tmp2 =  squeeze(ncread(his,'PO4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg = ncread(his,'PO4_01',[1 1 plotZ i],[Inf Inf 1 1]) ;
+        tmp2_sg =  squeeze(ncread(his,'PO4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'PO4_01',[1 1 plotZ i],[Inf Inf 1 1]) ;
+        tmp2_nosg =  squeeze(ncread(his_nosg,'PO4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     % elseif id == 35
     %     tmp = ncread(his,'DOC',[1 1 plotZ i],[Inf Inf 1 1]) ;
     % elseif id == 30
@@ -824,213 +851,373 @@ for i=1:1:imax
 % %         end
 %         tmp = tmp*24*60*60.*mask1;
     elseif id == 51
-        tmp =  ncread(his,'sediment_Tmp',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_Tmp',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_Tmp',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_Tmp',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_Tmp',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_Tmp',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 52
-        tmp =  ncread(his,'sediment_Sal',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_Sal',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_Sal',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_Sal',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_Sal',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_Sal',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 53
-        tmp =  ncread(his,'sediment_TA',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_TA',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_TA',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_TA',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_TA',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_TA',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 54
-        tmp =  ncread(his,'sediment_O2',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_O2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_O2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_O2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_O2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_O2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 55
-        tmp =  ncread(his,'sediment_DIC_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_DIC_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_DIC_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_DIC_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_DIC_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_DIC_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 56
-        tmp =  ncread(his,'sediment_N2',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_N2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_N2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_N2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_N2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_N2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 57
-        tmp =  ncread(his,'sediment_DOC01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_DOC01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_DOC01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 58
-        tmp =  ncread(his,'sediment_DOC02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_DOC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_DOC02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_DOC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_DOC02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_DOC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 59
-        tmp =  ncread(his,'sediment_POC01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_POC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_POC01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_POC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_POC01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_POC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 60
-        tmp =  ncread(his,'sediment_POC02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_POC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_POC02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_POC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_POC02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_POC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 61
-        tmp =  ncread(his,'sediment_POC03_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_POC03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_POC03_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_POC03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_POC03_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_POC03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 62
-        tmp =  ncread(his,'sediment_NO3_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_NO3_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_NO3_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_NO3_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_NO3_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_NO3_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 63
-        tmp =  ncread(his,'sediment_NH4_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_NH4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_NH4_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_NH4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_NH4_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_NH4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 64
-        tmp =  ncread(his,'sediment_PO4_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_PO4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_PO4_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_PO4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_PO4_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_PO4_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 65
-        tmp =  ncread(his,'sediment_DON01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_DON01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_DON01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 66
-        tmp =  ncread(his,'sediment_DON02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_DON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_DON02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_DON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_DON02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_DON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 67
-        tmp =  ncread(his,'sediment_PON01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_PON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_PON01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_PON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_PON01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_PON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 68
-        tmp =  ncread(his,'sediment_PON02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_PON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_PON02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_PON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_PON02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_PON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 69
-        tmp =  ncread(his,'sediment_PON03_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_PON03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_PON03_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_PON03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_PON03_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_PON03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 70
-        tmp =  ncread(his,'sediment_DOP01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_DOP01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_DOP01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 71
-        tmp =  ncread(his,'sediment_DOP02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_DOP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_DOP02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_DOP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_DOP02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_DOP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 72
-        tmp =  ncread(his,'sediment_POP01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_POP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_POP01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_POP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_POP01_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_POP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 73
-        tmp =  ncread(his,'sediment_POP02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_POP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_POP02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_POP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_POP02_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_POP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 74
-        tmp =  ncread(his,'sediment_POP03_01',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_POP03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_POP03_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_POP03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_POP03_01',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_POP03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 75
-        tmp =  ncread(his,'sediment_Mn2',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_Mn2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_Mn2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_Mn2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_Mn2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_Mn2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 76
-        tmp =  ncread(his,'sediment_MnO2',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_MnO2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_MnO2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_MnO2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_MnO2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_MnO2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 77
-        tmp =  ncread(his,'sediment_Fe2',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_Fe2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_Fe2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_Fe2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_Fe2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_Fe2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 78
-        tmp =  ncread(his,'sediment_FeS',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_FeS',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_FeS',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_FeS',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_FeS',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_FeS',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 79
-        tmp =  ncread(his,'sediment_FeS2',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_FeS2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_FeS2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_FeS2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_FeS2',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_FeS2',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 80
-        tmp =  ncread(his,'sediment_FeOOH',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_FeOOH',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_FeOOH',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_FeOOH',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_FeOOH',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_FeOOH',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 81
-        tmp =  ncread(his,'sediment_FeOOH_PO4',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_FeOOH_PO4',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_FeOOH_PO4',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_FeOOH_PO4',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_FeOOH_PO4',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_FeOOH_PO4',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 82
-        tmp =  ncread(his,'sediment_H2S',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_H2S',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_H2S',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_H2S',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_H2S',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_H2S',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 83
-        tmp =  ncread(his,'sediment_SO4',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_SO4',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_SO4',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_SO4',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_SO4',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_SO4',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 84
-        tmp =  ncread(his,'sediment_S0',[1 1 SedLayer i],[Inf Inf 1 1]);
-        tmp2 =  squeeze(ncread(his,'sediment_S0',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg =  ncread(his,'sediment_S0',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_sg =  squeeze(ncread(his,'sediment_S0',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg =  ncread(his_nosg,'sediment_S0',[1 1 SedLayer i],[Inf Inf 1 1]);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_S0',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 91 % sum sediment of OC
-        tmp =  ncread(his,'sediment_DOC01_01',[1 1 SedLayer i],[Inf Inf 1 1])...
+        tmp_sg =  ncread(his,'sediment_DOC01_01',[1 1 SedLayer i],[Inf Inf 1 1])...
              + ncread(his,'sediment_DOC02_01',[1 1 SedLayer i],[Inf Inf 1 1])...
              + ncread(his,'sediment_POC01_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
              + ncread(his,'sediment_POC02_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
              + ncread(his,'sediment_POC03_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L);
-        tmp2 =  squeeze(ncread(his,'sediment_DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg =  squeeze(ncread(his,'sediment_DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
               + squeeze(ncread(his,'sediment_DOC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
               + squeeze(ncread(his,'sediment_POC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
               + squeeze(ncread(his,'sediment_POC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
               + squeeze(ncread(his,'sediment_POC03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L);
-        tmp = tmp ./ 1000000; % umol L-1 -> mol L-1
-        tmp2 = tmp2 ./ 1000000; % umol L-1 -> mol L-1
+        tmp_sg = tmp_sg ./ 1000000; % umol L-1 -> mol L-1
+        tmp2_sg = tmp2_sg ./ 1000000; % umol L-1 -> mol L-1
+        tmp_nosg =  ncread(his_nosg,'sediment_DOC01_01',[1 1 SedLayer i],[Inf Inf 1 1])...
+             + ncread(his_nosg,'sediment_DOC02_01',[1 1 SedLayer i],[Inf Inf 1 1])...
+             + ncread(his_nosg,'sediment_POC01_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+             + ncread(his_nosg,'sediment_POC02_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+             + ncread(his_nosg,'sediment_POC03_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+              + squeeze(ncread(his_nosg,'sediment_DOC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+              + squeeze(ncread(his_nosg,'sediment_POC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+              + squeeze(ncread(his_nosg,'sediment_POC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+              + squeeze(ncread(his_nosg,'sediment_POC03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L);
+        tmp_nosg = tmp_nosg ./ 1000000; % umol L-1 -> mol L-1
+        tmp2_nosg = tmp2_nosg ./ 1000000; % umol L-1 -> mol L-1
     elseif id == 92 % sum sediment of OC
-        tmp =  ncread(his,'sediment_DON01_01',[1 1 SedLayer i],[Inf Inf 1 1])...
+        tmp_sg =  ncread(his,'sediment_DON01_01',[1 1 SedLayer i],[Inf Inf 1 1])...
              + ncread(his,'sediment_DON02_01',[1 1 SedLayer i],[Inf Inf 1 1])...
              + ncread(his,'sediment_PON01_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
              + ncread(his,'sediment_PON02_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
              + ncread(his,'sediment_PON03_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
-        tmp2 =  squeeze(ncread(his,'sediment_DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg =  squeeze(ncread(his,'sediment_DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
               + squeeze(ncread(his,'sediment_DON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
               + squeeze(ncread(his,'sediment_PON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
               + squeeze(ncread(his,'sediment_PON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
               + squeeze(ncread(his,'sediment_PON03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
-        tmp = tmp ./ 1000000; % umol L-1 -> mol L-1
-        tmp2 = tmp2 ./ 1000000; % umol L-1 -> mol L-1
+        tmp_sg = tmp_sg ./ 1000000; % umol L-1 -> mol L-1
+        tmp2_sg = tmp2_sg ./ 1000000; % umol L-1 -> mol L-1
+        tmp_nosg =  ncread(his_nosg,'sediment_DON01_01',[1 1 SedLayer i],[Inf Inf 1 1])...
+             + ncread(his_nosg,'sediment_DON02_01',[1 1 SedLayer i],[Inf Inf 1 1])...
+             + ncread(his_nosg,'sediment_PON01_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+             + ncread(his_nosg,'sediment_PON02_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+             + ncread(his_nosg,'sediment_PON03_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+              + squeeze(ncread(his_nosg,'sediment_DON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+              + squeeze(ncread(his_nosg,'sediment_PON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+              + squeeze(ncread(his_nosg,'sediment_PON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+              + squeeze(ncread(his_nosg,'sediment_PON03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+        tmp_nosg = tmp_nosg ./ 1000000; % umol L-1 -> mol L-1
+        tmp2_nosg = tmp2_nosg ./ 1000000; % umol L-1 -> mol L-1
     elseif id == 93 % sum sediment of OC
-        tmp =  ncread(his,'sediment_DOP01_01',[1 1 SedLayer i],[Inf Inf 1 1])...
+        tmp_sg =  ncread(his,'sediment_DOP01_01',[1 1 SedLayer i],[Inf Inf 1 1])...
              + ncread(his,'sediment_DOP02_01',[1 1 SedLayer i],[Inf Inf 1 1])...
              + ncread(his,'sediment_POP01_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
              + ncread(his,'sediment_POP02_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
              + ncread(his,'sediment_POP03_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L);
-        tmp2 =  squeeze(ncread(his,'sediment_DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg =  squeeze(ncread(his,'sediment_DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
               + squeeze(ncread(his,'sediment_DOP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
               + squeeze(ncread(his,'sediment_POP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
               + squeeze(ncread(his,'sediment_POP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
               + squeeze(ncread(his,'sediment_POP03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L);
-        tmp = tmp ./ 1000000; % umol L-1 -> mol L-1
-        tmp2 = tmp2 ./ 1000000; % umol L-1 -> mol L-1
+        tmp_sg = tmp_sg ./ 1000000; % umol L-1 -> mol L-1
+        tmp2_sg = tmp2_sg ./ 1000000; % umol L-1 -> mol L-1
+        tmp_nosg =  ncread(his_nosg,'sediment_DOP01_01',[1 1 SedLayer i],[Inf Inf 1 1])...
+             + ncread(his_nosg,'sediment_DOP02_01',[1 1 SedLayer i],[Inf Inf 1 1])...
+             + ncread(his_nosg,'sediment_POP01_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+             + ncread(his_nosg,'sediment_POP02_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+             + ncread(his_nosg,'sediment_POP03_01',[1 1 SedLayer i],[Inf Inf 1 1])*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L);
+        tmp2_nosg =  squeeze(ncread(his_nosg,'sediment_DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+              + squeeze(ncread(his_nosg,'sediment_DOP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+              + squeeze(ncread(his_nosg,'sediment_POP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+              + squeeze(ncread(his_nosg,'sediment_POP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density... % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L)
+              + squeeze(ncread(his_nosg,'sediment_POP03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))*soil_density;   % (nmol/g) (g/cm3) (umol/1000nmol) (1000cm3/L);
+        tmp_nosg = tmp_nosg ./ 1000000; % umol L-1 -> mol L-1
+        tmp2_nosg = tmp2_nosg ./ 1000000; % umol L-1 -> mol L-1
     elseif id == 401 % sum of DOC
-        tmp = ncread(his,'DOC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+        tmp_sg = ncread(his,'DOC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'DOC02_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg = squeeze(ncread(his,'DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'DOC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'DOC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'DOC02_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'DOC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 402 % sum of DON
-        tmp = ncread(his,'DON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+        tmp_sg = ncread(his,'DON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'DON02_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg = squeeze(ncread(his,'DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'DON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'DON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'DON02_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'DON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 403 % sum of DOP
-        tmp = ncread(his,'DOP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+        tmp_sg = ncread(his,'DOP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'DOP02_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg = squeeze(ncread(his,'DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'DOP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'DOP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'DOP02_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'DOP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 404 % sum of POC
-        tmp = ncread(his,'POC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+        tmp_sg = ncread(his,'POC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'POC02_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'POC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg = squeeze(ncread(his,'POC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'POC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'POC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'POC02_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'POC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'POC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 405 % sum of PON
-        tmp = ncread(his,'PON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+        tmp_sg = ncread(his,'PON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'PON02_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'PON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg = squeeze(ncread(his,'PON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'PON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'PON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'PON02_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'PON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'PON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 406 % sum of POP
-        tmp = ncread(his,'POP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+        tmp_sg = ncread(his,'POP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'POP02_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'POP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg = squeeze(ncread(his,'POP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'POP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'POP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'POP02_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'POP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'POP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 407 % sum of OC
-        tmp = ncread(his,'DOC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+        tmp_sg = ncread(his,'DOC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'DOC02_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'POC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'POC02_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg = squeeze(ncread(his,'DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'DOC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'POC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'POC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'DOC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'DOC02_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'POC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'POC02_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'DOC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'DOC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'POC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'POC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 408 % sum of ON
-        tmp = ncread(his,'DON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+        tmp_sg = ncread(his,'DON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'DON02_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'PON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'PON02_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg = squeeze(ncread(his,'DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'DON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'PON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'PON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'DON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'DON02_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'PON01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'PON02_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'DON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'DON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'PON01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'PON02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 409 % sum of OP
-        tmp = ncread(his,'DOP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+        tmp_sg = ncread(his,'DOP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'DOP02_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'POP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'POP02_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg = squeeze(ncread(his,'DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'DOP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'POP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'POP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'DOP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'DOP02_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'POP01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'POP02_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'DOP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'DOP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'POP01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'POP02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 410 % sum of phytoplankton
-        tmp = ncread(his,'PhyC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+        tmp_sg = ncread(his,'PhyC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'PhyC02_01',[1 1 plotZ i],[Inf Inf 1 1])...
             + ncread(his,'PhyC03_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'PhyC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+        tmp2_sg = squeeze(ncread(his,'PhyC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'PhyC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
              + squeeze(ncread(his,'PhyC03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'PhyC01_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'PhyC02_01',[1 1 plotZ i],[Inf Inf 1 1])...
+            + ncread(his_nosg,'PhyC03_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'PhyC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'PhyC02_01',[1 transectYindex 1 i],[Inf 1 Inf 1]))...
+             + squeeze(ncread(his_nosg,'PhyC03_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     elseif id == 411 % sum of zooplankton
-        tmp = ncread(his,'ZooC01_01',[1 1 plotZ i],[Inf Inf 1 1]);
-        tmp2 = squeeze(ncread(his,'ZooC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_sg = ncread(his,'ZooC01_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_sg = squeeze(ncread(his,'ZooC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
+        tmp_nosg = ncread(his_nosg,'ZooC01_01',[1 1 plotZ i],[Inf Inf 1 1]);
+        tmp2_nosg = squeeze(ncread(his_nosg,'ZooC01_01',[1 transectYindex 1 i],[Inf 1 Inf 1]));
     % elseif id == 1001
     %     tmp = ncread(his,'Tair',[1 1 i],[Inf Inf 1]);
     % elseif id == 1002
@@ -1042,6 +1229,9 @@ for i=1:1:imax
     % elseif id == 1005
     %     tmp = ncread(his,'cloud',[1 1 i],[Inf Inf 1]);
     end
+
+    tmp = tmp_nosg - tmp_sg;
+    tmp2 = tmp2_nosg - tmp2_sg;
 
     if wet_dry == 1
         wetdry_mask_rho = ncread(his,'wetdry_mask_rho',[1 1 i],[Inf Inf 1]);

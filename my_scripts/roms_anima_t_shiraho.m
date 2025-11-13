@@ -1,9 +1,13 @@
 %
-% === ver 2016/03/10   Copyright (c) 2014-2016 Takashi NAKAMURA  =====
-%                for MATLAB R2015a,b  
+% === ver 2025/04/14   Copyright (c) 2014-2016 Takashi NAKAMURA  2023-2025 Yuta A Takagi =====
+%                for MATLAB R2023a  
 
 clear
 clc
+close all
+
+addpath('/Users/yuta/Documents/TiTech/Nakamura_Lab/Simulation/matlab/') 
+% cd '/Users/yuta/Documents/TiTech/Nakamura_Lab/Simulation/matlab/'
 
 % grd='../Data/Shiraho_reef/shiraho_reef_grid16.3.nc'; 
 % 
@@ -22,11 +26,20 @@ clc
 % his_dia='/Users/yuta/mount/takagi/SeagrassData/seagrass_straight_roots/ocean_seagrass_unconstrained_01_dia.nc';
 
 % % -------------- Unconstrained seagrass with SGD ------------------------------
-grd='/Users/yuta/COAWST/Data/Shiraho_reef/shiraho_reef_grid16_unconstrained_seagrass.nc'; 
-grd2='/Users/yuta/COAWST/Data/Shiraho_reef/shiraho_reef_grid16.3.nc'; 
-his_his='/Users/yuta/mount/takagi/SeagrassData/Shiraho_reef_seagrass_unconstrained_low_SGD/ocean_seagrass_unconstrained_low_SGD_01_his.nc';
-his_qck='/Users/yuta/mount/takagi/SeagrassData/Shiraho_reef_seagrass_unconstrained_low_SGD/ocean_seagrass_unconstrained_low_SGD_01_qck.nc';
-his_dia='/Users/yuta/mount/takagi/SeagrassData/Shiraho_reef_seagrass_unconstrained_low_SGD/ocean_seagrass_unconstrained_low_SGD_01_dia.nc';
+% grd='/Users/yuta/COAWST/Data/Shiraho_reef/shiraho_reef_grid16_unconstrained_seagrass.nc'; 
+% grd2='/Users/yuta/COAWST/Data/Shiraho_reef/shiraho_reef_grid16.3.nc'; 
+% his_his='/Users/yuta/mount/takagi/SeagrassData/Shiraho_reef_seagrass_unconstrained_low_SGD/ocean_seagrass_unconstrained_low_SGD_01_his.nc';
+% his_qck='/Users/yuta/mount/takagi/SeagrassData/Shiraho_reef_seagrass_unconstrained_low_SGD/ocean_seagrass_unconstrained_low_SGD_01_qck.nc';
+% his_dia='/Users/yuta/mount/takagi/SeagrassData/Shiraho_reef_seagrass_unconstrained_low_SGD/ocean_seagrass_unconstrained_low_SGD_01_dia.nc';
+
+% % -------------- Seagrass 2025/04/14 ------------------------------
+grd='/Volumes/syn1/yuta/COAWST_DATA/Yaeyama/Shiraho_reef2/Grid/shiraho_roms_grd_JCOPET_v18.1.nc'; 
+his_his='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_sg_his_20231001_test_17.nc';
+his_qck='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_sg_qck_20231001_test_17.nc';
+his_dia='/Volumes/syn1/yuta/COAWST_OUTPUT/Yaeyama/Shiraho_reef2_eco/SR_veg_eco2_sg_dia_20231001_test_17.nc';
+
+% ncdisp(grd)
+% ncdisp(his_his)
 
 
 % My color map
@@ -52,20 +65,21 @@ time_annot = true;
     % id = 36; % Coral mortality rate
 % id = 40; his=grd; Cbounds=[0 1];     color=colmap7; time_annot=false;    % SGD map
 % id = 41; his=grd; Cbounds=[0 1];     color=colmap7; time_annot=false;    % coral map
-% id = 42; his=grd2; Cbounds=[0 1];     color=colmap7; time_annot=false;    % seagrass map
+% id = 42; his=grd; Cbounds=[0 1];     color=colmap7; time_annot=false;    % seagrass map
     % id = 201; his=his_his; Cbounds=[400000 600000];   color=colmap6; fix_bottom = true;     % seagrass_SgCBm    400000, 600000, colmap7,
     % id = 202; his=his_dia; Cbounds=[0 1000000];       color=colmap6; fix_bottom = true;     % seagrass_LfCBm    0, 1000000, colmap7
     % id = 203; his=his_dia; Cbounds=[0 1000000];       color=colmap6; fix_bottom = true;     % seagrass_RtCBm    0, 1000000, colmap7
     % id = 204; his=his_dia; Cbounds=[0 1000000];       color=colmap6; fix_bottom = true;     % seagrass_ELAP     0, 1000000
-% id = 205; his=his_his; Cbounds=[0.05 0.2];             color=colmap7; fix_bottom = true;     % seagrass_TotSgCBm
+% id = 205; his=his_his; Cbounds=[0 100];             color=colmap7; fix_bottom = true;     % seagrass_TotSgCBm
     % id = 206; his=his_qck; Cbounds=[0 10];            color=colmap7; fix_bottom = true;     % seagrass_TotLfCBm
     % id = 207; his=his_qck; Cbounds=[0 10];            color=colmap7; fix_bottom = true;     % seagrass_TotRtCBm
     % id = 208; his=his_qck; Cbounds=[0 100];           color=colmap7; fix_bottom = true;     % seagrass_LA
     % id = 221; his=his_his; Cbounds=[0 2];             color=colmap7; fix_bottom = true;     % seagrass_Phot
-% id = 222; his=his_his; Cbounds=[0 4];             color=colmap6; fix_bottom = true;     % seagrass_Phot_Limiting
+% id = 222; his=his_his; Cbounds=[0 4]; alphaMax = 0.1;  color=colmap6; fix_bottom = true;     % seagrass_Phot_Limiting
     % id = 223; his=his_his; Cbounds=[0 1];             color=colmap7; fix_bottom = true;     % seagrass_Resp
-% id = 224; his=his_his; Cbounds=[-0.1 0.1];        color=colmap10;fix_bottom = true;     % seagrass_Net_Phot
+% id = 224; his=his_his; Cbounds=[-15 15];        color=colmap10;fix_bottom = true;     % seagrass_Net_Phot
     % id = 225; his=his_his; Cbounds=[0 0.01];           color=colmap7; fix_bottom = true;     % seagrass_Dieoff
+id = 230; his=his_his; Cbounds=[-15 15];        color=colmap10;fix_bottom = true;     % seagrass_Net_Phot
     % id = 1001; % Air temperature
     % id = 1002; % Air pressure
     % id = 1003; % Humidity
@@ -84,20 +98,24 @@ Nz=8; % for Shiraho
 SedLayer=1;
 
 % LOCAL_TIME='(UTC)';
-% LOCAL_TIME='(JST)';
+LOCAL_TIME=' (JST)';
 %LOCAL_TIME='(UTC+9)';
-LOCAL_TIME='';
+% LOCAL_TIME='';
+UTC_offset = 9;
 
 wet_dry = 0;  % Dry mask OFF: 0, ON: 1
 
 
 unit = 'km'; % 'm', 'latlon'
-LevelList = [0 0.2 0.5 3 20];
+% LevelList = [0 0.2 0.5 3 20];
+% LevelList = [-1 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
+LevelList = [-2 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30];
+
 
 h          = ncread(grd,'h');
-p_coral    = ncread(grd,'p_coral');
-p_coral2    = ncread(grd,'p_coral2');
-%p_seagrass = ncread(grd,'p_seagrass');
+p_coral_01  = ncread(grd,'p_coral_01');
+p_coral_02  = ncread(grd,'p_coral_02');
+%p_sgrass_01 = ncread(grd,'p_sgrass_01');
 %lat_rho    = ncread(grd,'lat_rho');
 %lon_rho    = ncread(grd,'lon_rho');
 x_rho      = ncread(grd,'x_rho');
@@ -138,15 +156,17 @@ elseif id <1000
 %time = ncread(his,'ocean_time',[i],[1]);
     time = ncread(his,'ocean_time');
     imax=length(time);
+    time = time + (UTC_offset * 60 * 60);
 else
     time = ncread(his,'time');
     imax=length(time);
+    time = time + (UTC_offset * 60 * 60);
 end
 
 % coral masking
-coral_mask = (p_coral==0).*0+(p_coral>0).*1;
+coral_mask = (p_coral_01==0).*0+(p_coral_01>0).*1;
 coral_mask = coral_mask ./coral_mask;
-coral2_mask = (p_coral2==0).*0+(p_coral2>0).*1;
+coral2_mask = (p_coral_02==0).*0+(p_coral_02>0).*1;
 coral2_mask = coral2_mask ./coral2_mask;
 
 mask_rho = mask_rho ./mask_rho;
@@ -159,10 +179,11 @@ else
     date=starting_date+time(i+1);
 end
 
-% date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
+% date_str=strcat(datestr(date,'yyyy-mm-dd HH:MM'),' ',LOCAL_TIME);
 date_str='';
 
 tmp = zeros(size(x_rho));
+tmp_alpha = tmp;
 
 
 if id == 1
@@ -380,7 +401,7 @@ elseif id == 221
         'Seagrass Photosynthesis',["umol" "m^2 s"], ...
         Cbounds(1),Cbounds(2),color,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 222
-    [h_surf,h_contour,axes1,h_annot,h_annot2]=createfigure6(x_rho,y_rho,tmp,h,date_str, ...
+    [h_surf,h_contour,axes1,h_annot,h_annot2]=createfigure6(x_rho,y_rho,tmp,tmp_alpha,h,date_str, ...
         "Seagrass Photosynthesis"+newline+"Limiting Factor", NaN, ...
         Cbounds(1),Cbounds(2),color,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 elseif id == 223
@@ -416,7 +437,8 @@ pn = ncread(grd,'pm',[1 1],[Inf Inf]) ;
 % for i=imax:1:imax
 % for i=1:1:1
 % for i=1:1:imax   
-for i=1:1:imax   
+for i=imax:1:imax
+% for i=1:1:imax   
 
     if id == 1
         tmp = ncread(his,'temp',[1 1 Nz i],[Inf Inf 1 1]);  % Surface
@@ -523,9 +545,9 @@ for i=1:1:imax
     elseif id == 40
         tmp = ncread(his,'sgd_src',[1 1],[Inf Inf]);
     elseif id == 41
-        tmp = ncread(his,'p_coral',[1 1],[Inf Inf]) + ncread(his,'p_coral2',[1 1],[Inf Inf]);
+        tmp = ncread(his,'p_coral_01',[1 1],[Inf Inf]) + ncread(his,'p_coral_02',[1 1],[Inf Inf]);
     elseif id == 42
-        tmp = ncread(his,'p_seagrass',[1 1],[Inf Inf]);
+        tmp = ncread(his,'p_sgrass_01',[1 1],[Inf Inf]);
 %     elseif id == 51
 %         tmp =  ncread(his,'sediment_Tmp',[1 1 SedLayer i],[Inf Inf 1 1]);
 %     elseif id == 52
@@ -615,7 +637,7 @@ for i=1:1:imax
     elseif id == 204
         tmp = ncread(his,'seagrass_ELAP_01',[1 1 i],[Inf Inf 1]) ; 
     elseif id == 205
-        tmp = ncread(his,'seagrass_TotSgCBm_01',[1 1 i],[Inf Inf 1]) ; 
+        tmp = ncread(his,'seagrass_TotSgCBm01',[1 1 i],[Inf Inf 1]) ; 
         tons_C = sum(tmp,'all','omitnan')*12.011/1000000; % mol.C * 12.011 g/mol * ton/1000000g
         set(h_annot2,'String',strcat("Total carbon: ",num2str(tons_C,'%0.2f'),' tons'))
         tmp = tmp .* 12.011 .*pm.*pn; % convert to g C per m2
@@ -634,11 +656,16 @@ for i=1:1:imax
     elseif id == 221
         tmp = ncread(his,'seagrass_Phot_01',[1 1 i],[Inf Inf 1]) ; 
     elseif id == 222
-        tmp = ncread(his,'seagrass_Phot_Limiting_01',[1 1 i],[Inf Inf 1]) ; 
+        tmp1 = ncread(his,'seagrass_Phot_Limiting01',[1 1 i],[Inf Inf 1]) ; 
+        tmp2 = ncread(his,'seagrass_Grow_Limiting01',[1 1 i],[Inf Inf 1]) ;
+        % tmp = tmp2 .* (tmp2 > 1) + (tmp2 > 1) + tmp1 .* (tmp2 <= 1);
+        tmp = tmp1 .* (tmp1 == 1) + tmp2 .* (tmp1 == 2) + (tmp1 == 2);
+        tmp_alpha = ncread(his,'seagrass_TotSgCBm01',[1 1 i],[Inf Inf 1]) ; 
+        tmp_alpha = tmp_alpha ./ (alphaMax./ 12.011 ./pm./pn);
     elseif id == 223
         tmp = ncread(his,'seagrass_Resp_01',[1 1 i],[Inf Inf 1]) ; 
     elseif id == 224
-        tmp = ncread(his,'seagrass_Net_Phot_01',[1 1 i],[Inf Inf 1]) ; 
+        tmp = ncread(his,'seagrass_Net_Phot01',[1 1 i],[Inf Inf 1]) ; 
     elseif id == 225
         tmp = ncread(his,'seagrass_Dieoff_01',[1 1 i],[Inf Inf 1]) ; 
     % elseif id == 1001
@@ -670,13 +697,17 @@ for i=1:1:imax
         date_str=""
     elseif id <1000
         date=starting_date+time(i)/24/60/60;
-        date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
+        date_str=strcat(datestr(date,'yyyy-mm-dd HH:MM'),' ',LOCAL_TIME);
     else
         date=starting_date+time(i);
-        date_str=strcat(datestr(date,31),'  ',LOCAL_TIME);
+        date_str=strcat(datestr(date,'yyyy-mm-dd HH:MM'),' ',LOCAL_TIME);
     end
 
     set(h_surf,'CData',tmp)
+
+    if id == 222
+        set(h_surf,'alphadata',tmp_alpha)
+    end
 
     % if time_annot
     if time_annot

@@ -8,20 +8,35 @@ close all;
 % CASE 4=> Yaeyama1; 5=> Yaeyama2; 6=> Yaeyama3
 % CASE 7=> Shiraho reef
 
+% CASE 15=> Palau2
 % CASE 17=> FORP-JPN02 offline
 % CASE 18=> Kushimoto
 
-CASE = 18;
+CASE = 15;
 
 % --- Plotting period --- %
-min_date    = datenum(2010,6,21,0,0,0);  % Period 4 start
-max_date    = datenum(2010,8,10,0,0,0);  % Period 4 end
+% min_date    = datenum(2023,1,7,0,0,0);  % Period 1 start
+% % min_date    = datenum(2023,1,16,18,0,0);  % Period 1 end
+% max_date    = datenum(2023,1,21,0,0,0);  % Period 1 end
+
+% min_date    = datenum(2023,3,2,0,0,0);  % Period 2 start
+% % min_date    = datenum(2023,3,10,8,0,0);  % Period 2 end
+% max_date    = datenum(2023,3,16,0,0,0);  % Period 2 end
+
+% min_date    = datenum(2023,6,2,0,0,0);  % Period 3 start
+% % min_date    = datenum(2023,6,12,0,0,0);  % Period 3 end
+% max_date    = datenum(2023,6,16,0,0,0);  % Period 3 end
+
+min_date    = datenum(2023,11,2,0,0,0);  % Period 4 start
+% min_date    = datenum(2023,11,12,13,0,0);  % Period 4 start
+max_date    = datenum(2023,11,16,0,0,0);  % Period 4 end
 
 ref_date     = datenum(2000,1,1,0,0,0);  % 
 
-id=1;
+% id=1;
 % id=2;
 % id=10;
+id=11;
 
 %==================== Shizugawa ==============================================
 if CASE == 1      % Shizugawa1
@@ -222,9 +237,15 @@ elseif CASE == 15  % Palau2
 % converted to a classic netcdf fil as follows:
 % $nccopy -k classic P2_ROMSPath_flt.nc P2_ROMSPath_flt_v2.nc
 
-    flt='../ROMSPath/P2_ROMSPath_flt_srf_HTurb1.0_v2.nc'; %LTRANS/ROMSPath float
+    % flt='E:/COAWST_OUTPUT/Palau/Palau2_flt_offline/P2_ROMSPath_flt_srf_HTurb1.0_202301.nc'; %LTRANS/ROMSPath float
+    % flt='E:/COAWST_OUTPUT/Palau/Palau2_flt_offline/P2_ROMSPath_flt_srf_HTurb1.0_202303.nc'; %LTRANS/ROMSPath float
+    % flt='E:/COAWST_OUTPUT/Palau/Palau2_flt_offline/P2_ROMSPath_flt_srf_HTurb1.0_202306.nc'; %LTRANS/ROMSPath float
+    flt='E:/COAWST_OUTPUT/Palau/Palau2_flt_offline/P2_ROMSPath_flt_srf_HTurb1.0_202311.nc'; %LTRANS/ROMSPath float
 
-    out_dirstr = 'output/figs_png_Palau2_flt_ROMSPath';
+    % out_dirstr = 'output/figs_png_Palau2_flt_v2/202301';
+    % out_dirstr = 'output/figs_png_Palau2_flt_v2/202303';
+    % out_dirstr = 'output/figs_png_Palau2_flt_v2/202306';
+    out_dirstr = 'output/figs_png_Palau2_flt_v2/202311';
     
     LevelList = [-1 5 50];
     
@@ -316,11 +337,12 @@ elseif strcmp(unit,'km')
     y_rho      = ncread(grd,'y_rho');
     x_rho=(x_rho-min(min(x_rho)))/1000; % m->km
     y_rho=(y_rho-min(min(y_rho)))/1000; % m->km
-
-    X_wplgn = (X_wplgn- x_corner_m)/1000; % m->km;
-    Y_wplgn = (Y_wplgn- y_corner_m)/1000; % m->km;
-    X_eplgn = (X_eplgn- x_corner_m)/1000; % m->km;
-    Y_eplgn = (Y_eplgn- y_corner_m)/1000; % m->km;
+    if CASE == 18  % Kushimoto
+        X_wplgn = (X_wplgn- x_corner_m)/1000; % m->km;
+        Y_wplgn = (Y_wplgn- y_corner_m)/1000; % m->km;
+        X_eplgn = (X_eplgn- x_corner_m)/1000; % m->km;
+        Y_eplgn = (Y_eplgn- y_corner_m)/1000; % m->km;
+    end
 end
 
 k=0;
@@ -459,6 +481,43 @@ elseif id == 5
 elseif id == 10
     ifloat=zeros(size(xfloat,2),1);
     [h_scatter,h_contour,h_annot]=createfltplot5(x_rho,y_rho,xfloat,yfloat,ifloat,h,date_str,'Particle density (particles km^-^2)',0,2e3,jet(128),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList,2);
+elseif id == 11
+    polyfile = 'F:/Dropbox/Projects/Palau/Palau_personal/model/Seagrass_polygons.shp';
+    csvfile  = '../ROMSPath/Projects/Palau/initial_part_location_v2.csv';
+    S = shaperead(polyfile);
+    n_poly = size(S,1);
+    for i=1:n_poly
+        S(i).Lat = rmmissing(S(i).Y);
+        S(i).Lon = rmmissing(S(i).X);
+        S(i).y_km = rmmissing(S(i).Y);
+        S(i).x_km = rmmissing(S(i).X);
+    end
+    % Sort by id field
+    S2=S;
+    for i=1:n_poly-1
+        for j=i+1:n_poly
+            if S(i).id >S(j).id
+                S2(i)=S(i);
+                S(i)=S(j);
+                S(j)=S2(i);
+            end
+        end
+    end
+    T = readtable(csvfile);
+    lonf_ini = T{:,1};
+    latf_ini = T{:,2};
+
+    % Set origin of polygon for each float
+    originf0 = zeros(num_float,1);
+    for i=1:num_float
+        for j=1:n_poly
+            if (inpolygon(lonf_ini(i), latf_ini(i), S(j).Lon, S(j).Lat))
+                originf0(i) = j;
+            end
+        end
+    end
+
+    [h_scatter,h_contour,h_annot]=createfltplot5(x_rho,y_rho,xfloat,yfloat,originf0,h,date_str,'Particle tracking',0.5,n_poly+0.5,flipud(jet(n_poly)),xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList,2);
 end
 % plot(pgon,'FaceColor','b','FaceAlpha',0.05);
 drawnow
@@ -512,19 +571,22 @@ for i=1:1:imax%336 %imax-1  %i=1:imax-1
             dist=1.0; % (km); Cell size for counting particle density
             dens = point_density( xfloat, yfloat, dist, dist );
             set(h_scatter,'XData',xfloat(:),'YData',yfloat(:),'CData',dens(:))
+        elseif id == 11
+            originf = originf0(sfloat==1);
+            set(h_scatter,'XData',xfloat(:),'YData',yfloat(:),'CData',originf)
         end
         
         set(h_annot,'String',date_str)
         drawnow
         fname = strcat( 'flt', datestr(date,'_yyyymmddHHMM') );
-        % exportgraphics(figure(1), strcat(out_dirstr,'/', fname,'.png'));
+        exportgraphics(figure(1), strcat(out_dirstr,'/', fname,'.png'));
 
 
-        ine = inpolygon(xfloat, yfloat, X_eplgn, Y_eplgn);
-        num_ineplgn = sum(ine);
-        inw = inpolygon(xfloat, yfloat, X_wplgn, Y_wplgn);
-        num_inwplgn = sum(inw);
-        fprintf(fid,'%s, %d, %d\r\n',datestr(date,'yyyy/mm/dd HH:MM'),num_ineplgn,num_inwplgn);   
+        % ine = inpolygon(xfloat, yfloat, X_eplgn, Y_eplgn);
+        % num_ineplgn = sum(ine);
+        % inw = inpolygon(xfloat, yfloat, X_wplgn, Y_wplgn);
+        % num_inwplgn = sum(inw);
+        % fprintf(fid,'%s, %d, %d\r\n',datestr(date,'yyyy/mm/dd HH:MM'),num_ineplgn,num_inwplgn);   
     
     end
 end

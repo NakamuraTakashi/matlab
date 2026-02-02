@@ -7,35 +7,21 @@ clear all
 % CASE 4=> Yaeyama1; 5=> Yaeyama2; 6=> Yaeyama3
 % CASE 7=> Shiraho reef
 
+% CASE 14=> Palau1; CASE 15=> Palau2
 % CASE 17=> FORP-JPN02 offline
 % CASE 18=> Kushimoto
 
-CASE = 18;
+CASE = 3;
 
 % --- Plotting period --- %
-% min_date    = datenum(2018,6,15,0,0,0);  % Period 4 start
-% min_date    = datenum(2023,10,14,0,0,0);  % Period 4 start
-% max_date    = datenum(2018,8,2,0,0,0);  % Period 4 end
-
-% min_date    = datenum(1994,1,10,0,0,0);  % Period 4 start
-% min_date    = datenum(1997,8,7,0,0,0);  % Period 4 start
-% max_date    = datenum(2024,1,1,0,0,0);  % Period 4 end
-
-% min_date    = datenum(2013,10,21,0,0,0);  % Period 4 start
-% min_date    = datenum(2016,5,1,0,0,0);  % Period 4 start
-% max_date    = datenum(2016,11,1,0,0,0);  % Period 4 end
-
-% min_date    = datenum(2023,9,13,0,0,0);  % Period 4 start
-% max_date    = datenum(2024,1,1,0,0,0);  % Period 4 end
-
-% min_date    = datenum(2006,1,9,0,0,0);   % FORP start
-% max_date    = datenum(2006,1,10,0,0,0);  % FORP end
-
-% min_date    = datenum(2019,8,1,0,0,0);  % Y1Y2 start
-% max_date    = datenum(2019,9,1,0,0,0);  % Y1Y2 end
-
-min_date    = datenum(2010,6,21,0,0,0);  % Period 4 start
-max_date    = datenum(2010,8,10,0,0,0);  % Period 4 end
+% min_date    = datenum(2023,1,7,0,0,0);  % Period 1 start
+% max_date    = datenum(2023,1,21,0,0,0);  % Period 1 end
+% min_date    = datenum(2023,3,2,0,0,0);  % Period 2 start
+% max_date    = datenum(2023,3,16,0,0,0);  % Period 2 end
+% min_date    = datenum(2023,6,2,0,0,0);  % Period 3 start
+% max_date    = datenum(2023,6,16,0,0,0);  % Period 3 end
+min_date    = datenum(2023,7,2,0,0,0);  % Period 4 start
+max_date    = datenum(2023,7,15,0,0,0);  % Period 4 end
 
 ref_date     = datenum(2000,1,1,0,0,0);  % 
 
@@ -50,11 +36,12 @@ id = 7;  % <- Select 1,2,3,7,100
 % id = 11;  % <- Select 1,2,3,7,100 for 2D fields
 % id = 12;  % <- Select 1,2,3,7,100 for Total Phytoplankton
 % id = 13;  % <- Select 1,2,3,7,100 for Seagrass biomass
+% id = 14;  % <- Select 1,2,3,7,100 for Oyster DW
 
 % id = 100;  % <- Select 1,2,3,7,100
 
-wet_dry = 0;  % Dry mask OFF: 0, ON: 1
-% wet_dry = 1;  % Dry mask OFF: 0, ON: 1
+% wet_dry = 0;  % Dry mask OFF: 0, ON: 1
+wet_dry = 1;  % Dry mask OFF: 0, ON: 1
 
 %==================== Shizugawa ==============================================
 if CASE == 1      % Shizugawa1
@@ -131,38 +118,48 @@ elseif CASE == 2  % Shizugawa2
 
 
 elseif CASE == 3  % Shizugawa3
-    grd='D:\COAWST_DATA\Shizugawa\Shizugawa3\Grid\Shizugawa3_grd_v0.3b.nc';
-    his=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa3_eco\SZ3_aqdrag_his_20230701.nc"];
+    grd='D:\COAWST_DATA\Shizugawa\Shizugawa3\Grid\Shizugawa3_grd_v0.5b.nc';
+    % his=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa3_eco\SZ3_aqdrag_his_20230701.nc"];
+    % his=["../../TSUBAME/gs1/nakamura/COAWST/COAWST_OUTPUT/Shizugawa/SZ3_eco_oys_test1/SZ3_veg_eco_his_20230701.nc"];
+    his=["E:/COAWST_OUTPUT/Shizugawa/Shizugawa3_eco/SZ3_eco_his_20230701_v3.nc"];
+    % his=["E:/COAWST_OUTPUT/Shizugawa/Shizugawa3_eco/SZ3_eco_his_20230701_v4_OYSx3.nc"];
     Fqck=false;
     % Fqck=true;
-    qck=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa3_eco\SZ3_eco_qck_20210701v2.nc"];
+    qck=["../../TSUBAME/gs1/nakamura/COAWST/COAWST_OUTPUT/Shizugawa/SZ3_eco_oys_test1/SZ3_veg_eco_qck_20230701.nc"];
     Fdia=false;
     % Fdia=true;
-    dia=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa3_eco\SZ3_eco_dia_20210701v2.nc"];
+    dia=["../../TSUBAME/gs1/nakamura/COAWST/COAWST_OUTPUT/Shizugawa/SZ3_eco_oys_test1/SZ3_veg_eco_dia_20230701.nc"];
 
     % out_dirstr = 'output/figs_png_SZ3noaqdrag_srf';
-    out_dirstr = 'output/figs_png_SZ3aqdrag_btm';
+    out_dirstr = 'output/figs_png_SZ3_srf_OYSx1';
+    % out_dirstr = 'output/figs_png_SZ3_srf_OYSx3';
+    % out_dirstr = 'output/figs_png_SZ3oys_btm_v2';
     % out_dirstr = 'output/figs_png_SZ3sedeco';
     % out_dirstr = 'output/figs_png_SZ3tmp_srf';
     % out_dirstr = 'output/figs_png_SZ3tmp_btm';
     
     LevelList = [-10 0 10 20 30 40 50 60 70 80 90 100 110 120 130];
     
-    % Nz=15; % Surface
-    Nz=1; % Bottom (Sediment: surface layer)
+    Nz=15; % Surface
+    % Nz=1; % Bottom (Sediment: surface layer)
     unit = 'km'; 
 %          'm', 'latlon'
 %     unit = 'latlon';
-    x_arrow_txt = 2.8; y_arrow_txt=8.25;
-    I_arrow_legend = 5; J_arrow_legend=20;
-    v_legend = 0.5;
-   
-    if id==3 %wave
+    if id==3 % Wave direction
         scale=0.3;
         s_interval=7;
-    else
+    elseif id==100 % Wind
+        scale=1;
+        s_interval=5;
+        x_arrow_txt = 3; y_arrow_txt=8;
+        d_arrow_txt = -0.5;
+        v_legend = 20;
+    else % Water Velocity
         scale=3;
         s_interval=5;
+        x_arrow_txt = 3; y_arrow_txt=8;
+        d_arrow_txt = -0.5;
+        v_legend = 0.5;
     end
 
 %==================== Yaeyama ==============================================
@@ -704,18 +701,18 @@ elseif CASE == 13  % TokyoBay3
 %==================== Palau ==============================================
 elseif CASE == 14      % Palau1
     grd='D:/COAWST_DATA/Palau/Palau1/Grid/Palau1_grd_v1.0.nc';
-    % his=["E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230102.nc"
-    %      "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230728.nc"
-    %      "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230729.nc"
-    %      "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230911.nc"];
-    % his=["E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230913.nc"];
+    his=["E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230102.nc"
+         "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230728.nc"
+         "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230729.nc"
+         "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230911.nc"
+         "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230913.nc"];
     % his=["E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20240102.nc"];
-    his=["E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20240201.nc"];
+    % his=["E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20240201.nc"];
     Fqck=false;
     Fdia=false;
     % out_dirstr = 'output/figs_png_SZ1wv';
     % out_dirstr = 'output/figs_png_SZ1tmp_btm';
-    out_dirstr = 'output/figs_png_Palau1_srf_2024';
+    out_dirstr = 'output/figs_png_Palau1_srf/202311';
     
     LevelList = [-1 5 50];
     
@@ -744,7 +741,10 @@ elseif CASE == 14      % Palau1
     
 elseif CASE == 15  % Palau2
     grd='D:/COAWST_DATA/Palau/Palau2/Grid/Palau2_grd_v1.1.nc';
-    his=["E:\COAWST_OUTPUT\Palau\Palau2\P2_his_20240106.nc"];
+    his=["\\gshs.t4.gsic.titech.ac.jp\t4_bs\tga-NakamuLab\nakamura\COAWST\COAWST_OUTPUT\Palau\Palau2\P2_his_202301_all.nc"];
+    % his=["\\gshs.t4.gsic.titech.ac.jp\t4_bs\tga-NakamuLab\nakamura\COAWST\COAWST_OUTPUT\Palau\Palau2\P2_his_202303_all.nc"];
+    % his=["\\gshs.t4.gsic.titech.ac.jp\t4_bs\tga-NakamuLab\nakamura\COAWST\COAWST_OUTPUT\Palau\Palau2\P2_his_202306_all.nc"];
+    % his=["\\gshs.t4.gsic.titech.ac.jp\t4_bs\tga-NakamuLab\nakamura\COAWST\COAWST_OUTPUT\Palau\Palau2\P2_his_202311_all.nc"];
     Fqck=false;
     % Fqck=true;
     qck=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa2\Shizugawa2_qck_20210601.nc"];
@@ -752,8 +752,15 @@ elseif CASE == 15  % Palau2
     % Fdia=true;
     dia=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa2\Shizugawa2_dia_20210601.nc"];
 
-    % out_dirstr = 'output/figs_png_Palau2_srf';
-    out_dirstr = 'output/figs_png_Palau2_srf_Zoom';
+    % out_dirstr = 'output/figs_png_Palau2_srf/202301';
+    % out_dirstr = 'output/figs_png_Palau2_srf/202303';
+    % out_dirstr = 'output/figs_png_Palau2_srf/202306';
+    % out_dirstr = 'output/figs_png_Palau2_srf/202311';
+
+    out_dirstr = 'output/figs_png_Palau2_srf_Zoom/202301';
+    % out_dirstr = 'output/figs_png_Palau2_srf_Zoom/202303';
+    % out_dirstr = 'output/figs_png_Palau2_srf_Zoom/202306';
+    % out_dirstr = 'output/figs_png_Palau2_srf_Zoom/202311';
       
     Nz=30; % Surface
     % Nz=1; % Bottom
@@ -763,12 +770,6 @@ elseif CASE == 15  % Palau2
 
     LevelList = [-1 5 50];
     
-    Nz=30; % Surface
-    % Nz=1; % Bottom
-    unit = 'km'; 
-%          'm', 'latlon'
-%     unit = 'latlon';
-
     if id==3 % Wave direction
         scale=5;
         s_interval=7;
@@ -788,7 +789,7 @@ elseif CASE == 15  % Palau2
 
     % close up
         scale=3;
-        s_interval=4;
+        s_interval=7;
         x_arrow_txt = 118; y_arrow_txt=105;
         d_arrow_txt = -2;
         v_legend = 2;
@@ -796,17 +797,16 @@ elseif CASE == 15  % Palau2
 
 %==================== FORP-JPN ==============================================
 elseif CASE == 17  % FORP
-    grd='D:\COAWST_DATA\FORP_offline\Grid\forp-jpn-south_grd_v1.1.nc';
-    his=["F:\COAWST_OUTPUT\FORP_offline\FORP_eco_offline_his_20060110.nc"];
+    grd='D:\COAWST_DATA\FORP_Kuroshio\Grid\forp-kuroshio_grd_v0.0.nc';
+    his=["../../TSUBAME/gs1/nakamura/COAWST/COAWST_OUTPUT/FORP_Kuroshio/Kuro_his_20060102_3.nc"];
     Fqck=false;
     % Fqck=true;
     qck=["F:\COAWST_OUTPUT\FORP_offline\FORP_eco_offline_qck_20060110.nc"];
     Fdia=false;
     % Fdia=true;
-    dia=["F:\COAWST_OUTPUT\FORP_offline\FORP_eco_offline_dia_20060110.nc"];
+    dia=["../../TSUBAME/gs1/nakamura/COAWST/COAWST_OUTPUT/FORP_Kuroshio/Kuro_dia_20060102_3.nc"];
 
-    % out_dirstr = 'output/figs_png_Palau2_srf';
-    out_dirstr = 'output/figs_png_FORP_offine';
+    out_dirstr = 'output/figs_png_FORP_Kuro';
       
     Nz=30; % Surface
     % Nz=1; % Bottom
@@ -814,7 +814,8 @@ elseif CASE == 17  % FORP
 %          'm', 'latlon'
     unit = 'latlon';
 
-    LevelList = [-1 0 1000 2000 3000 4000 5000 6000];
+    % LevelList = [-1 0 1000 2000 3000 4000 5000 6000];
+    LevelList = [-1 0 ];
     
 
     if id==3 % Wave direction
@@ -822,16 +823,16 @@ elseif CASE == 17  % FORP
         s_interval=7;
     elseif id==100 % Wind
         scale=1;
-        s_interval=5;
+        s_interval=10;
         x_arrow_txt = 150; y_arrow_txt=40;
         d_arrow_txt = -7;
         v_legend = 20;
     else % Water Velocity
     % Whole area
-        scale=1;
-        s_interval=10;
-        x_arrow_txt = 150; y_arrow_txt=40;
-        d_arrow_txt = -7;
+        scale=0.7;
+        s_interval=20;
+        x_arrow_txt = 140; y_arrow_txt=23;
+        d_arrow_txt = -0.8;
         v_legend = 2;
 
     % close up
@@ -910,8 +911,27 @@ colormap6=superjet(128,'NuvibZctgyorWq');
 colormap7=superjet(128,'xvbZctgyorWq');
 colormap8=superjet(128,'vbwwrW');
 
+% === FORP Kuroshio basic output ====
 % === for ID = 7 ===
-% title='Sea surface temperature (^oC)'; cmin=10; cmax=30; colmap=colormap7; ncname='temp'; % Shizugawa summer
+% id = 7;
+% title='Sea surface temperature (^oC)'; cmin=6; cmax=29; colmap=colormap7; ncname='temp'; % Kushimoto
+title='Surface NO_3 (umolN L^-^1)';  cmin=0; cmax=5; colmap=colormap7; ncname='NO3_01';
+% title='Surface PO_4 (umolP L^-^1)';  cmin=0; cmax=1.0; colmap=colormap7; ncname='PO4_01';
+% title='TA (umol kg^-^1)'; cmin=2120; cmax=2300; colmap=colormap7; ncname='TA';
+% title='DIC (umol kg^-^1)'; cmin=1900; cmax=2100; colmap=colormap7; ncname='DIC_01';
+% Fdia=true;
+% title='pH'; cmin=7.9; cmax=8.4; colmap=colormap7; ncname='pH';
+% title='Aragonite saturation state'; cmin=2.0; cmax=3.8; colmap=colormap7; ncname='Omega_arg';
+% === for ID = 12 ===
+% id = 12;
+% title='Total Phytoplankton C biomass (umolC L^-^1)'; cmin=0; cmax=80; colmap=colormap7; ncname='PhyCtot_01'; % Shiraho surf
+% === for ID = 8 ===
+% id = 8;
+% title='DIN (umolN L^-^1)'; cmin=0; cmax=15; colmap=colormap7; ncname='DIN_01'; % ID =8
+
+% === for ID = 7 ===
+% id = 7;
+% title='Sea surface temperature (^oC)'; cmin=10; cmax=28; colmap=colormap7; ncname='temp'; % Shizugawa summer
 % title='Sea bottom temperature (^oC)'; cmin=10; cmax=30; colmap=colormap7; ncname='temp'; % Shizugawa summer
 % title='Sea surface temperature (^oC)'; cmin=0; cmax=30; colmap=colormap6; ncname='temp'; % YAEYAMA1
 % title='Sea surface temperature (^oC)'; cmin=6; cmax=12; colmap=jet(128); ncname='temp'; % YAEYAMA1
@@ -922,9 +942,9 @@ colormap8=superjet(128,'vbwwrW');
 % title='Sea bottom temperature (^oC)'; cmin=23; cmax=34; colmap=colormap7; ncname='temp'; % Pany
 % title='Sea surface temperature (^oC)'; cmin=22; cmax=33; colmap=colormap7; ncname='temp'; % Palau
 % title='Sea bottom temperature (^oC)'; cmin=23; cmax=34; colmap=colormap7; ncname='temp'; % Palau
-title='Sea surface temperature (^oC)'; cmin=19; cmax=31; colmap=colormap7; ncname='temp'; % Kushimoto
+% title='Sea surface temperature (^oC)'; cmin=6; cmax=29; colmap=colormap7; ncname='temp'; % Kushimoto
 
-% title='Sea surface Salinity (psu)'; cmin=20; cmax=34.7; colmap=colormap7; ncname='salt';
+% title='Sea surface Salinity (psu)'; cmin=20; cmax=36; colmap=colormap7; ncname='salt';
 % title='Sea surface Salinity (psu)'; cmin=30; cmax=34.0; colmap=colormap7; ncname='salt';
 
 % title='Susupended Solid \phi=5um (kg m^-^3)'; cmin=0; cmax=0.01; colmap=colmap1; ncname='mud_01';
@@ -995,7 +1015,7 @@ title='Sea surface temperature (^oC)'; cmin=19; cmax=31; colmap=colormap7; ncnam
 % title='Zooplankton ^tP biomass (umolP L^-^1)'; cmin=0; cmax=5.0e-10; colmap=colormap7; ncname='ZooP01_02';
 
 % title='Surface NO_3 (umolN L^-^1)';  cmin=0; cmax=10; colmap=colormap7; ncname='NO3_01';
-% title='Surface PO_4 (umolP L^-^1)';  cmin=0; cmax=0.5; colmap=colormap7; ncname='PO4_01';
+% title='Surface PO_4 (umolP L^-^1)';  cmin=0; cmax=5; colmap=colormap7; ncname='PO4_01';
 % title='Surface ^tPO_4 (umolP L^-^1)';  cmin=0; cmax=0.000001; colmap=colormap7; ncname='PO4_02';
 % title='Bottom PO_4 (umolP L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PO4_01';
 % title='Bottom ^tPO_4 (umolP L^-^1)';  cmin=0; cmax=1; colmap=colormap7; ncname='PO4_02';
@@ -1007,7 +1027,7 @@ title='Sea surface temperature (^oC)'; cmin=19; cmax=31; colmap=colormap7; ncnam
 % title='Sediment RPO^1^3C (nmolC g^-^1; surface layer)'; cmin=0; cmax=1e-6; colmap=colmap1; ncname='sediment_POC02_02'; % Sediment model
 
 % === for ID = 8 ===
-% title='DIN (umolN L^-^1)'; cmin=0; cmax=5; colmap=colormap7; ncname='DIN_01'; % ID =8
+% title='DIN (umolN L^-^1)'; cmin=0; cmax=25; colmap=colormap7; ncname='DIN_01'; % ID =8
 % title='DI^1^5N (umolN L^-^1)'; cmin=0; cmax=0.00001; colmap=colormap7; ncname='DIN_02'; % ID =8
 
 % === for ID = 10 ===
@@ -1015,10 +1035,12 @@ title='Sea surface temperature (^oC)'; cmin=19; cmax=31; colmap=colormap7; ncnam
 % title='Sediment mass change (kg m^-^2)'; cmin=-3; cmax=3; colmap=colormap8; ncname='mudmass_02'; % Shiraho surf
 
 % === for ID = 11 ===
+% id = 11;
 % title='Max bottom stress (N m^-^2)'; cmin=0; cmax=30; colmap=colormap7; ncname='bstrcwmax'; % Shiraho surf
 
 % === for ID = 12 ===
-% title='Total Phytoplankton C biomass (umolC L^-^1)'; cmin=0; cmax=50; colmap=colormap7; ncname='PhyCtot_01'; % Shiraho surf
+% id = 12;
+% title='Total Phytoplankton C biomass (umolC L^-^1)'; cmin=0; cmax=20; colmap=colormap7; ncname='PhyCtot_01'; % Shiraho surf
 % title='Total Phytoplankton ^1^3C biomass (umolC L^-^1)'; cmin=0; cmax=0.000001; colmap=colormap7; ncname='PhyCtot_02'; % Shiraho surf
 % title='Total Phytoplankton N biomass (umolN L^-^1)'; cmin=0; cmax=10; colmap=colormap7; ncname='PhyNtot_01'; % Shiraho surf
 % title='Total Phytoplankton ^1^5N biomass (umolN L^-^1)'; cmin=0; cmax=0.00001; colmap=colormap7; ncname='PhyNtot_02'; % Shiraho surf
@@ -1026,12 +1048,17 @@ title='Sea surface temperature (^oC)'; cmin=19; cmax=31; colmap=colormap7; ncnam
 % title='Total Phytoplankton ^tP biomass (umolP L^-^1)'; cmin=0; cmax=0.000001; colmap=colormap7; ncname='PhyPtot_02'; % Shiraho surf
 
 % === for ID = 13 ===
+% id = 13;
 % title='Sg C biomass (mmolC m^-^2)'; cmin=0; cmax=8; colmap=colormap7; ncname='seagrass_SgCBm01_01'; % Shiraho surf
 % title='Sg C biomass (mmolC m^-^2)'; cmin=0; cmax=2; colmap=colormap7; ncname='seagrass_SgCBm01_02'; % Shiraho surf
 % title='Sg N biomass (mmolN m^-^2)'; cmin=0; cmax=1; colmap=colormap7; ncname='seagrass_SgNBm01_01'; % Shiraho surf
 % title='Sg N biomass (mmolN m^-^2)'; cmin=0; cmax=0.5; colmap=colormap7; ncname='seagrass_SgNBm01_02'; % Shiraho surf
 % title='Sg P biomass (mmolP m^-^2)'; cmin=0; cmax=0.03; colmap=colormap7; ncname='seagrass_SgPBm01_01'; % Shiraho surf
 % title='Sg P biomass (mmolP m^-^2)'; cmin=0; cmax=0.01; colmap=colormap7; ncname='seagrass_SgPBm01_02'; % Shiraho surf
+
+% === for ID = 14 ===
+% id = 14;
+% title='Oyster tissue dry weight (g(DW) indiv.^-^1)'; cmin=0; cmax=0.03; colmap=colormap7; ncname='oyster_dw'; % oyster
 
 
 h          = ncread(grd,'h');
@@ -1125,7 +1152,7 @@ elseif CASE == 17  % FORP
     % xsize=730; ysize=700;
     % Close up
     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
-    xsize=750; ysize=550;   
+    xsize=900; ysize=600;   
 elseif CASE == 18  % Kushimoto
     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
     xsize=780; ysize=520;   
@@ -1318,6 +1345,22 @@ for ihis=1:size(his,1)
                 vbar = ncread(his(ihis),'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
                 tmp = ncread(his(ihis),ncname,[1 1 i],[Inf Inf 1]).*mask_rho;
                 tmp = tmp .* p_sgrass_01/1000;
+            elseif id == 14
+                if F_drawUV
+                    ubar = ncread(his(ihis),'u',[1 1 Nz i],[Inf Inf 1 1]).*mask_u;
+                    vbar = ncread(his(ihis),'v',[1 1 Nz i],[Inf Inf 1 1]).*mask_v;
+                end
+                tmp =       ncread(his(ihis), 'bivalve_QCe01_01',[1 1 Nz i],[Inf Inf 1 1]);
+                tmp = tmp + ncread(his(ihis), 'bivalve_QCv01_01',[1 1 Nz i],[Inf Inf 1 1]);
+                tmp = tmp + ncread(his(ihis), 'bivalve_QCr01_01',[1 1 Nz i],[Inf Inf 1 1]);
+                tmp = tmp + ncread(his(ihis), 'bivalve_QCh01_01',[1 1 Nz i],[Inf Inf 1 1]);
+                tmp = tmp*12.0/0.51*1.0e-3; %  mmolC -> g(dw)
+                % tmp = tmp .*(tmp./tmp);
+                if wet_dry == 1
+                    wetdry_mask_rho = ncread(his(ihis),'wetdry_mask_rho',[1 1 i],[Inf Inf 1]);
+                    wetdry_mask_rho = wetdry_mask_rho ./wetdry_mask_rho;
+                    tmp = tmp .* wetdry_mask_rho;
+                end
             elseif id == 100
                 ubar = ncread(his(ihis),'Uwind',[1 1 i],[Inf Inf 1]);
                 vbar = ncread(his(ihis),'Vwind',[1 1 i],[Inf Inf 1]);

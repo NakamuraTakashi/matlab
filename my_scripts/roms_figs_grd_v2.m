@@ -6,10 +6,14 @@
 % CASE 4=> Yaeyama1; 5=> Yaeyama2; 6=> Yaeyama3
 % CASE 7=> Shiraho reef
 
+% CASE 14=> Palau1; CASE 15=> Palau2
+% CASE 17=> FORP-JPN02 offline
+% CASE 18=> Kushimoto
+
 CASE = 3;
 
-F_drawUV = true;
-% F_drawUV = false;
+% F_drawUV = true;
+F_drawUV = false;
 id = 2;  % <- Select 1,2,3,7,100 2=> uv velocity
 % id = 3;  % <- Select 1,2,3,7,100 3=> Wave
 % id = 7;  % <- Select 1,2,3,7,100
@@ -27,9 +31,10 @@ if CASE == 1      % Shizugawa1
     % his=["D:\COAWST_DATA\Shizugawa\Shizugawa1\Air\Shizugawa1_frc_MSMgb_20210101_1.nc"];
     Fqck=false;
     Fdia=false;
+    out_dirstr = 'output/figs_png_SZ1_grd';
     % out_dirstr = 'output/figs_png_SZ1wv';
     % out_dirstr = 'output/figs_png_SZ1tmp_btm';
-    out_dirstr = 'output/figs_png_SZ1tmp_srf';
+    % out_dirstr = 'output/figs_png_SZ1tmp_srf';
     
     LevelList = [-10 0 200 400 600 800 1000 1200 1400 1600 1800 2000 2200];
     
@@ -69,10 +74,11 @@ elseif CASE == 2  % Shizugawa2
     Fdia=false;
     % Fdia=true;
     dia=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa2\Shizugawa2_dia_20210601.nc"];
+    out_dirstr = 'output/figs_png_SZ2_grd';
 %     out_dirstr = 'output/figs_png_S2srf';
     % out_dirstr = 'output/figs_png_S2btm';
     % out_dirstr = 'output/figs_png_SZ2tmp_srf';
-    out_dirstr = 'output/figs_png_SZ2tmp_btm';
+    % out_dirstr = 'output/figs_png_SZ2tmp_btm';
     
     LevelList = [-10 0 20 40 60 80 100 120 140 160 180 200 220];
     
@@ -95,8 +101,8 @@ elseif CASE == 2  % Shizugawa2
 
 
 elseif CASE == 3  % Shizugawa3
-    grd='D:\COAWST_DATA\Shizugawa\Shizugawa3\Grid\Shizugawa3_grd_v0.4c.nc';
-    his=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa3_eco\SZ3_aqdrag_his_20230701.nc"];
+    grd='D:\COAWST_DATA\Shizugawa\Shizugawa3\Grid\Shizugawa3_grd_v0.5b.nc';
+    his=["E:/COAWST_OUTPUT/Shizugawa/Shizugawa3_eco/SZ3_eco_his_20230701_v3.nc"];
     Fqck=false;
     % Fqck=true;
     qck=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa3_eco\SZ3_eco_qck_20210701v2.nc"];
@@ -105,7 +111,8 @@ elseif CASE == 3  % Shizugawa3
     dia=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa3_eco\SZ3_eco_dia_20210701v2.nc"];
 
     % out_dirstr = 'output/figs_png_SZ3noaqdrag_srf';
-    out_dirstr = 'output/figs_png_SZ3aq_dis';
+    out_dirstr = 'output/figs_png_SZ3_grd';
+    % out_dirstr = 'output/figs_png_SZ3aq_dis';
     % out_dirstr = 'output/figs_png_SZ3sedeco';
     % out_dirstr = 'output/figs_png_SZ3tmp_srf';
     % out_dirstr = 'output/figs_png_SZ3tmp_btm';
@@ -531,6 +538,194 @@ elseif CASE == 10  % Tangalan
         I_arrow_legend = 15; J_arrow_legend=5;
         v_legend = 1.0;   
     end  
+%==================== Palau ==============================================
+elseif CASE == 14      % Palau1
+    grd='D:/COAWST_DATA/Palau/Palau1/Grid/Palau1_grd_v1.0.nc';
+    his=["E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230102.nc"
+         "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230728.nc"
+         "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230729.nc"
+         "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230911.nc"
+         "E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20230913.nc"];
+    % his=["E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20240102.nc"];
+    % his=["E:\COAWST_OUTPUT\Palau\Palau1\P1_his_20240201.nc"];
+    Fqck=false;
+    Fdia=false;
+    % out_dirstr = 'output/figs_png_SZ1wv';
+    % out_dirstr = 'output/figs_png_SZ1tmp_btm';
+    out_dirstr = 'output/figs_png_Palau1_grd';
+    
+    LevelList = [-1 5 50];
+    
+    Nz=30; % Surface
+    % Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+%     unit = 'latlon';
+
+    if id==3 % Wave direction
+        scale=5;
+        s_interval=7;
+    elseif id==100 % Wind
+        scale=1;
+        s_interval=5;
+        x_arrow_txt = 300; y_arrow_txt=80;
+        d_arrow_txt = -16;
+        v_legend = 20;
+    else % Water Velocity
+        scale=10;
+        s_interval=8;
+        x_arrow_txt = 300; y_arrow_txt=80;
+        d_arrow_txt = -16;
+        v_legend = 3;
+    end
+    
+elseif CASE == 15  % Palau2
+    grd='D:/COAWST_DATA/Palau/Palau2/Grid/Palau2_grd_v1.1.nc';
+    his=["\\gshs.t4.gsic.titech.ac.jp\t4_bs\tga-NakamuLab\nakamura\COAWST\COAWST_OUTPUT\Palau\Palau2\P2_his_202301_all.nc"];
+    % his=["\\gshs.t4.gsic.titech.ac.jp\t4_bs\tga-NakamuLab\nakamura\COAWST\COAWST_OUTPUT\Palau\Palau2\P2_his_202303_all.nc"];
+    % his=["\\gshs.t4.gsic.titech.ac.jp\t4_bs\tga-NakamuLab\nakamura\COAWST\COAWST_OUTPUT\Palau\Palau2\P2_his_202306_all.nc"];
+    % his=["\\gshs.t4.gsic.titech.ac.jp\t4_bs\tga-NakamuLab\nakamura\COAWST\COAWST_OUTPUT\Palau\Palau2\P2_his_202311_all.nc"];
+    Fqck=false;
+    % Fqck=true;
+    qck=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa2\Shizugawa2_qck_20210601.nc"];
+    Fdia=false;
+    % Fdia=true;
+    dia=["E:\COAWST_OUTPUT\Shizugawa\Shizugawa2\Shizugawa2_dia_20210601.nc"];
+
+    out_dirstr = 'output/figs_png_Palau2_grd';
+      
+    Nz=30; % Surface
+    % Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+%     unit = 'latlon';
+
+    LevelList = [-1 5 50];
+    
+    if id==3 % Wave direction
+        scale=5;
+        s_interval=7;
+    elseif id==100 % Wind
+        scale=1;
+        s_interval=5;
+        x_arrow_txt = 150; y_arrow_txt=40;
+        d_arrow_txt = -7;
+        v_legend = 20;
+    else % Water Velocity
+    % Whole area
+        scale=5;
+        s_interval=15;
+        x_arrow_txt = 150; y_arrow_txt=40;
+        d_arrow_txt = -7;
+        v_legend = 2;
+
+    % close up
+        % scale=3;
+        % s_interval=7;
+        % x_arrow_txt = 118; y_arrow_txt=105;
+        % d_arrow_txt = -2;
+        % v_legend = 2;
+    end
+
+%==================== FORP-JPN ==============================================
+elseif CASE == 17  % FORP
+    grd='D:\COAWST_DATA\FORP_Kuroshio\Grid\forp-kuroshio_grd_v0.0.nc';
+    his=["../../TSUBAME/gs1/nakamura/COAWST/COAWST_OUTPUT/FORP_Kuroshio/Kuro_his_20060102_3.nc"];
+    Fqck=false;
+    % Fqck=true;
+    qck=["F:\COAWST_OUTPUT\FORP_offline\FORP_eco_offline_qck_20060110.nc"];
+    Fdia=false;
+    % Fdia=true;
+    dia=["../../TSUBAME/gs1/nakamura/COAWST/COAWST_OUTPUT/FORP_Kuroshio/Kuro_dia_20060102_3.nc"];
+
+    out_dirstr = 'output/figs_png_FORP_Kuro';
+      
+    Nz=30; % Surface
+    % Nz=1; % Bottom
+    % unit = 'km'; 
+%          'm', 'latlon'
+    unit = 'latlon';
+
+    % LevelList = [-1 0 1000 2000 3000 4000 5000 6000];
+    LevelList = [-1 0 ];
+    
+
+    if id==3 % Wave direction
+        scale=5;
+        s_interval=7;
+    elseif id==100 % Wind
+        scale=1;
+        s_interval=10;
+        x_arrow_txt = 150; y_arrow_txt=40;
+        d_arrow_txt = -7;
+        v_legend = 20;
+    else % Water Velocity
+    % Whole area
+        scale=0.7;
+        s_interval=20;
+        x_arrow_txt = 140; y_arrow_txt=23;
+        d_arrow_txt = -0.8;
+        v_legend = 2;
+
+    % close up
+        % scale=3;
+        % s_interval=4;
+        % x_arrow_txt = 118; y_arrow_txt=105;
+        % d_arrow_txt = -2;
+        % v_legend = 2;
+    end
+
+
+%==================== Kushimoto ==============================================
+elseif CASE == 18  % Kushimoto
+    grd='D:/COAWST_DATA/Kushimoto/Grid/Kushimoto_grd_v0.1.nc';
+    his=["F:\COAWST_OUTPUT\Kushimoto\Kushimoto_his_20100621.nc"];
+    Fqck=false;
+    % Fqck=true;
+    qck=["F:\COAWST_OUTPUT\Kushimoto\Kushimoto_qck_20100621.nc"];
+    Fdia=false;
+    % Fdia=true;
+    dia=["F:\COAWST_OUTPUT\Kushimoto\Kushimoto_dia_20100621.nc"];
+
+    % out_dirstr = 'output/figs_png_Palau2_srf';
+    out_dirstr = 'output/figs_png_Kushimoto_srf';
+      
+    Nz=15; % Surface
+    % Nz=1; % Bottom
+    unit = 'km'; 
+%          'm', 'latlon'
+    % unit = 'latlon';
+
+    % LevelList = [-1 10 100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000];
+    LevelList = [-1 5];
+    
+
+    if id==3 % Wave direction
+        scale=5;
+        s_interval=7;
+    elseif id==100 % Wind
+        scale=1;
+        s_interval=5;
+        x_arrow_txt = 150; y_arrow_txt=40;
+        d_arrow_txt = -7;
+        v_legend = 20;
+    else % Water Velocity
+    % Whole area
+        scale=1.3;
+        s_interval=10;
+        x_arrow_txt = 3; y_arrow_txt=27;
+        d_arrow_txt = -1;
+        v_legend = 2;
+
+    % close up
+        % scale=3;
+        % s_interval=4;
+        % x_arrow_txt = 118; y_arrow_txt=105;
+        % d_arrow_txt = -2;
+        % v_legend = 2;
+    end
+%==========================================================================
+
 end
 
 %==========================================================================
@@ -616,6 +811,26 @@ elseif CASE == 12  % TokyoBay2
 elseif CASE == 13  % TokyoBay3
     xmin=139.6;   xmax=140.13;  ymin=35.13;   ymax=35.7;
     xsize=550; ysize=650;
+elseif CASE == 14  % Palau1
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xsize=630; ysize=600;
+elseif CASE == 15  % Palau2
+    % Whole area
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xsize=730; ysize=700;
+    % Close up
+    % xmin=80;   xmax=140;  ymin=50;   ymax=150;
+    % xsize=550; ysize=750;   
+elseif CASE == 17  % FORP
+    % Whole area
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xsize=730; ysize=700;
+    % Close up
+    % xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    % xsize=900; ysize=600;   
+elseif CASE == 18  % Kushimoto
+    xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
+    xsize=780; ysize=520;   
 else
     xmin=min(min(x_rho));   xmax=max(max(x_rho));  ymin=min(min(y_rho));   ymax=max(max(y_rho));
     xsize=520; ysize=520;   
@@ -695,28 +910,28 @@ date_str=strcat(datestr(starting_date,31),'  ',LOCAL_TIME);
 % My color map
 load('MyColormaps')
 colormap6=superjet(128,'NuvibZctgyorWq');
-% colormap7=superjet(128,'qhaoGUDylggtttZZZZbbbbiiiiiuuuuuuuuA');
-colormap7=superjet(128,'xvbZctgyorWq');
+colormap7=superjet(128,'qhaoGUDylggtttZZZZbbbbiiiiiuuuuuuuuA');
+% colormap7=superjet(128,'xvbZctgyorWq');
 
-data = ncread(grd,'h');
-title='Bathymetry';
-cmin=0; cmax=50;
+data = ncread(grd,'h'); title='Bathymetry'; cmin=-0; cmax=70; colmap=colmap2;
 tmp=data.*mask_rho;
-colmap=colormap7;
+% colmap=colormap7;
+
 
 % data = ncread(grd,'aquaculture_01');
 % title='aquaculture01';
-data = ncread(grd,'aquaculture_05');
-title='aquaculture05';
-cmin=0; cmax=0.2;
-tmp=data.*mask_rho;
-colmap=colormap7;
+% data = ncread(grd,'aquaculture_05');
+% title='aquaculture05';
+% cmin=0; cmax=0.2;
+% tmp=data.*mask_rho;
+% colmap=colormap7;
 
 [h_quiver,h_surf,h_contour,h_annot]=createvplot7(x_rho,y_rho,tmp,x_rho2,y_rho2,ubar3,vbar3,h,scale,date_str,title,cmin,cmax,colmap,xsize,ysize,xmin,xmax,ymin,ymax,unit,LevelList);
 % set(gca,'ColorScale','log')
 
 drawnow
 % hgexport(figure(1), 'output/figs_png/aq5.png',hgexport('factorystyle'),'Format','png');
-hgexport(figure(1), strcat(out_dirstr,'/', title,'.png'),hgexport('factorystyle'),'Format','png');
+% hgexport(figure(1), strcat(out_dirstr,'/', title,'.png'),hgexport('factorystyle'),'Format','png');
 % hgexport(figure(1), 'output/figs_eps\bathY3_2.eps',hgexport('factorystyle'),'Format','eps');
+exportgraphics(figure(1), strcat(out_dirstr,'/', title,'.png'));
 
